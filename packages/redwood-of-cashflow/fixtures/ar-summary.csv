@@ -1,0 +1,6 @@
+Payer Type,Amount
+medicare_a,520000
+medicaid,610000
+managed_care,280000
+private,90000
+hospice,42000

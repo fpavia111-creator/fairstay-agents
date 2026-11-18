@@ -1,0 +1,62 @@
+{
+  "collect": {
+    "medicare_a": {
+      "pct": 0.98,
+      "weeks": 4
+    },
+    "medicaid": {
+      "pct": 0.97,
+      "weeks": 5
+    },
+    "managed_care": {
+      "pct": 0.9,
+      "weeks": 8
+    },
+    "private": {
+      "pct": 0.85,
+      "weeks": 6
+    }
+  },
+  "weekly_billing": {
+    "medicare_a": 120000,
+    "medicaid": 150000,
+    "managed_care": 60000,
+    "private": 22000
+  },
+  "lag": {
+    "medicare_a": {
+      "pct": 0.98,
+      "lag_weeks": 3
+    },
+    "medicaid": {
+      "pct": 0.97,
+      "lag_weeks": 5
+    },
+    "managed_care": {
+      "pct": 0.9,
+      "lag_weeks": 7
+    },
+    "private": {
+      "pct": 0.9,
+      "lag_weeks": 2
+    }
+  },
+  "payroll": {
+    "amount": 420000,
+    "first_date": "2026-04-10",
+    "every_days": 14
+  },
+  "fixed": [
+    {
+      "name": "Rent to propco",
+      "amount": 185000,
+      "day_of_month": 1
+    },
+    {
+      "name": "Insurance",
+      "amount": 21000,
+      "day_of_month": 10
+    }
+  ],
+  "min_cash": 400000
+}
