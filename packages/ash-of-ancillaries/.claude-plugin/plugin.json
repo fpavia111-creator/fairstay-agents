@@ -1,0 +1,23 @@
+{
+  "name": "ash-of-ancillaries",
+  "version": "0.1.0",
+  "description": "Ancillary invoice review: pharmacy, therapy, lab, radiology and supply charges for residents not in the building, for residents whose payer should be billed instead, outside consolidated billing, above contract rates or duplicated, with credit request drafts.",
+  "author": {
+    "name": "Kurt Francisco"
+  },
+  "license": "MIT",
+  "homepage": "https://github.com/fpavia111-creator/evergreen-agents/tree/main/packages/ash-of-ancillaries#readme",
+  "keywords": [
+    "mcp",
+    "mcp-server",
+    "nursing-home",
+    "skilled-nursing",
+    "snf",
+    "long-term-care",
+    "evergreen",
+    "ancillary",
+    "consolidated-billing",
+    "pharmacy",
+    "credits"
+  ]
+}

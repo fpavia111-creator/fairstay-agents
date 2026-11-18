@@ -1,0 +1,8 @@
+Resident #,Resident Name,Payer,Effective Date,End Date,Bed Status
+R1901,Jasper Holt,Medicare A,2026-03-01,,
+R1902,Kiri Anand,Lone Star Medicaid (fictional),2025-08-01,,
+R1903,Leif Moreau,Medicare A,2026-02-20,2026-03-12,
+R1904,Maeve Collins,Sunrise Advantage HMO (fictional),2026-03-05,2026-03-15,
+R1904,Maeve Collins,Sunrise Advantage HMO (fictional),2026-03-15,2026-03-18,Hospital leave
+R1904,Maeve Collins,Sunrise Advantage HMO (fictional),2026-03-18,,
+R1905,Nico Brandt,Private Pay,2025-11-01,,

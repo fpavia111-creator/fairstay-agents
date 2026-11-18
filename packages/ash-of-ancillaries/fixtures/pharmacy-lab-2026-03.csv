@@ -1,0 +1,10 @@
+Vendor,Vendor Type,Invoice #,Resident #,Resident Name,Date,Code,Description,Qty,Amount
+Gulf Coast Pharmacy (fictional),pharmacy,GCP-0326,R1901,Jasper Holt,2026-03-04,RX-ELIQ5,Apixaban 5 mg x30,1,612.40
+Gulf Coast Pharmacy (fictional),pharmacy,GCP-0326,R1901,Jasper Holt,2026-03-04,RX-ELIQ5,Apixaban 5 mg x30,1,612.40
+Gulf Coast Pharmacy (fictional),pharmacy,GCP-0326,R1902,Kiri Anand,2026-03-06,RX-METF500,Metformin 500 mg x60,1,18.20
+Gulf Coast Pharmacy (fictional),pharmacy,GCP-0326,R1903,Leif Moreau,2026-03-14,RX-AMOX500,Amoxicillin 500 mg x21,1,24.90
+Gulf Coast Pharmacy (fictional),pharmacy,GCP-0326,R1904,Maeve Collins,2026-03-16,RX-INSG,Insulin glargine pen,1,148.00
+Gulf Coast Pharmacy (fictional),pharmacy,GCP-0326,R1904,Maeve Collins,2026-03-20,RX-INSG,Insulin glargine pen,1,148.00
+Prairie Lab Services (fictional),lab,PLS-3301,R1901,Jasper Holt,2026-03-08,80053,Comprehensive metabolic panel,1,38.00
+Prairie Lab Services (fictional),lab,PLS-3301,R1901,Jasper Holt,2026-03-09,J9035,Chemotherapy drug (fictional exclusion),1,890.00
+Prairie Lab Services (fictional),lab,PLS-3301,R1904,Maeve Collins,2026-03-21,85025,Complete blood count,1,22.00

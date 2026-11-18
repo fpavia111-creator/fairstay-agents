@@ -1,0 +1,316 @@
+{
+ "suite": "ash-of-ancillaries",
+ "root": "..",
+ "data_note": "Fictional residents, vendors and rates in ../fixtures. Deterministic checks; no model is called.",
+ "cases": [
+  {
+   "id": "totals",
+   "tool": "ash_check",
+   "args": {
+    "invoices": "fixtures/pharmacy-lab-2026-03.csv",
+    "census": "fixtures/census.csv",
+    "rates": "fixtures/contract-rates.csv",
+    "rules": "fixtures/rules.json"
+   },
+   "expect": {
+    "status": "executed",
+    "equals": {
+     "result.lines": 9,
+     "result.billed": 2513.9,
+     "result.credits_due": 1717.5,
+     "result.vendors": 2
+    }
+   }
+  },
+  {
+   "id": "hospital-day-first",
+   "tool": "ash_check",
+   "args": {
+    "invoices": "fixtures/pharmacy-lab-2026-03.csv",
+    "census": "fixtures/census.csv",
+    "rates": "fixtures/contract-rates.csv",
+    "rules": "fixtures/rules.json"
+   },
+   "expect": {
+    "equals": {
+     "result.items.0.status": "not_in_building",
+     "result.items.0.date": "2026-03-16"
+    },
+    "contains": [
+     "in the hospital"
+    ]
+   }
+  },
+  {
+   "id": "after-discharge",
+   "tool": "ash_check",
+   "args": {
+    "invoices": "fixtures/pharmacy-lab-2026-03.csv",
+    "census": "fixtures/census.csv",
+    "rates": "fixtures/contract-rates.csv",
+    "rules": "fixtures/rules.json",
+    "status": "not_in_building"
+   },
+   "expect": {
+    "equals": {
+     "result.items.1.date": "2026-03-14"
+    }
+   }
+  },
+  {
+   "id": "duplicate",
+   "tool": "ash_check",
+   "args": {
+    "invoices": "fixtures/pharmacy-lab-2026-03.csv",
+    "census": "fixtures/census.csv",
+    "rates": "fixtures/contract-rates.csv",
+    "rules": "fixtures/rules.json",
+    "status": "duplicate_line"
+   },
+   "expect": {
+    "equals": {
+     "result.items.0.amount": 612.4,
+     "result.items.0.duplicate_of_line": 1
+    }
+   }
+  },
+  {
+   "id": "medicaid-pharmacy",
+   "tool": "ash_check",
+   "args": {
+    "invoices": "fixtures/pharmacy-lab-2026-03.csv",
+    "census": "fixtures/census.csv",
+    "rates": "fixtures/contract-rates.csv",
+    "rules": "fixtures/rules.json",
+    "status": "bill_payer_instead"
+   },
+   "expect": {
+    "equals": {
+     "result.items.0.payer_type": "medicaid",
+     "result.items.0.amount": 18.2
+    }
+   }
+  },
+  {
+   "id": "cb-exclusion",
+   "tool": "ash_check",
+   "args": {
+    "invoices": "fixtures/pharmacy-lab-2026-03.csv",
+    "census": "fixtures/census.csv",
+    "rates": "fixtures/contract-rates.csv",
+    "rules": "fixtures/rules.json",
+    "status": "outside_consolidated_billing"
+   },
+   "expect": {
+    "equals": {
+     "result.items.0.code": "J9035",
+     "result.items.0.amount": 890
+    }
+   }
+  },
+  {
+   "id": "above-contract",
+   "tool": "ash_check",
+   "args": {
+    "invoices": "fixtures/pharmacy-lab-2026-03.csv",
+    "census": "fixtures/census.csv",
+    "rates": "fixtures/contract-rates.csv",
+    "rules": "fixtures/rules.json",
+    "status": "above_contract"
+   },
+   "expect": {
+    "equals": {
+     "result.items.0.amount": 24,
+     "result.items.0.contract_rate": 14
+    }
+   }
+  },
+  {
+   "id": "no-rules-no-exclusions",
+   "tool": "ash_check",
+   "args": {
+    "invoices": "fixtures/pharmacy-lab-2026-03.csv",
+    "census": "fixtures/census.csv"
+   },
+   "expect": {
+    "not_contains": [
+     "outside_consolidated_billing",
+     "above_contract"
+    ]
+   }
+  },
+  {
+   "id": "typo-rules-refused",
+   "tool": "ash_check",
+   "args": {
+    "invoices": "fixtures/pharmacy-lab-2026-03.csv",
+    "census": "fixtures/census.csv",
+    "rates": "fixtures/contract-rates.csv",
+    "rules": "fixtures/rules-typo.json"
+   },
+   "expect": {
+    "status": "error",
+    "contains": [
+     "snf_pays"
+    ]
+   }
+  },
+  {
+   "id": "masked",
+   "tool": "ash_check",
+   "args": {
+    "invoices": "fixtures/pharmacy-lab-2026-03.csv",
+    "census": "fixtures/census.csv",
+    "rates": "fixtures/contract-rates.csv",
+    "rules": "fixtures/rules.json"
+   },
+   "expect": {
+    "not_contains": [
+     "Jasper Holt",
+     "R1901"
+    ],
+    "matches": [
+     "MRN-[0-9a-f]{8}"
+    ]
+   }
+  },
+  {
+   "id": "draft-needs-a-yes",
+   "tool": "ash_draft_credit_request",
+   "args": {
+    "invoices": "fixtures/pharmacy-lab-2026-03.csv",
+    "census": "fixtures/census.csv",
+    "rates": "fixtures/contract-rates.csv",
+    "rules": "fixtures/rules.json",
+    "invoice_no": "GCP-0326"
+   },
+   "expect": {
+    "status": "needs_approval",
+    "decision": "ask"
+   }
+  },
+  {
+   "id": "draft-written",
+   "tool": "ash_draft_credit_request",
+   "args": {
+    "invoices": "fixtures/pharmacy-lab-2026-03.csv",
+    "census": "fixtures/census.csv",
+    "rates": "fixtures/contract-rates.csv",
+    "rules": "fixtures/rules.json",
+    "invoice_no": "GCP-0326",
+    "out_dir": "evergreen-out/eval-ash-draft"
+   },
+   "expect": {
+    "status": "executed",
+    "equals": {
+     "result.amount": 803.5
+    },
+    "contains": [
+     "Nothing was sent"
+    ]
+   },
+   "approve": "Pat Example"
+  },
+  {
+   "id": "draft-unknown-invoice",
+   "tool": "ash_draft_credit_request",
+   "args": {
+    "invoices": "fixtures/pharmacy-lab-2026-03.csv",
+    "census": "fixtures/census.csv",
+    "rates": "fixtures/contract-rates.csv",
+    "rules": "fixtures/rules.json",
+    "invoice_no": "NOPE-1",
+    "out_dir": "evergreen-out/eval-ash-draft"
+   },
+   "expect": {
+    "status": "error",
+    "contains": [
+     "not found"
+    ]
+   },
+   "approve": "Pat Example"
+  },
+  {
+   "id": "request-waits-for-a-named-click",
+   "tool": "ash_request_send",
+   "args": {
+    "draft": "fixtures/drafts/credit_request-example000001.md",
+    "draft_sha256": "fc3705781b02bcc5ab28b9ba7a2da8309bb75e8f101a20dbf31652fdcfdf513d",
+    "out_dir": "evergreen-out/eval-ash-request"
+   },
+   "expect": {
+    "status": "needs_approval"
+   }
+  },
+  {
+   "id": "request-approved-records-nothing-sent",
+   "tool": "ash_request_send",
+   "args": {
+    "draft": "fixtures/drafts/credit_request-example000001.md",
+    "draft_sha256": "fc3705781b02bcc5ab28b9ba7a2da8309bb75e8f101a20dbf31652fdcfdf513d",
+    "out_dir": "evergreen-out/eval-ash-request"
+   },
+   "expect": {
+    "status": "executed",
+    "contains": [
+     "approved and recorded",
+     "Nothing was sent"
+    ]
+   },
+   "approve": "Pat Example"
+  },
+  {
+   "id": "request-wrong-sha-refused",
+   "tool": "ash_request_send",
+   "args": {
+    "draft": "fixtures/drafts/credit_request-example000001.md",
+    "draft_sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+    "out_dir": "evergreen-out/eval-ash-request"
+   },
+   "expect": {
+    "status": "error",
+    "contains": [
+     "does not match"
+    ]
+   },
+   "approve": "Pat Example"
+  },
+  {
+   "id": "report",
+   "tool": "ash_write_report",
+   "args": {
+    "invoices": "fixtures/pharmacy-lab-2026-03.csv",
+    "census": "fixtures/census.csv",
+    "rates": "fixtures/contract-rates.csv",
+    "rules": "fixtures/rules.json"
+   },
+   "expect": {
+    "status": "executed",
+    "contains": [
+     "ash-ancillaries.csv"
+    ]
+   }
+  },
+  {
+   "id": "hold-refused",
+   "tool": "vendor_payment_hold",
+   "args": {},
+   "expect": {
+    "status": "blocked",
+    "decision": "block"
+   }
+  },
+  {
+   "id": "recall-empty",
+   "tool": "ash_recall",
+   "args": {},
+   "expect": {
+    "status": "executed",
+    "contains": [
+     "memory is empty",
+     "vendor_contact"
+    ]
+   }
+  }
+ ]
+}
