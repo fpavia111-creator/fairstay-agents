@@ -1,0 +1,21 @@
+Entity,Account,Account Name,Activity,Prior Month,Ending Balance
+Cedar Hollow OpCo,1000,Operating cash,0,0,412000
+Cedar Hollow OpCo,1200,Accounts receivable,0,0,1385000
+Cedar Hollow OpCo,1290,Unapplied cash,0,0,-6450
+Cedar Hollow OpCo,1500,Due from Cedar Hollow PropCo,0,0,95000
+Cedar Hollow OpCo,2000,Accounts payable,0,0,-512000
+Cedar Hollow OpCo,2100,Accrued payroll,0,0,-288000
+Cedar Hollow OpCo,3000,Equity,0,0,-262040
+Cedar Hollow OpCo,4000,Medicare A revenue,-820000,-845000,-2465000
+Cedar Hollow OpCo,4100,Medicaid revenue,-960000,-955000,-2860000
+Cedar Hollow OpCo,5100,Nursing wages,1040000,1025000,3090000
+Cedar Hollow OpCo,5300,Pharmacy,38000,96000,226000
+Cedar Hollow OpCo,5400,Contract therapy,0,118000,236000
+Cedar Hollow OpCo,5500,Food,74000,71000,219000
+Cedar Hollow OpCo,5600,Utilities,30500,29500,88000
+Cedar Hollow OpCo,6000,Rent to PropCo,185000,185000,555000
+Cedar Hollow OpCo,6100,Agency staffing,96000,42000,195000
+Cedar Hollow OpCo,9999,Suspense,0,0,-106310
+Cedar Hollow PropCo,1000,Operating cash,0,0,640000
+Cedar Hollow PropCo,2500,Due to Cedar Hollow OpCo,0,0,-90000
+Cedar Hollow PropCo,3000,Equity,0,0,-550000

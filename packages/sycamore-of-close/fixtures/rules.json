@@ -1,0 +1,7 @@
+{
+  "patient_days": 3410,
+  "swing_pct": 25,
+  "swing_min": 5000,
+  "accruals": [ { "account": "5400", "name": "Contract therapy", "min": 90000 }, { "account": "5600", "name": "Utilities", "min": 20000 } ],
+  "ppd": [ { "account": "5300", "low": 20, "high": 32 }, { "account": "5500", "low": 18, "high": 24 }, { "account": "6100", "low": 0, "high": 15 } ]
+}

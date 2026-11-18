@@ -1,0 +1,12 @@
+{
+  "mcpServers": {
+    "sycamore-of-close": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "sycamore-of-close@0.1.0",
+        "mcp"
+      ]
+    }
+  }
+}
