@@ -1,0 +1,214 @@
+{
+ "suite": "olive-of-chow",
+ "root": "..",
+ "data_note": "Fictional CHOW checklist in ../fixtures. Deterministic checks; no model is called.",
+ "cases": [
+  {
+   "id": "totals",
+   "tool": "olive_check",
+   "args": {
+    "steps": "fixtures/chow-steps.csv",
+    "deal": "fixtures/deal.json",
+    "as_of": "2026-04-01"
+   },
+   "expect": {
+    "status": "executed",
+    "equals": {
+     "result.steps": 11,
+     "result.done": 2,
+     "result.days_to_close": 91,
+     "result.close_date": "2026-07-01"
+    }
+   }
+  },
+  {
+   "id": "license-late-first",
+   "tool": "olive_check",
+   "args": {
+    "steps": "fixtures/chow-steps.csv",
+    "deal": "fixtures/deal.json",
+    "as_of": "2026-04-01"
+   },
+   "expect": {
+    "equals": {
+     "result.items.0.status": "late",
+     "result.items.0.due": "2026-03-25",
+     "result.items.0.days_left": -7
+    }
+   }
+  },
+  {
+   "id": "medicaid-blocked",
+   "tool": "olive_check",
+   "args": {
+    "steps": "fixtures/chow-steps.csv",
+    "deal": "fixtures/deal.json",
+    "as_of": "2026-04-01",
+    "status": "blocked"
+   },
+   "expect": {
+    "equals": {
+     "result.items.length": 1,
+     "result.items.0.step": "Medicaid CHOW enrollment"
+    },
+    "contains": [
+     "CMS-855A"
+    ]
+   }
+  },
+  {
+   "id": "done-blocker-clears",
+   "tool": "olive_check",
+   "args": {
+    "steps": "fixtures/chow-steps.csv",
+    "deal": "fixtures/deal.json",
+    "as_of": "2026-04-01",
+    "status": "due_soon"
+   },
+   "expect": {
+    "equals": {
+     "result.items.0.step": "Medicare CMS-855A CHOW application",
+     "result.items.0.due": "2026-04-02"
+    }
+   }
+  },
+  {
+   "id": "missing-standard",
+   "tool": "olive_check",
+   "args": {
+    "steps": "fixtures/chow-steps.csv",
+    "deal": "fixtures/deal.json",
+    "as_of": "2026-04-01",
+    "status": "missing_standard_step"
+   },
+   "expect": {
+    "equals": {
+     "result.items.length": 4,
+     "result.items.0.standard": "provider_agreement",
+     "result.items.3.standard": "final_cost_report"
+    },
+    "contains": [
+     "clia",
+     "pbj_access"
+    ]
+   }
+  },
+  {
+   "id": "cost-report-after-close",
+   "tool": "olive_check",
+   "args": {
+    "steps": "fixtures/chow-steps.csv",
+    "deal": "fixtures/deal.json",
+    "as_of": "2026-04-01",
+    "status": "missing_standard_step"
+   },
+   "expect": {
+    "equals": {
+     "result.items.3.due": "2026-11-28"
+    }
+   }
+  },
+  {
+   "id": "due-soon-count",
+   "tool": "olive_check",
+   "args": {
+    "steps": "fixtures/chow-steps.csv",
+    "deal": "fixtures/deal.json",
+    "as_of": "2026-04-01"
+   },
+   "expect": {
+    "equals": {
+     "result.by_status.due_soon": 3,
+     "result.by_status.open": 4,
+     "result.by_status.late": 1
+    }
+   }
+  },
+  {
+   "id": "later-as-of",
+   "tool": "olive_check",
+   "args": {
+    "steps": "fixtures/chow-steps.csv",
+    "deal": "fixtures/deal.json",
+    "as_of": "2026-06-20"
+   },
+   "expect": {
+    "equals": {
+     "result.days_to_close": 11
+    },
+    "min": {
+     "result.by_status.late": 5
+    }
+   }
+  },
+  {
+   "id": "typo-deal-refused",
+   "tool": "olive_check",
+   "args": {
+    "steps": "fixtures/chow-steps.csv",
+    "deal": "fixtures/rules-typo.json",
+    "as_of": "2026-04-01"
+   },
+   "expect": {
+    "status": "error",
+    "contains": [
+     "closing"
+    ]
+   }
+  },
+  {
+   "id": "emails-masked",
+   "tool": "olive_check",
+   "args": {
+    "steps": "fixtures/chow-steps.csv",
+    "deal": "fixtures/deal.json",
+    "as_of": "2026-04-01"
+   },
+   "expect": {
+    "not_contains": [
+     "contractor.example",
+     "state.example"
+    ],
+    "contains": [
+     "[EMAIL]"
+    ]
+   }
+  },
+  {
+   "id": "report",
+   "tool": "olive_write_report",
+   "args": {
+    "steps": "fixtures/chow-steps.csv",
+    "deal": "fixtures/deal.json",
+    "as_of": "2026-04-01"
+   },
+   "expect": {
+    "status": "executed",
+    "contains": [
+     "olive-chow.csv"
+    ]
+   }
+  },
+  {
+   "id": "filing-refused",
+   "tool": "agency_filing_submit",
+   "args": {},
+   "expect": {
+    "status": "blocked",
+    "decision": "block"
+   }
+  },
+  {
+   "id": "recall-empty",
+   "tool": "olive_recall",
+   "args": {},
+   "expect": {
+    "status": "executed",
+    "contains": [
+     "memory is empty",
+     "chow_note"
+    ]
+   }
+  }
+ ]
+}

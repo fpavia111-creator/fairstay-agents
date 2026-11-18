@@ -1,0 +1,58 @@
+{
+  "name": "olive-of-chow",
+  "version": "0.1.0",
+  "description": "Change of ownership (CHOW) tracker: every step for Medicare, Medicaid, the state license, payers, banking, payroll and vendors against the closing date, with late steps, steps due soon, blocked steps and standard steps missing from your list.",
+  "type": "module",
+  "license": "MIT",
+  "author": "Kurt Francisco",
+  "engines": {
+    "node": ">=20"
+  },
+  "main": "src/index.js",
+  "exports": {
+    ".": "./src/index.js",
+    "./package.json": "./package.json"
+  },
+  "bin": {
+    "olive-of-chow": "bin/olive-of-chow.js"
+  },
+  "files": [
+    "src",
+    "bin",
+    "fixtures",
+    "evals",
+    "README.md",
+    "CHANGELOG.md",
+    "LICENSE"
+  ],
+  "scripts": {
+    "test": "node scripts/run-tests.cjs",
+    "demo": "node bin/olive-of-chow.js demo",
+    "eval": "node bin/olive-of-chow.js eval"
+  },
+  "dependencies": {
+    "evergreen-core": "^0.1.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/fpavia111-creator/evergreen-agents.git",
+    "directory": "packages/olive-of-chow"
+  },
+  "homepage": "https://github.com/fpavia111-creator/evergreen-agents/tree/main/packages/olive-of-chow#readme",
+  "bugs": {
+    "url": "https://github.com/fpavia111-creator/evergreen-agents/issues"
+  },
+  "keywords": [
+    "mcp",
+    "mcp-server",
+    "nursing-home",
+    "skilled-nursing",
+    "snf",
+    "long-term-care",
+    "evergreen",
+    "chow",
+    "change-of-ownership",
+    "cms-855a",
+    "licensing"
+  ]
+}

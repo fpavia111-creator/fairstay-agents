@@ -1,0 +1,12 @@
+Step,Area,Owner,Due,Days Before Close,Done,Blocked By,Agency Contact
+New EIN and NPI for the buyer,Payers,Buyer CFO,,75,2026-03-10,,
+Medicare CMS-855A CHOW application,Medicare,Reimbursement consultant,,90,,New EIN and NPI for the buyer,mac.enroll@contractor.example
+Medicaid CHOW enrollment,Medicaid,Reimbursement consultant,,60,,Medicare CMS-855A CHOW application,mcd.chow@state.example
+State license application,License,Buyer counsel,2026-03-25,,,,license.desk@state.example
+Managed care contracts and credentialing,Payers,Business office director,,90,,,
+Resident and family notice letters,Residents,Administrator,,30,,,
+Lockbox and operating bank accounts,Banking,Buyer CFO,,30,,,
+Payroll and workers comp,Payroll,HR director,,30,2026-03-28,,
+Pharmacy and therapy vendor contracts,Vendors,Administrator,2026-04-10,,,,
+Liability insurance bound,Insurance,Buyer CFO,,14,,,
+Census and AR cutoff plan,Billing,Business office director,2026-06-25,,,,
