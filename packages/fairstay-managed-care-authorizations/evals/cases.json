@@ -1,0 +1,266 @@
+{
+  "suite": "fairstay-managed-care-authorizations",
+  "root": "..",
+  "data_note": "Fictional residents and example settings in ../fixtures. Deterministic checks; no model is called.",
+  "cases": [
+    {
+      "id": "totals",
+      "tool": "auths_check",
+      "args": {
+        "census": "fixtures/census.csv",
+        "auths": "fixtures/auths.csv",
+        "rules": "fixtures/rules.json",
+        "start": "2026-03-01",
+        "as_of": "2026-03-16"
+      },
+      "expect": {
+        "status": "executed",
+        "equals": {
+          "result.residents": 5,
+          "result.auth_days": 73,
+          "result.days_without_auth": 4
+        }
+      }
+    },
+    {
+      "id": "no-auth-first",
+      "tool": "auths_check",
+      "args": {
+        "census": "fixtures/census.csv",
+        "auths": "fixtures/auths.csv",
+        "rules": "fixtures/rules.json",
+        "start": "2026-03-01",
+        "as_of": "2026-03-16"
+      },
+      "expect": {
+        "equals": {
+          "result.items.0.status": "no_auth",
+          "result.items.0.from": "2026-03-05",
+          "result.items.0.to": "2026-03-08",
+          "result.items.0.days": 4
+        }
+      }
+    },
+    {
+      "id": "over-authorized",
+      "tool": "auths_check",
+      "args": {
+        "census": "fixtures/census.csv",
+        "auths": "fixtures/auths.csv",
+        "rules": "fixtures/rules.json",
+        "start": "2026-03-01",
+        "as_of": "2026-03-16",
+        "status": "over_authorized_days"
+      },
+      "expect": {
+        "equals": {
+          "result.items.0.from": "2026-03-11",
+          "result.items.0.days": 6,
+          "result.items.0.auth_number": "SA-1002"
+        }
+      }
+    },
+    {
+      "id": "level-differs",
+      "tool": "auths_check",
+      "args": {
+        "census": "fixtures/census.csv",
+        "auths": "fixtures/auths.csv",
+        "rules": "fixtures/rules.json",
+        "start": "2026-03-01",
+        "as_of": "2026-03-16",
+        "status": "level_differs"
+      },
+      "expect": {
+        "equals": {
+          "result.items.0.days": 14
+        },
+        "contains": [
+          "REHAB MED"
+        ]
+      }
+    },
+    {
+      "id": "review-overdue",
+      "tool": "auths_check",
+      "args": {
+        "census": "fixtures/census.csv",
+        "auths": "fixtures/auths.csv",
+        "rules": "fixtures/rules.json",
+        "start": "2026-03-01",
+        "as_of": "2026-03-16",
+        "status": "review_overdue"
+      },
+      "expect": {
+        "equals": {
+          "result.items.0.review_on": "2026-03-12",
+          "result.items.0.days_left": -4
+        }
+      }
+    },
+    {
+      "id": "auth-ending",
+      "tool": "auths_check",
+      "args": {
+        "census": "fixtures/census.csv",
+        "auths": "fixtures/auths.csv",
+        "rules": "fixtures/rules.json",
+        "start": "2026-03-01",
+        "as_of": "2026-03-16",
+        "status": "auth_ending"
+      },
+      "expect": {
+        "equals": {
+          "result.items.0.auth_number": "SA-1002",
+          "result.items.0.days_left": 1
+        }
+      }
+    },
+    {
+      "id": "renewed-auth-quiet",
+      "tool": "auths_check",
+      "args": {
+        "census": "fixtures/census.csv",
+        "auths": "fixtures/auths.csv",
+        "rules": "fixtures/rules.json",
+        "start": "2026-03-01",
+        "as_of": "2026-03-16"
+      },
+      "expect": {
+        "not_contains": [
+          "SA-1005",
+          "SA-1006"
+        ]
+      }
+    },
+    {
+      "id": "medicaid-needs-no-auth",
+      "tool": "auths_check",
+      "args": {
+        "census": "fixtures/census.csv",
+        "auths": "fixtures/auths.csv",
+        "rules": "fixtures/rules-medicaid.json",
+        "start": "2026-03-01",
+        "as_of": "2026-03-16"
+      },
+      "expect": {
+        "equals": {
+          "result.residents": 6
+        },
+        "min": {
+          "result.days_without_auth": 20
+        }
+      }
+    },
+    {
+      "id": "typo-rules-refused",
+      "tool": "auths_check",
+      "args": {
+        "census": "fixtures/census.csv",
+        "auths": "fixtures/auths.csv",
+        "rules": "fixtures/rules-typo.json",
+        "start": "2026-03-01",
+        "as_of": "2026-03-16"
+      },
+      "expect": {
+        "status": "error",
+        "contains": [
+          "warning_days"
+        ]
+      }
+    },
+    {
+      "id": "masked",
+      "tool": "auths_check",
+      "args": {
+        "census": "fixtures/census.csv",
+        "auths": "fixtures/auths.csv",
+        "rules": "fixtures/rules.json",
+        "start": "2026-03-01",
+        "as_of": "2026-03-16"
+      },
+      "expect": {
+        "not_contains": [
+          "Wes Ibarra",
+          "R1302"
+        ],
+        "matches": [
+          "MRN-[0-9a-f]{8}"
+        ]
+      }
+    },
+    {
+      "id": "report",
+      "tool": "auths_write_report",
+      "args": {
+        "census": "fixtures/census.csv",
+        "auths": "fixtures/auths.csv",
+        "rules": "fixtures/rules.json",
+        "start": "2026-03-01",
+        "as_of": "2026-03-16"
+      },
+      "expect": {
+        "status": "executed",
+        "contains": [
+          "auths-authorizations.csv"
+        ]
+      }
+    },
+    {
+      "id": "submit-refused",
+      "tool": "plan_portal_submit",
+      "args": {},
+      "expect": {
+        "status": "blocked",
+        "decision": "block"
+      }
+    },
+    {
+      "id": "recall-empty",
+      "tool": "auths_recall",
+      "args": {},
+      "expect": {
+        "status": "executed",
+        "contains": [
+          "memory is empty",
+          "plan_review_rule"
+        ]
+      }
+    },
+    {
+      "id": "file-outside-root-refused",
+      "tool": "auths_check",
+      "args": {
+        "census": "../../outside-root.csv",
+        "auths": "fixtures/auths.csv",
+        "rules": "fixtures/rules.json",
+        "start": "2026-03-01",
+        "as_of": "2026-03-16"
+      },
+      "expect": {
+        "status": "error",
+        "contains": [
+          "outside the allowed root"
+        ]
+      }
+    },
+    {
+      "id": "missing-file-named",
+      "tool": "auths_check",
+      "args": {
+        "census": "fixtures/missing-export.csv",
+        "auths": "fixtures/auths.csv",
+        "rules": "fixtures/rules.json",
+        "start": "2026-03-01",
+        "as_of": "2026-03-16"
+      },
+      "expect": {
+        "status": "error",
+        "contains": [
+          "not found",
+          "missing-export.csv"
+        ]
+      }
+    }
+  ]
+}

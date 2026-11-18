@@ -1,0 +1,12 @@
+{
+  "mcpServers": {
+    "fairstay-bank-reconciliation": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "fairstay-bank-reconciliation@0.1.0",
+        "mcp"
+      ]
+    }
+  }
+}

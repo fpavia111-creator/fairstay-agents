@@ -1,0 +1,12 @@
+{
+  "mcpServers": {
+    "fairstay-borrowing-base": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "fairstay-borrowing-base@0.1.0",
+        "mcp"
+      ]
+    }
+  }
+}

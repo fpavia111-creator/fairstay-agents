@@ -1,0 +1,37 @@
+{
+  "$schema": "https://static.modelcontextprotocol.io/schemas/2025-12-11/server.schema.json",
+  "name": "io.github.fpavia111-creator/fairstay-managed-care-claims",
+  "title": "Fairstay Managed Care Claims",
+  "description": "Managed care (HMO, Medicare Advantage, Medicaid MCO) claim checks",
+  "version": "0.1.0",
+  "repository": {
+    "url": "https://github.com/fpavia111-creator/fairstay-agents",
+    "source": "github",
+    "subfolder": "packages/fairstay-managed-care-claims"
+  },
+  "websiteUrl": "https://fair-agents.com/fairstay.html",
+  "packages": [
+    {
+      "registryType": "npm",
+      "identifier": "fairstay-managed-care-claims",
+      "version": "0.1.0",
+      "transport": {
+        "type": "stdio"
+      },
+      "packageArguments": [
+        {
+          "type": "positional",
+          "value": "mcp"
+        },
+        {
+          "type": "named",
+          "name": "--root",
+          "description": "Folder holding the exports this agent may read and write (it cannot reach outside it)",
+          "isRequired": true,
+          "format": "filepath",
+          "valueHint": "exports_folder"
+        }
+      ]
+    }
+  ]
+}

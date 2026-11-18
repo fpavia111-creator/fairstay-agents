@@ -1,0 +1,23 @@
+{
+  "name": "fairstay-part-b-therapy",
+  "version": "0.1.0",
+  "description": "Medicare Part B therapy for long-term residents: units over the 8-minute rule, missing GP/GO/GN modifiers, the KX threshold, therapy billed on days the resident was in a Part A stay, and duplicate lines.",
+  "author": {
+    "name": "Kurt Francisco"
+  },
+  "license": "MIT",
+  "homepage": "https://github.com/fpavia111-creator/fairstay-agents/tree/main/packages/fairstay-part-b-therapy#readme",
+  "keywords": [
+    "mcp",
+    "mcp-server",
+    "nursing-home",
+    "skilled-nursing",
+    "snf",
+    "long-term-care",
+    "evergreen",
+    "medicare-part-b",
+    "therapy",
+    "8-minute-rule",
+    "kx"
+  ]
+}

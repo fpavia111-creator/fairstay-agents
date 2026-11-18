@@ -1,0 +1,21 @@
+{
+  "name": "fairstay-bank-reconciliation",
+  "version": "0.1.0",
+  "description": "Daily bank reconciliation: bank lines with no book entry, book entries not on the bank, stale outstanding checks, deposits in transit too long and the unexplained difference.",
+  "author": {
+    "name": "Kurt Francisco"
+  },
+  "license": "MIT",
+  "homepage": "https://github.com/fpavia111-creator/fairstay-agents/tree/main/packages/fairstay-bank-reconciliation#readme",
+  "keywords": [
+    "mcp",
+    "mcp-server",
+    "nursing-home",
+    "skilled-nursing",
+    "snf",
+    "long-term-care",
+    "evergreen",
+    "bank-reconciliation",
+    "cash"
+  ]
+}

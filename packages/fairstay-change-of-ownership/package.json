@@ -1,0 +1,60 @@
+{
+  "name": "fairstay-change-of-ownership",
+  "version": "0.1.0",
+  "mcpName": "io.github.fpavia111-creator/fairstay-change-of-ownership",
+  "description": "Change of ownership (CHOW) tracker: every step for Medicare, Medicaid, the state license, payers, banking, payroll and vendors against the closing date, with late steps, steps due soon, blocked steps and standard steps missing from your list.",
+  "type": "module",
+  "license": "MIT",
+  "author": "Kurt Francisco",
+  "engines": {
+    "node": ">=20"
+  },
+  "main": "src/index.js",
+  "exports": {
+    ".": "./src/index.js",
+    "./package.json": "./package.json"
+  },
+  "bin": {
+    "fairstay-change-of-ownership": "bin/fairstay-change-of-ownership.js"
+  },
+  "files": [
+    "src",
+    "bin",
+    "fixtures",
+    "evals",
+    "README.md",
+    "CHANGELOG.md",
+    "LICENSE",
+    "server.json"
+  ],
+  "scripts": {
+    "test": "node scripts/run-tests.cjs",
+    "demo": "node bin/fairstay-change-of-ownership.js demo",
+    "eval": "node bin/fairstay-change-of-ownership.js eval"
+  },
+  "dependencies": {
+    "fairstay-core": "^0.1.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/fpavia111-creator/fairstay-agents.git",
+    "directory": "packages/fairstay-change-of-ownership"
+  },
+  "homepage": "https://github.com/fpavia111-creator/fairstay-agents/tree/main/packages/fairstay-change-of-ownership#readme",
+  "bugs": {
+    "url": "https://github.com/fpavia111-creator/fairstay-agents/issues"
+  },
+  "keywords": [
+    "mcp",
+    "mcp-server",
+    "nursing-home",
+    "skilled-nursing",
+    "snf",
+    "long-term-care",
+    "evergreen",
+    "chow",
+    "change-of-ownership",
+    "cms-855a",
+    "licensing"
+  ]
+}

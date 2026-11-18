@@ -1,0 +1,22 @@
+{
+  "name": "fairstay-payer-source",
+  "version": "0.1.0",
+  "description": "Payer source for every resident day: days with no payer, two payers on the same day, payers missing from your payer list, Medicare Part A past day 100, coinsurance days with no secondary payer, hospice residents on the wrong payer and private pay with no responsible party.",
+  "author": {
+    "name": "Kurt Francisco"
+  },
+  "license": "MIT",
+  "homepage": "https://github.com/fpavia111-creator/fairstay-agents/tree/main/packages/fairstay-payer-source#readme",
+  "keywords": [
+    "mcp",
+    "mcp-server",
+    "nursing-home",
+    "skilled-nursing",
+    "snf",
+    "long-term-care",
+    "evergreen",
+    "payer-source",
+    "census",
+    "coinsurance"
+  ]
+}

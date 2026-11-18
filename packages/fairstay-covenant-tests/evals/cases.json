@@ -1,0 +1,250 @@
+{
+  "suite": "fairstay-covenant-tests",
+  "root": "..",
+  "data_note": "Fictional figures and covenants in ../fixtures. Deterministic arithmetic; no model is called.",
+  "cases": [
+    {
+      "id": "totals",
+      "tool": "covenants_check",
+      "args": {
+        "financials": "fixtures/financials.csv",
+        "covenants": "fixtures/covenants.csv",
+        "rules": "fixtures/rules.json",
+        "as_of": "2026-04-20"
+      },
+      "expect": {
+        "status": "executed",
+        "equals": {
+          "result.period": "2026-03",
+          "result.covenants": 5,
+          "result.by_status.breach": 3,
+          "result.by_status.near_miss": 1
+        }
+      }
+    },
+    {
+      "id": "occupancy-quarter",
+      "tool": "covenants_check",
+      "args": {
+        "financials": "fixtures/financials.csv",
+        "covenants": "fixtures/covenants.csv",
+        "rules": "fixtures/rules.json",
+        "as_of": "2026-04-20"
+      },
+      "expect": {
+        "equals": {
+          "result.items.0.test": "occupancy",
+          "result.items.0.value": 79,
+          "result.items.0.months": 3
+        }
+      }
+    },
+    {
+      "id": "fccr-breach",
+      "tool": "covenants_check",
+      "args": {
+        "financials": "fixtures/financials.csv",
+        "covenants": "fixtures/covenants.csv",
+        "rules": "fixtures/rules.json",
+        "as_of": "2026-04-20",
+        "status": "breach"
+      },
+      "expect": {
+        "equals": {
+          "result.items.1.test": "fccr",
+          "result.items.1.value": 1.09
+        }
+      }
+    },
+    {
+      "id": "rent-coverage-near-miss",
+      "tool": "covenants_check",
+      "args": {
+        "financials": "fixtures/financials.csv",
+        "covenants": "fixtures/covenants.csv",
+        "rules": "fixtures/rules.json",
+        "as_of": "2026-04-20",
+        "status": "near_miss"
+      },
+      "expect": {
+        "equals": {
+          "result.items.0.value": 1.2,
+          "result.items.0.cushion_pct": 4.35
+        }
+      }
+    },
+    {
+      "id": "dscr-passes",
+      "tool": "covenants_check",
+      "args": {
+        "financials": "fixtures/financials.csv",
+        "covenants": "fixtures/covenants.csv",
+        "rules": "fixtures/rules.json",
+        "as_of": "2026-04-20",
+        "status": "pass"
+      },
+      "expect": {
+        "equals": {
+          "result.items.0.test": "dscr",
+          "result.items.0.value": 2
+        }
+      }
+    },
+    {
+      "id": "reporting-due",
+      "tool": "covenants_check",
+      "args": {
+        "financials": "fixtures/financials.csv",
+        "covenants": "fixtures/covenants.csv",
+        "rules": "fixtures/rules.json",
+        "as_of": "2026-04-20",
+        "status": "reporting_due"
+      },
+      "expect": {
+        "equals": {
+          "result.items.0.due_date": "2026-04-30"
+        }
+      }
+    },
+    {
+      "id": "reporting-late",
+      "tool": "covenants_check",
+      "args": {
+        "financials": "fixtures/financials.csv",
+        "covenants": "fixtures/covenants.csv",
+        "rules": "fixtures/rules.json",
+        "as_of": "2026-05-20",
+        "status": "reporting_late"
+      },
+      "expect": {
+        "min": {
+          "result.items.length": 2
+        },
+        "not_contains": [
+          "Bank fixed charge"
+        ]
+      }
+    },
+    {
+      "id": "earlier-period-not-enough-months",
+      "tool": "covenants_check",
+      "args": {
+        "financials": "fixtures/financials.csv",
+        "covenants": "fixtures/covenants.csv",
+        "rules": "fixtures/rules.json",
+        "as_of": "2026-04-20",
+        "period": "2025-12"
+      },
+      "expect": {
+        "contains": [
+          "no_data"
+        ]
+      }
+    },
+    {
+      "id": "typo-rules-refused",
+      "tool": "covenants_check",
+      "args": {
+        "financials": "fixtures/financials.csv",
+        "covenants": "fixtures/covenants.csv",
+        "rules": "fixtures/rules-typo.json",
+        "as_of": "2026-04-20"
+      },
+      "expect": {
+        "status": "error",
+        "contains": [
+          "warning_pct"
+        ]
+      }
+    },
+    {
+      "id": "loan-numbers-masked",
+      "tool": "covenants_check",
+      "args": {
+        "financials": "fixtures/financials.csv",
+        "covenants": "fixtures/covenants.csv",
+        "rules": "fixtures/rules.json",
+        "as_of": "2026-04-20"
+      },
+      "expect": {
+        "not_contains": [
+          "LEASE-77041",
+          "HUD-1144092"
+        ],
+        "matches": [
+          "ACCT-[0-9a-f]{8}"
+        ]
+      }
+    },
+    {
+      "id": "report",
+      "tool": "covenants_write_report",
+      "args": {
+        "financials": "fixtures/financials.csv",
+        "covenants": "fixtures/covenants.csv",
+        "rules": "fixtures/rules.json",
+        "as_of": "2026-04-20"
+      },
+      "expect": {
+        "status": "executed",
+        "contains": [
+          "covenants.csv"
+        ]
+      }
+    },
+    {
+      "id": "send-refused",
+      "tool": "compliance_certificate_send",
+      "args": {},
+      "expect": {
+        "status": "blocked",
+        "decision": "block"
+      }
+    },
+    {
+      "id": "recall-empty",
+      "tool": "covenants_recall",
+      "args": {},
+      "expect": {
+        "status": "executed",
+        "contains": [
+          "memory is empty",
+          "covenant_definition"
+        ]
+      }
+    },
+    {
+      "id": "file-outside-root-refused",
+      "tool": "covenants_check",
+      "args": {
+        "financials": "../../outside-root.csv",
+        "covenants": "fixtures/covenants.csv",
+        "rules": "fixtures/rules.json",
+        "as_of": "2026-04-20"
+      },
+      "expect": {
+        "status": "error",
+        "contains": [
+          "outside the allowed root"
+        ]
+      }
+    },
+    {
+      "id": "missing-file-named",
+      "tool": "covenants_check",
+      "args": {
+        "financials": "fixtures/missing-export.csv",
+        "covenants": "fixtures/covenants.csv",
+        "rules": "fixtures/rules.json",
+        "as_of": "2026-04-20"
+      },
+      "expect": {
+        "status": "error",
+        "contains": [
+          "not found",
+          "missing-export.csv"
+        ]
+      }
+    }
+  ]
+}

@@ -1,0 +1,258 @@
+{
+  "suite": "fairstay-13-week-cash-flow",
+  "root": "..",
+  "no_names_in_report": true,
+  "data_note": "Fictional figures in ../fixtures. Deterministic arithmetic; no model is called.",
+  "cases": [
+    {
+      "id": "totals",
+      "tool": "cashflow_check",
+      "args": {
+        "opening": "fixtures/cash.csv",
+        "ar": "fixtures/ar-summary.csv",
+        "bills": "fixtures/bills.csv",
+        "plan": "fixtures/plan.json",
+        "start": "2026-04-06"
+      },
+      "expect": {
+        "status": "executed",
+        "equals": {
+          "result.opening_cash": 456500,
+          "result.ending_cash": 901300,
+          "result.lowest_week": 1,
+          "result.lowest_cash": 241490
+        }
+      }
+    },
+    {
+      "id": "week-1-below-minimum",
+      "tool": "cashflow_check",
+      "args": {
+        "opening": "fixtures/cash.csv",
+        "ar": "fixtures/ar-summary.csv",
+        "bills": "fixtures/bills.csv",
+        "plan": "fixtures/plan.json",
+        "start": "2026-04-06",
+        "status": "below_minimum"
+      },
+      "expect": {
+        "equals": {
+          "result.items.0.week": 1,
+          "result.items.0.amount": 8510
+        }
+      }
+    },
+    {
+      "id": "payroll-every-two-weeks",
+      "tool": "cashflow_check",
+      "args": {
+        "opening": "fixtures/cash.csv",
+        "ar": "fixtures/ar-summary.csv",
+        "bills": "fixtures/bills.csv",
+        "plan": "fixtures/plan.json",
+        "start": "2026-04-06"
+      },
+      "expect": {
+        "equals": {
+          "result.projection.0.payroll": 420000,
+          "result.projection.1.payroll": 0,
+          "result.projection.2.payroll": 420000
+        }
+      }
+    },
+    {
+      "id": "rent-on-the-first",
+      "tool": "cashflow_check",
+      "args": {
+        "opening": "fixtures/cash.csv",
+        "ar": "fixtures/ar-summary.csv",
+        "bills": "fixtures/bills.csv",
+        "plan": "fixtures/plan.json",
+        "start": "2026-04-06"
+      },
+      "expect": {
+        "equals": {
+          "result.projection.3.fixed": 185000,
+          "result.projection.0.fixed": 21000
+        }
+      }
+    },
+    {
+      "id": "past-due-in-week-1",
+      "tool": "cashflow_check",
+      "args": {
+        "opening": "fixtures/cash.csv",
+        "ar": "fixtures/ar-summary.csv",
+        "bills": "fixtures/bills.csv",
+        "plan": "fixtures/plan.json",
+        "start": "2026-04-06",
+        "status": "past_due_bills"
+      },
+      "expect": {
+        "equals": {
+          "result.items.0.amount": 64000
+        }
+      }
+    },
+    {
+      "id": "no-rate-listed",
+      "tool": "cashflow_check",
+      "args": {
+        "opening": "fixtures/cash.csv",
+        "ar": "fixtures/ar-summary.csv",
+        "bills": "fixtures/bills.csv",
+        "plan": "fixtures/plan.json",
+        "start": "2026-04-06",
+        "status": "no_collection_rate"
+      },
+      "expect": {
+        "equals": {
+          "result.items.0.amount": 42000
+        },
+        "contains": [
+          "hospice"
+        ]
+      }
+    },
+    {
+      "id": "new-billing-after-lag",
+      "tool": "cashflow_check",
+      "args": {
+        "opening": "fixtures/cash.csv",
+        "ar": "fixtures/ar-summary.csv",
+        "bills": "fixtures/bills.csv",
+        "plan": "fixtures/plan.json",
+        "start": "2026-04-06"
+      },
+      "expect": {
+        "equals": {
+          "result.projection.0.new_collections": 0,
+          "result.projection.2.new_collections": 19800
+        }
+      }
+    },
+    {
+      "id": "higher-minimum",
+      "tool": "cashflow_check",
+      "args": {
+        "opening": "fixtures/cash.csv",
+        "ar": "fixtures/ar-summary.csv",
+        "bills": "fixtures/bills.csv",
+        "plan": "fixtures/plan-strict.json",
+        "start": "2026-04-06",
+        "status": "below_minimum"
+      },
+      "expect": {
+        "min": {
+          "result.items.length": 3
+        }
+      }
+    },
+    {
+      "id": "typo-plan-refused",
+      "tool": "cashflow_check",
+      "args": {
+        "opening": "fixtures/cash.csv",
+        "ar": "fixtures/ar-summary.csv",
+        "bills": "fixtures/bills.csv",
+        "plan": "fixtures/plan-typo.json",
+        "start": "2026-04-06"
+      },
+      "expect": {
+        "status": "error",
+        "contains": [
+          "minimum_cash"
+        ]
+      }
+    },
+    {
+      "id": "accounts-masked",
+      "tool": "cashflow_check",
+      "args": {
+        "opening": "fixtures/cash.csv",
+        "ar": "fixtures/ar-summary.csv",
+        "bills": "fixtures/bills.csv",
+        "plan": "fixtures/plan.json",
+        "start": "2026-04-06"
+      },
+      "expect": {
+        "not_contains": [
+          "44120071"
+        ]
+      }
+    },
+    {
+      "id": "report",
+      "tool": "cashflow_write_report",
+      "args": {
+        "opening": "fixtures/cash.csv",
+        "ar": "fixtures/ar-summary.csv",
+        "bills": "fixtures/bills.csv",
+        "plan": "fixtures/plan.json",
+        "start": "2026-04-06"
+      },
+      "expect": {
+        "status": "executed",
+        "contains": [
+          "cashflow-cash-13-week.csv"
+        ]
+      }
+    },
+    {
+      "id": "draw-refused",
+      "tool": "line_draw",
+      "args": {},
+      "expect": {
+        "status": "blocked",
+        "decision": "block"
+      }
+    },
+    {
+      "id": "recall-empty",
+      "tool": "cashflow_recall",
+      "args": {},
+      "expect": {
+        "status": "executed",
+        "contains": [
+          "memory is empty",
+          "cash_note"
+        ]
+      }
+    },
+    {
+      "id": "file-outside-root-refused",
+      "tool": "cashflow_check",
+      "args": {
+        "opening": "../../outside-root.csv",
+        "ar": "fixtures/ar-summary.csv",
+        "bills": "fixtures/bills.csv",
+        "plan": "fixtures/plan.json",
+        "start": "2026-04-06"
+      },
+      "expect": {
+        "status": "error",
+        "contains": [
+          "outside the allowed root"
+        ]
+      }
+    },
+    {
+      "id": "missing-file-named",
+      "tool": "cashflow_check",
+      "args": {
+        "opening": "fixtures/missing-export.csv",
+        "ar": "fixtures/ar-summary.csv",
+        "bills": "fixtures/bills.csv",
+        "plan": "fixtures/plan.json",
+        "start": "2026-04-06"
+      },
+      "expect": {
+        "status": "error",
+        "contains": [
+          "not found",
+          "missing-export.csv"
+        ]
+      }
+    }
+  ]
+}

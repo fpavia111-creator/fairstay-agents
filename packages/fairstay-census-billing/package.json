@@ -1,0 +1,59 @@
+{
+  "name": "fairstay-census-billing",
+  "version": "0.1.0",
+  "mcpName": "io.github.fpavia111-creator/fairstay-census-billing",
+  "description": "Census against billing for nursing homes: days billed to the wrong payer, unbilled or over-billed days, leave days billed to a payer that does not pay bed holds, days after discharge, overlapping census rows and per-diem rates that differ from your rate table.",
+  "type": "module",
+  "license": "MIT",
+  "author": "Kurt Francisco",
+  "engines": {
+    "node": ">=20"
+  },
+  "main": "src/index.js",
+  "exports": {
+    ".": "./src/index.js",
+    "./package.json": "./package.json"
+  },
+  "bin": {
+    "fairstay-census-billing": "bin/fairstay-census-billing.js"
+  },
+  "files": [
+    "src",
+    "bin",
+    "fixtures",
+    "evals",
+    "README.md",
+    "CHANGELOG.md",
+    "LICENSE",
+    "server.json"
+  ],
+  "scripts": {
+    "test": "node scripts/run-tests.cjs",
+    "demo": "node bin/fairstay-census-billing.js demo",
+    "eval": "node bin/fairstay-census-billing.js eval"
+  },
+  "dependencies": {
+    "fairstay-core": "^0.1.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/fpavia111-creator/fairstay-agents.git",
+    "directory": "packages/fairstay-census-billing"
+  },
+  "homepage": "https://github.com/fpavia111-creator/fairstay-agents/tree/main/packages/fairstay-census-billing#readme",
+  "bugs": {
+    "url": "https://github.com/fpavia111-creator/fairstay-agents/issues"
+  },
+  "keywords": [
+    "mcp",
+    "mcp-server",
+    "nursing-home",
+    "skilled-nursing",
+    "snf",
+    "long-term-care",
+    "evergreen",
+    "census",
+    "per-diem",
+    "bed-hold"
+  ]
+}

@@ -1,0 +1,12 @@
+{
+  "mcpServers": {
+    "fairstay-mco-contracts": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "fairstay-mco-contracts@0.1.0",
+        "mcp"
+      ]
+    }
+  }
+}

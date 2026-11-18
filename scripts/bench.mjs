@@ -21,12 +21,12 @@ import { spawnSync } from 'node:child_process';
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), '..');
 const PK = join(ROOT, 'packages');
-const { parseCsv, toCsv } = await import(pathToFileURL(join(PK, 'remedy-core', 'src', 'index.js')).href);
+const { parseCsv, toCsv } = await import(pathToFileURL(join(PK, 'fairclaim-core', 'src', 'index.js')).href);
 const argv = process.argv.slice(2);
 const si = argv.indexOf('--sizes'); const SIZES = si >= 0 ? argv[si + 1].split(',').map(Number) : [1000, 10000];
 const TIMEOUT = 180000;
 const only = argv.filter((a, i) => !a.startsWith('--') && argv[i - 1] !== '--sizes');
-const agents = readdirSync(PK).filter((n) => /-of-/.test(n) && (!only.length || only.includes(n))).sort();
+const agents = readdirSync(PK).filter((n) => /^fair[a-z]+-(?!core$)/.test(n) && (!only.length || only.includes(n))).sort();
 
 // Seeded PRNG (mulberry32) so a run is repeatable.
 const rng = (seed) => () => { seed |= 0; seed = (seed + 0x6d2b79f5) | 0; let t = Math.imul(seed ^ (seed >>> 15), 1 | seed); t = (t + Math.imul(t ^ (t >>> 7), 61 | t)) ^ t; return ((t ^ (t >>> 14)) >>> 0) / 4294967296; };

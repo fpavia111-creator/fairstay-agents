@@ -4,11 +4,11 @@
 import { readdirSync, existsSync, writeFileSync } from 'node:fs';
 import { join, dirname } from 'node:path';
 import { fileURLToPath, pathToFileURL } from 'node:url';
-import { runEvalFile } from '../packages/remedy-core/src/index.js';
+import { runEvalFile } from '../packages/fairclaim-core/src/index.js';
 
 const PK = join(dirname(fileURLToPath(import.meta.url)), '..', 'packages');
 const only = process.argv.slice(2).filter((a) => !a.startsWith('--'));
-const agents = readdirSync(PK).filter((n) => /-of-/.test(n) && existsSync(join(PK, n, 'evals', 'cases.json')) && (!only.length || only.includes(n))).sort();
+const agents = readdirSync(PK).filter((n) => /^fair[a-z]+-(?!core$)/.test(n) && existsSync(join(PK, n, 'evals', 'cases.json')) && (!only.length || only.includes(n))).sort();
 let cases = 0, failed = 0; const rows = [];
 for (const n of agents) {
   const { manifest } = await import(pathToFileURL(join(PK, n, 'src', 'index.js')).href);

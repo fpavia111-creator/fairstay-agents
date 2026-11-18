@@ -1,0 +1,59 @@
+{
+  "name": "fairstay-payables-review",
+  "version": "0.1.0",
+  "mcpName": "io.github.fpavia111-creator/fairstay-payables-review",
+  "description": "Accounts payable review for nursing homes: duplicate invoices, vendors not on the approved list, invoices over the purchase order, missing purchase orders, past-due bills and goods received but not invoiced for the month-end accrual.",
+  "type": "module",
+  "license": "MIT",
+  "author": "Kurt Francisco",
+  "engines": {
+    "node": ">=20"
+  },
+  "main": "src/index.js",
+  "exports": {
+    ".": "./src/index.js",
+    "./package.json": "./package.json"
+  },
+  "bin": {
+    "fairstay-payables-review": "bin/fairstay-payables-review.js"
+  },
+  "files": [
+    "src",
+    "bin",
+    "fixtures",
+    "evals",
+    "README.md",
+    "CHANGELOG.md",
+    "LICENSE",
+    "server.json"
+  ],
+  "scripts": {
+    "test": "node scripts/run-tests.cjs",
+    "demo": "node bin/fairstay-payables-review.js demo",
+    "eval": "node bin/fairstay-payables-review.js eval"
+  },
+  "dependencies": {
+    "fairstay-core": "^0.1.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/fpavia111-creator/fairstay-agents.git",
+    "directory": "packages/fairstay-payables-review"
+  },
+  "homepage": "https://github.com/fpavia111-creator/fairstay-agents/tree/main/packages/fairstay-payables-review#readme",
+  "bugs": {
+    "url": "https://github.com/fpavia111-creator/fairstay-agents/issues"
+  },
+  "keywords": [
+    "mcp",
+    "mcp-server",
+    "nursing-home",
+    "skilled-nursing",
+    "snf",
+    "long-term-care",
+    "evergreen",
+    "accounts-payable",
+    "duplicates",
+    "accruals"
+  ]
+}

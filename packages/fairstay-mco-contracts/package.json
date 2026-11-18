@@ -1,0 +1,60 @@
+{
+  "name": "fairstay-mco-contracts",
+  "version": "0.1.0",
+  "mcpName": "io.github.fpavia111-creator/fairstay-mco-contracts",
+  "description": "Managed care contract review: per-diem rates below your market benchmark, paid below contract, contracts ending or in their notice window, rates unchanged for years, and a payer matrix for the admissions team.",
+  "type": "module",
+  "license": "MIT",
+  "author": "Kurt Francisco",
+  "engines": {
+    "node": ">=20"
+  },
+  "main": "src/index.js",
+  "exports": {
+    ".": "./src/index.js",
+    "./package.json": "./package.json"
+  },
+  "bin": {
+    "fairstay-mco-contracts": "bin/fairstay-mco-contracts.js"
+  },
+  "files": [
+    "src",
+    "bin",
+    "fixtures",
+    "evals",
+    "README.md",
+    "CHANGELOG.md",
+    "LICENSE",
+    "server.json"
+  ],
+  "scripts": {
+    "test": "node scripts/run-tests.cjs",
+    "demo": "node bin/fairstay-mco-contracts.js demo",
+    "eval": "node bin/fairstay-mco-contracts.js eval"
+  },
+  "dependencies": {
+    "fairstay-core": "^0.1.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/fpavia111-creator/fairstay-agents.git",
+    "directory": "packages/fairstay-mco-contracts"
+  },
+  "homepage": "https://github.com/fpavia111-creator/fairstay-agents/tree/main/packages/fairstay-mco-contracts#readme",
+  "bugs": {
+    "url": "https://github.com/fpavia111-creator/fairstay-agents/issues"
+  },
+  "keywords": [
+    "mcp",
+    "mcp-server",
+    "nursing-home",
+    "skilled-nursing",
+    "snf",
+    "long-term-care",
+    "evergreen",
+    "managed-care",
+    "contracts",
+    "payer-matrix",
+    "rates"
+  ]
+}

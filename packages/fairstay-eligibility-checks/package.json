@@ -1,0 +1,59 @@
+{
+  "name": "fairstay-eligibility-checks",
+  "version": "0.1.0",
+  "mcpName": "io.github.fpavia111-creator/fairstay-eligibility-checks",
+  "description": "Eligibility for nursing-home residents: stale or missing checks, inactive or ending coverage, Medicare Part A benefit days running out, missing or short qualifying hospital stays, late admissions after the hospital stay and Medicaid renewals coming due.",
+  "type": "module",
+  "license": "MIT",
+  "author": "Kurt Francisco",
+  "engines": {
+    "node": ">=20"
+  },
+  "main": "src/index.js",
+  "exports": {
+    ".": "./src/index.js",
+    "./package.json": "./package.json"
+  },
+  "bin": {
+    "fairstay-eligibility-checks": "bin/fairstay-eligibility-checks.js"
+  },
+  "files": [
+    "src",
+    "bin",
+    "fixtures",
+    "evals",
+    "README.md",
+    "CHANGELOG.md",
+    "LICENSE",
+    "server.json"
+  ],
+  "scripts": {
+    "test": "node scripts/run-tests.cjs",
+    "demo": "node bin/fairstay-eligibility-checks.js demo",
+    "eval": "node bin/fairstay-eligibility-checks.js eval"
+  },
+  "dependencies": {
+    "fairstay-core": "^0.1.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/fpavia111-creator/fairstay-agents.git",
+    "directory": "packages/fairstay-eligibility-checks"
+  },
+  "homepage": "https://github.com/fpavia111-creator/fairstay-agents/tree/main/packages/fairstay-eligibility-checks#readme",
+  "bugs": {
+    "url": "https://github.com/fpavia111-creator/fairstay-agents/issues"
+  },
+  "keywords": [
+    "mcp",
+    "mcp-server",
+    "nursing-home",
+    "skilled-nursing",
+    "snf",
+    "long-term-care",
+    "evergreen",
+    "eligibility",
+    "medicare-part-a",
+    "qualifying-stay"
+  ]
+}

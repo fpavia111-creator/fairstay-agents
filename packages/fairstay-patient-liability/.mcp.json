@@ -1,0 +1,12 @@
+{
+  "mcpServers": {
+    "fairstay-patient-liability": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "fairstay-patient-liability@0.1.0",
+        "mcp"
+      ]
+    }
+  }
+}

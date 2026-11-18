@@ -1,5 +1,5 @@
 #!/usr/bin/env node
-// Family-wide checks every Evergreen agent must pass, beyond its own tests:
+// Family-wide checks every Fairstay agent must pass, beyond its own tests:
 //   - every agent in scripts/agents.json exists, and no package is missing from the list
 //   - tool names and prefixes are unique across the family
 //   - at least ten eval cases, three PHI canaries, a typo config fixture, a fixtures README and an agent README
@@ -11,7 +11,7 @@ import { fileURLToPath, pathToFileURL } from 'node:url';
 
 const repo = join(dirname(fileURLToPath(import.meta.url)), '..'); const PK = join(repo, 'packages');
 const list = JSON.parse(readFileSync(join(repo, 'scripts/agents.json'), 'utf8')).map((x) => x[0]);
-const pkgs = readdirSync(PK).filter((n) => /-of-/.test(n));
+const pkgs = readdirSync(PK).filter((n) => /^fair[a-z]+-(?!core$)/.test(n));
 const problems = []; const bad = (n, m) => problems.push(`${n}: ${m}`);
 for (const n of list) if (!pkgs.includes(n)) bad(n, 'listed in agents.json but has no package');
 for (const n of pkgs) if (!list.includes(n)) bad(n, 'package not listed in agents.json');

@@ -1,0 +1,60 @@
+{
+  "name": "fairstay-ancillary-invoices",
+  "version": "0.1.0",
+  "mcpName": "io.github.fpavia111-creator/fairstay-ancillary-invoices",
+  "description": "Ancillary invoice review: pharmacy, therapy, lab, radiology and supply charges for residents not in the building, for residents whose payer should be billed instead, outside consolidated billing, above contract rates or duplicated, with credit request drafts.",
+  "type": "module",
+  "license": "MIT",
+  "author": "Kurt Francisco",
+  "engines": {
+    "node": ">=20"
+  },
+  "main": "src/index.js",
+  "exports": {
+    ".": "./src/index.js",
+    "./package.json": "./package.json"
+  },
+  "bin": {
+    "fairstay-ancillary-invoices": "bin/fairstay-ancillary-invoices.js"
+  },
+  "files": [
+    "src",
+    "bin",
+    "fixtures",
+    "evals",
+    "README.md",
+    "CHANGELOG.md",
+    "LICENSE",
+    "server.json"
+  ],
+  "scripts": {
+    "test": "node scripts/run-tests.cjs",
+    "demo": "node bin/fairstay-ancillary-invoices.js demo",
+    "eval": "node bin/fairstay-ancillary-invoices.js eval"
+  },
+  "dependencies": {
+    "fairstay-core": "^0.1.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/fpavia111-creator/fairstay-agents.git",
+    "directory": "packages/fairstay-ancillary-invoices"
+  },
+  "homepage": "https://github.com/fpavia111-creator/fairstay-agents/tree/main/packages/fairstay-ancillary-invoices#readme",
+  "bugs": {
+    "url": "https://github.com/fpavia111-creator/fairstay-agents/issues"
+  },
+  "keywords": [
+    "mcp",
+    "mcp-server",
+    "nursing-home",
+    "skilled-nursing",
+    "snf",
+    "long-term-care",
+    "evergreen",
+    "ancillary",
+    "consolidated-billing",
+    "pharmacy",
+    "credits"
+  ]
+}

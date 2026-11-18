@@ -1,0 +1,12 @@
+{
+  "mcpServers": {
+    "fairstay-collections": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "fairstay-collections@0.1.0",
+        "mcp"
+      ]
+    }
+  }
+}

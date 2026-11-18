@@ -1,0 +1,260 @@
+{
+  "suite": "fairstay-vendor-contracts",
+  "root": "..",
+  "data_note": "Fictional vendors and contracts in ../fixtures. Deterministic checks; no model is called.",
+  "cases": [
+    {
+      "id": "totals",
+      "tool": "vendors_check",
+      "args": {
+        "contracts": "fixtures/contracts.csv",
+        "spend": "fixtures/spend.csv",
+        "prices": "fixtures/prices.csv",
+        "rules": "fixtures/rules.json",
+        "as_of": "2026-04-01"
+      },
+      "expect": {
+        "status": "executed",
+        "equals": {
+          "result.contracts": 4,
+          "result.spend": 35180,
+          "result.vendors_with_spend": 4
+        }
+      }
+    },
+    {
+      "id": "expired-first",
+      "tool": "vendors_check",
+      "args": {
+        "contracts": "fixtures/contracts.csv",
+        "spend": "fixtures/spend.csv",
+        "prices": "fixtures/prices.csv",
+        "rules": "fixtures/rules.json",
+        "as_of": "2026-04-01"
+      },
+      "expect": {
+        "equals": {
+          "result.items.0.status": "expired_still_billing",
+          "result.items.0.amount": 12400
+        }
+      }
+    },
+    {
+      "id": "notice-window",
+      "tool": "vendors_check",
+      "args": {
+        "contracts": "fixtures/contracts.csv",
+        "spend": "fixtures/spend.csv",
+        "prices": "fixtures/prices.csv",
+        "rules": "fixtures/rules.json",
+        "as_of": "2026-04-01",
+        "status": "notice_window_open"
+      },
+      "expect": {
+        "equals": {
+          "result.items.0.notice_by": "2026-05-01",
+          "result.items.0.days_left": 30
+        }
+      }
+    },
+    {
+      "id": "auto-renewed",
+      "tool": "vendors_check",
+      "args": {
+        "contracts": "fixtures/contracts.csv",
+        "spend": "fixtures/spend.csv",
+        "prices": "fixtures/prices.csv",
+        "rules": "fixtures/rules.json",
+        "as_of": "2026-04-01",
+        "status": "auto_renewed"
+      },
+      "expect": {
+        "equals": {
+          "result.items.0.notice_by": "2026-03-02"
+        },
+        "contains": [
+          "Bluebonnet"
+        ]
+      }
+    },
+    {
+      "id": "escalator",
+      "tool": "vendors_check",
+      "args": {
+        "contracts": "fixtures/contracts.csv",
+        "spend": "fixtures/spend.csv",
+        "prices": "fixtures/prices.csv",
+        "rules": "fixtures/rules.json",
+        "as_of": "2026-04-01",
+        "status": "price_increase_above_escalator"
+      },
+      "expect": {
+        "equals": {
+          "result.items.0.increase_pct": 16.67,
+          "result.items.0.escalator_pct": 3,
+          "result.items.0.amount": 574
+        }
+      }
+    },
+    {
+      "id": "above-contract",
+      "tool": "vendors_check",
+      "args": {
+        "contracts": "fixtures/contracts.csv",
+        "spend": "fixtures/spend.csv",
+        "prices": "fixtures/prices.csv",
+        "rules": "fixtures/rules.json",
+        "as_of": "2026-04-01",
+        "status": "above_contract_rate"
+      },
+      "expect": {
+        "equals": {
+          "result.items.0.amount": 100
+        }
+      }
+    },
+    {
+      "id": "no-contract",
+      "tool": "vendors_check",
+      "args": {
+        "contracts": "fixtures/contracts.csv",
+        "spend": "fixtures/spend.csv",
+        "prices": "fixtures/prices.csv",
+        "rules": "fixtures/rules.json",
+        "as_of": "2026-04-01",
+        "status": "spend_no_contract"
+      },
+      "expect": {
+        "equals": {
+          "result.items.0.amount": 12800
+        }
+      }
+    },
+    {
+      "id": "higher-threshold",
+      "tool": "vendors_check",
+      "args": {
+        "contracts": "fixtures/contracts.csv",
+        "spend": "fixtures/spend.csv",
+        "prices": "fixtures/prices.csv",
+        "rules": "fixtures/rules-20000.json",
+        "as_of": "2026-04-01"
+      },
+      "expect": {
+        "not_contains": [
+          "spend_no_contract"
+        ]
+      }
+    },
+    {
+      "id": "typo-rules-refused",
+      "tool": "vendors_check",
+      "args": {
+        "contracts": "fixtures/contracts.csv",
+        "spend": "fixtures/spend.csv",
+        "prices": "fixtures/prices.csv",
+        "rules": "fixtures/rules-typo.json",
+        "as_of": "2026-04-01"
+      },
+      "expect": {
+        "status": "error",
+        "contains": [
+          "warn"
+        ]
+      }
+    },
+    {
+      "id": "contacts-masked",
+      "tool": "vendors_check",
+      "args": {
+        "contracts": "fixtures/contracts.csv",
+        "spend": "fixtures/spend.csv",
+        "prices": "fixtures/prices.csv",
+        "rules": "fixtures/rules.json",
+        "as_of": "2026-04-01"
+      },
+      "expect": {
+        "not_contains": [
+          "lonestarlinen.example",
+          "512-555-0141"
+        ],
+        "contains": [
+          "[EMAIL]"
+        ]
+      }
+    },
+    {
+      "id": "report",
+      "tool": "vendors_write_report",
+      "args": {
+        "contracts": "fixtures/contracts.csv",
+        "spend": "fixtures/spend.csv",
+        "prices": "fixtures/prices.csv",
+        "rules": "fixtures/rules.json",
+        "as_of": "2026-04-01"
+      },
+      "expect": {
+        "status": "executed",
+        "contains": [
+          "vendors-vendor-contracts.csv"
+        ]
+      }
+    },
+    {
+      "id": "notice-refused",
+      "tool": "contract_notice_send",
+      "args": {},
+      "expect": {
+        "status": "blocked",
+        "decision": "block"
+      }
+    },
+    {
+      "id": "recall-empty",
+      "tool": "vendors_recall",
+      "args": {},
+      "expect": {
+        "status": "executed",
+        "contains": [
+          "memory is empty",
+          "contract_note"
+        ]
+      }
+    },
+    {
+      "id": "file-outside-root-refused",
+      "tool": "vendors_check",
+      "args": {
+        "contracts": "../../outside-root.csv",
+        "spend": "fixtures/spend.csv",
+        "prices": "fixtures/prices.csv",
+        "rules": "fixtures/rules.json",
+        "as_of": "2026-04-01"
+      },
+      "expect": {
+        "status": "error",
+        "contains": [
+          "outside the allowed root"
+        ]
+      }
+    },
+    {
+      "id": "missing-file-named",
+      "tool": "vendors_check",
+      "args": {
+        "contracts": "fixtures/missing-export.csv",
+        "spend": "fixtures/spend.csv",
+        "prices": "fixtures/prices.csv",
+        "rules": "fixtures/rules.json",
+        "as_of": "2026-04-01"
+      },
+      "expect": {
+        "status": "error",
+        "contains": [
+          "not found",
+          "missing-export.csv"
+        ]
+      }
+    }
+  ]
+}

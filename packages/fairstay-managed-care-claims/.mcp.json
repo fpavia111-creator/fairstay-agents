@@ -1,0 +1,12 @@
+{
+  "mcpServers": {
+    "fairstay-managed-care-claims": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "fairstay-managed-care-claims@0.1.0",
+        "mcp"
+      ]
+    }
+  }
+}

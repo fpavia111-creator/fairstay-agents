@@ -1,0 +1,59 @@
+{
+  "name": "fairstay-propco-bookkeeping",
+  "version": "0.1.0",
+  "mcpName": "io.github.fpavia111-creator/fairstay-propco-bookkeeping",
+  "description": "Property company bookkeeping for nursing-home real estate: rent short or unpaid, escalators not billed, operator (tenant) rent coverage and occupancy, leases ending and tenant financials not received.",
+  "type": "module",
+  "license": "MIT",
+  "author": "Kurt Francisco",
+  "engines": {
+    "node": ">=20"
+  },
+  "main": "src/index.js",
+  "exports": {
+    ".": "./src/index.js",
+    "./package.json": "./package.json"
+  },
+  "bin": {
+    "fairstay-propco-bookkeeping": "bin/fairstay-propco-bookkeeping.js"
+  },
+  "files": [
+    "src",
+    "bin",
+    "fixtures",
+    "evals",
+    "README.md",
+    "CHANGELOG.md",
+    "LICENSE",
+    "server.json"
+  ],
+  "scripts": {
+    "test": "node scripts/run-tests.cjs",
+    "demo": "node bin/fairstay-propco-bookkeeping.js demo",
+    "eval": "node bin/fairstay-propco-bookkeeping.js eval"
+  },
+  "dependencies": {
+    "fairstay-core": "^0.1.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/fpavia111-creator/fairstay-agents.git",
+    "directory": "packages/fairstay-propco-bookkeeping"
+  },
+  "homepage": "https://github.com/fpavia111-creator/fairstay-agents/tree/main/packages/fairstay-propco-bookkeeping#readme",
+  "bugs": {
+    "url": "https://github.com/fpavia111-creator/fairstay-agents/issues"
+  },
+  "keywords": [
+    "mcp",
+    "mcp-server",
+    "nursing-home",
+    "skilled-nursing",
+    "snf",
+    "long-term-care",
+    "evergreen",
+    "propco",
+    "rent-coverage",
+    "asset-management"
+  ]
+}

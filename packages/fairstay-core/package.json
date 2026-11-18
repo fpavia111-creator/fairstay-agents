@@ -1,0 +1,39 @@
+{
+  "name": "fairstay-core",
+  "version": "0.1.0",
+  "description": "Nursing-home (SNF) helpers for the Fairstay agents: census days, payer types, per-diem pricing, aging, SNF export column names, and the agent builder. Re-exports fairclaim-core (PHI masking, approvals, audit log, MCP server, evals).",
+  "type": "module",
+  "license": "MIT",
+  "author": "Kurt Francisco",
+  "engines": {
+    "node": ">=20"
+  },
+  "main": "src/index.js",
+  "exports": {
+    ".": "./src/index.js",
+    "./testkit": "./src/testkit.js",
+    "./package.json": "./package.json"
+  },
+  "files": [
+    "src",
+    "README.md",
+    "LICENSE",
+    "CHANGELOG.md"
+  ],
+  "scripts": {
+    "test": "node scripts/run-tests.cjs"
+  },
+  "dependencies": {
+    "fairclaim-core": "^0.2.0"
+  },
+  "keywords": [
+    "mcp",
+    "mcp-server",
+    "skilled-nursing",
+    "snf",
+    "long-term-care",
+    "nursing-home",
+    "revenue-cycle",
+    "evergreen"
+  ]
+}

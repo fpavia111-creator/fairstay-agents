@@ -1,0 +1,22 @@
+{
+  "name": "fairstay-13-week-cash-flow",
+  "version": "0.1.0",
+  "description": "13-week cash projection for a nursing home from opening cash, AR collection rates by payer type, payroll dates, bills due and fixed payments, with the weeks below your minimum cash.",
+  "author": {
+    "name": "Kurt Francisco"
+  },
+  "license": "MIT",
+  "homepage": "https://github.com/fpavia111-creator/fairstay-agents/tree/main/packages/fairstay-13-week-cash-flow#readme",
+  "keywords": [
+    "mcp",
+    "mcp-server",
+    "nursing-home",
+    "skilled-nursing",
+    "snf",
+    "long-term-care",
+    "evergreen",
+    "cash-flow",
+    "13-week",
+    "projection"
+  ]
+}

@@ -1,0 +1,12 @@
+{
+  "mcpServers": {
+    "fairstay-hospice-room-and-board": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "fairstay-hospice-room-and-board@0.1.0",
+        "mcp"
+      ]
+    }
+  }
+}

@@ -21,7 +21,7 @@ import { readdirSync, readFileSync, writeFileSync, cpSync, mkdtempSync, existsSy
 import { join, dirname } from 'node:path';
 import { tmpdir } from 'node:os';
 import { fileURLToPath, pathToFileURL } from 'node:url';
-import { runEvals, kindsByArg } from '../packages/remedy-core/src/index.js';
+import { runEvals, kindsByArg } from '../packages/fairclaim-core/src/index.js';
 import { MARKETS, localise, argFiles } from './lib/localise.mjs';
 import { encodeText } from './lib/encode.mjs';
 
@@ -30,7 +30,7 @@ const argv = process.argv.slice(2);
 const verbose = argv.includes('--verbose'); const showMissing = argv.includes('--missing'); const missing = new Map();
 const li = argv.indexOf('--lang'); const langArg = li >= 0 ? argv[li + 1] : null;
 const only = argv.filter((a, i) => !a.startsWith('--') && (li < 0 || i !== li + 1));
-const agents = readdirSync(PK).filter((n) => n !== 'remedy-core' && n !== 'evergreen-core' && existsSync(join(PK, n, 'src', 'manifest.js')) && (!only.length || only.includes(n))).sort();
+const agents = readdirSync(PK).filter((n) => n !== 'fairclaim-core' && n !== 'fairstay-core' && existsSync(join(PK, n, 'src', 'manifest.js')) && (!only.length || only.includes(n))).sort();
 
 const LANGS = langArg ? langArg.split(',') : Object.keys(MARKETS);
 

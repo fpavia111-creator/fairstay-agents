@@ -5,5 +5,5 @@ discharge_past_due,R1404,Emil Strand,Sunrise Advantage HMO (fictional),,Planned 
 review_overdue,R1404,Emil Strand,Sunrise Advantage HMO (fictional),,Last clinical review was 2026-03-03 (14 days ago).,"Review at this week's meeting: goals, therapy minutes, expected discharge.",,
 auth_ending_no_plan,R1404,Emil Strand,Sunrise Advantage HMO (fictional),2,The authorization ends 2026-03-19 (2 days) and no plan is recorded.,"Decide this week: extension request, discharge or payer change.",,
 nomnc_due,R1402,Cyrus Vane,Medicare A,2,The last covered day is 2026-03-21; the NOMNC is due by 2026-03-19.,"Deliver the NOMNC (CMS-10123) and get it signed, or note who was reached by phone.",,
-day_100_coming,R1403,Dora Achebe,Medicare A,12,Medicare day 100 is 2026-03-29.,Plan the next payer (hemlock-of-next-payer) and the notices.,,
+day_100_coming,R1403,Dora Achebe,Medicare A,12,Medicare day 100 is 2026-03-29.,Plan the next payer (fairstay-next-payer-planning) and the notices.,,
 day_20_coming,R1402,Cyrus Vane,Medicare A,3,Medicare day 20 is 2026-03-20; coinsurance starts on day 21.,"Tell the resident or family about the daily coinsurance and who will pay it (secondary insurance, Medicaid or private).",,

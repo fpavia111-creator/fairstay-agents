@@ -1,0 +1,12 @@
+{
+  "mcpServers": {
+    "fairstay-vendor-contracts": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "fairstay-vendor-contracts@0.1.0",
+        "mcp"
+      ]
+    }
+  }
+}

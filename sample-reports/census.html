@@ -1,0 +1,46 @@
+<!doctype html>
+<html lang="es"><head><meta charset="utf-8">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'unsafe-inline'">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Conciliación de censo y facturación</title>
+<style>
+:root{--bg:#fbfaf7;--fg:#1d1c1a;--mut:#6b6760;--line:#e4e0d8;--ok:#1f7a4d;--bad:#b42318;--warn:#a15c07;--card:#fff}
+@media (prefers-color-scheme:dark){:root{--bg:#161514;--fg:#ecebe8;--mut:#a29d94;--line:#34312d;--ok:#4ade80;--bad:#f87171;--warn:#fbbf24;--card:#1f1e1c}}
+body{margin:0;background:var(--bg);color:var(--fg);font:15px/1.5 system-ui,-apple-system,Segoe UI,"Hiragino Sans","Yu Gothic UI","Microsoft YaHei","PingFang SC","Malgun Gothic","Apple SD Gothic Neo","Noto Sans CJK",sans-serif}
+main{max-width:1040px;margin:0 auto;padding:24px 16px}
+h1{font-size:22px;margin:0 0 4px}h2{font-size:17px;margin:28px 0 8px}
+.mut{color:var(--mut)}.ok{color:var(--ok)}.bad{color:var(--bad)}.warn{color:var(--warn)}
+table{border-collapse:collapse;width:100%;background:var(--card);font-size:14px}
+th,td{border-bottom:1px solid var(--line);padding:6px 8px;text-align:left;vertical-align:top}
+th{font-weight:600}td.num,th.num{text-align:right;font-variant-numeric:tabular-nums}
+.tiles{display:flex;gap:12px;flex-wrap:wrap}.tile{background:var(--card);border:1px solid var(--line);border-radius:8px;padding:10px 14px;min-width:120px}
+.tile b{display:block;font-size:22px}code{font-size:13px;overflow-wrap:anywhere}pre{overflow-x:auto}
+.wrap{overflow-x:auto;max-width:100%}svg,img{max-width:100%;height:auto}figure{margin:16px 0}p,li,h1,h2,h3{overflow-wrap:break-word}
+</style></head><body><main>
+<h1>Conciliación de censo y facturación</h1>
+<p class="mut">9 resident(s), 254 census days (240 billable), 258 billed days. 8 finding(s): wrong_payer 1, unbilled 1, billed_not_in_census 1, bed_hold_billed 1, duplicate_billed 1, census_overlap 1, level_mismatch 1, rate_mismatch 1. Revenue at risk 13738; billed without a census day 7593.5.</p>
+<p class="mut">Traducido por Claude; pendiente de revisión por un hablante nativo. Los motivos de cada fila quedan en inglés para que códigos e importes se lean igual en todas partes.</p>
+<h2>Findings by type</h2><div class="wrap"><table><thead><tr><th scope="col">Estado</th><th scope="col">Cantidad</th></tr></thead><tbody>
+<tr><td>wrong_payer</td><td>1</td></tr>
+<tr><td>unbilled</td><td>1</td></tr>
+<tr><td>billed_not_in_census</td><td>1</td></tr>
+<tr><td>bed_hold_billed</td><td>1</td></tr>
+<tr><td>duplicate_billed</td><td>1</td></tr>
+<tr><td>census_overlap</td><td>1</td></tr>
+<tr><td>level_mismatch</td><td>1</td></tr>
+<tr><td>rate_mismatch</td><td>1</td></tr>
+</tbody></table></div>
+<h2>Todas las filas (8)</h2>
+<div class="wrap"><table><thead><tr><th scope="col">Estado</th><th scope="col">resident name</th><th scope="col">from</th><th scope="col">to</th><th scope="col">Días</th><th scope="col">Pagador</th><th scope="col">billed payer</th><th scope="col">Importe</th><th scope="col">Hallazgo</th><th scope="col">Cómo corregir</th></tr></thead><tbody>
+<tr><td>wrong_payer</td><td>Clara Okafor</td><td>2026-02-01</td><td>2026-02-14</td><td>14</td><td>Medicare A</td><td>Lone Star Medicaid (fictional)</td><td>9100</td><td>The census has Medicare A for 2026-02-01 to 2026-02-14; the days were billed to Lone Star Medicaid (fictional).</td><td>Fix the payer on the census or rebill the right payer before the claim is denied or recouped.</td></tr>
+<tr><td>unbilled</td><td>Bruno Kessler</td><td>2026-02-21</td><td>2026-02-28</td><td>8</td><td>Lone Star Medicaid (fictional)</td><td></td><td>1964</td><td>8 census day(s) with Lone Star Medicaid (fictional) (2026-02-21 to 2026-02-28) were not billed.</td><td>Bill the days, or correct the census if the resident was not in the building.</td></tr>
+<tr><td>billed_not_in_census</td><td>Elena Brooks</td><td>2026-02-20</td><td>2026-02-28</td><td>9</td><td>Private Pay</td><td>Private Pay</td><td>3420</td><td>9 day(s) billed to Private Pay (2026-02-20 to 2026-02-28) are not on the census, after the resident&#39;s last census day.</td><td>Cancel or correct the billed days, or add the missing census rows if the resident was there.</td></tr>
+<tr><td>bed_hold_billed</td><td>Dmitri Varga</td><td>2026-02-10</td><td>2026-02-12</td><td>3</td><td>Lone Star Medicaid (fictional)</td><td>Lone Star Medicaid (fictional)</td><td>736.5</td><td>3 leave or hospital day(s) (2026-02-10 to 2026-02-12) were billed to Lone Star Medicaid (fictional), which is not on your bed-hold payer list.</td><td>Check the payer&#39;s bed-hold rule; if it does not pay leave days, take them off the claim.</td></tr>
+<tr><td>duplicate_billed</td><td>Hiro Tanaka</td><td>2026-02-15</td><td>2026-02-28</td><td>14</td><td>Lone Star Medicaid (fictional)</td><td>Lone Star Medicaid (fictional)</td><td>3437</td><td>2026-02-15 to 2026-02-28 was billed more than once (Lone Star Medicaid (fictional)).</td><td>Void the duplicate line.</td></tr>
+<tr><td>census_overlap</td><td>Grace Lindqvist</td><td>2026-02-18</td><td>2026-02-28</td><td>11</td><td>Lone Star Medicaid (fictional)</td><td></td><td>0</td><td>Two census rows cover 2026-02-18 to 2026-02-28: Lone Star Medicaid (fictional) and Medicare A.</td><td>End one row the day the other starts so each day has one payer.</td></tr>
+<tr><td>level_mismatch</td><td>Felix Amari</td><td>2026-02-01</td><td>2026-02-28</td><td>28</td><td>Gulf Coast Advantage HMO (fictional)</td><td>Gulf Coast Advantage HMO (fictional)</td><td>2520</td><td>The census level is L2 for 2026-02-01 to 2026-02-28; the claim has L3.</td><td>Bill the level on the census (or correct the census level).</td></tr>
+<tr><td>rate_mismatch</td><td>Iris Mendel</td><td>2026-02-01</td><td>2026-02-28</td><td>28</td><td>Lone Star Medicaid (fictional)</td><td>Lone Star Medicaid (fictional)</td><td>154</td><td>Billed 240 a day; the rate table has 245.5 for Lone Star Medicaid (fictional).</td><td>Correct the rate on the claim, or update the rate table if the contract changed.</td></tr>
+</tbody></table></div>
+<h2>Límites</h2><ul><li>Reads only the files you give it. It does not log in to PointClickCare, MatrixCare, a payer portal, a bank, a state Medicaid portal or a payroll system.</li><li>Census days follow the midnight census: the discharge day is not counted. Billed service dates are read as inclusive.</li><li>Not legal, tax, accounting, clinical, reimbursement or HIPAA advice. A person decides what to bill, pay, appeal, file or send.</li><li>Results returned to the AI model have patient names, birth dates, member ids and other direct identifiers masked. The files written here keep the real values: keep them in a secure folder.</li></ul>
+<p class="mut" style="margin-top:32px">Generado por un agente de Fairclaim a partir de sus archivos en este equipo. No se envió, presentó ni pagó nada. Esta página contiene datos de pacientes: guárdela en su carpeta segura y no la envíe por correo electrónico.</p>
+</main></body></html>

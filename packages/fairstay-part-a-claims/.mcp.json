@@ -1,0 +1,12 @@
+{
+  "mcpServers": {
+    "fairstay-part-a-claims": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "fairstay-part-a-claims@0.1.0",
+        "mcp"
+      ]
+    }
+  }
+}

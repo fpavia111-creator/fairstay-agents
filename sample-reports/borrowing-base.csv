@@ -1,0 +1,7 @@
+status,resident_id,resident_name,payer,payer_type,date,age_days,amount,message,owner,decision
+concentration_excess,,,Sunrise Advantage HMO (fictional),managed_care,,,13725,Sunrise Advantage HMO (fictional) is 29.02% of eligible receivables; the excess over 25% is out.,,
+cross_aged,R1609,Wade Corliss,Private Pay,private,2026-03-31,0,6200,"Most of this debtor's balance is over age, so all of it is out.",,
+over_age,R1603,Quinn Adair,Medicare A,medicare_a,2025-10-31,151,9000,Over the age limit for its payer type.,,
+over_age,R1609,Wade Corliss,Private Pay,private,2025-11-30,121,8400,Over the age limit for its payer type.,,
+medicaid_pending,R1606,Tess Marlow,Medicaid Pending,medicaid_pending,2026-03-31,0,33000,Medicaid pending is not eligible.,,
+credit_balance,R1611,Yara Beck,Private Pay,private,2026-02-28,31,1300,A credit balance comes off eligible receivables.,,

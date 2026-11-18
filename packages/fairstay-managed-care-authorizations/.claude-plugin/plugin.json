@@ -1,0 +1,22 @@
+{
+  "name": "fairstay-managed-care-authorizations",
+  "version": "0.1.0",
+  "description": "Managed care authorizations against the daily census: days with no authorization, levels that differ from the authorized level, days past the authorized count, authorizations about to end and concurrent reviews due.",
+  "author": {
+    "name": "Kurt Francisco"
+  },
+  "license": "MIT",
+  "homepage": "https://github.com/fpavia111-creator/fairstay-agents/tree/main/packages/fairstay-managed-care-authorizations#readme",
+  "keywords": [
+    "mcp",
+    "mcp-server",
+    "nursing-home",
+    "skilled-nursing",
+    "snf",
+    "long-term-care",
+    "evergreen",
+    "authorizations",
+    "managed-care",
+    "concurrent-review"
+  ]
+}

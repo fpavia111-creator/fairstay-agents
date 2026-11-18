@@ -1,0 +1,247 @@
+{
+  "suite": "fairstay-bank-reconciliation",
+  "root": "..",
+  "data_note": "Fictional account and example settings in ../fixtures. Deterministic checks; no model is called.",
+  "cases": [
+    {
+      "id": "totals",
+      "tool": "bankrec_check",
+      "args": {
+        "bank": "fixtures/bank.csv",
+        "books": "fixtures/books.csv",
+        "rules": "fixtures/rules.json",
+        "as_of": "2026-03-31"
+      },
+      "expect": {
+        "status": "executed",
+        "equals": {
+          "result.bank_lines": 6,
+          "result.book_entries": 7,
+          "result.matched": 4,
+          "result.reconciliation.0.unexplained": 45
+        }
+      }
+    },
+    {
+      "id": "unexplained-first",
+      "tool": "bankrec_check",
+      "args": {
+        "bank": "fixtures/bank.csv",
+        "books": "fixtures/books.csv",
+        "rules": "fixtures/rules.json",
+        "as_of": "2026-03-31"
+      },
+      "expect": {
+        "equals": {
+          "result.items.0.status": "unexplained_difference",
+          "result.items.0.amount": 45
+        }
+      }
+    },
+    {
+      "id": "check-amount-differs",
+      "tool": "bankrec_check",
+      "args": {
+        "bank": "fixtures/bank.csv",
+        "books": "fixtures/books.csv",
+        "rules": "fixtures/rules.json",
+        "as_of": "2026-03-31",
+        "status": "amount_differs"
+      },
+      "expect": {
+        "equals": {
+          "result.items.0.check_no": "10443",
+          "result.items.0.amount": 90
+        }
+      }
+    },
+    {
+      "id": "date-lag-still-matches",
+      "tool": "bankrec_check",
+      "args": {
+        "bank": "fixtures/bank.csv",
+        "books": "fixtures/books.csv",
+        "rules": "fixtures/rules.json",
+        "as_of": "2026-03-31",
+        "status": "bank_not_in_books"
+      },
+      "expect": {
+        "not_contains": [
+          "MEDICARE PART A"
+        ],
+        "contains": [
+          "SUNRISE HMO EFT",
+          "MERCHANT FEE"
+        ]
+      }
+    },
+    {
+      "id": "stale-check",
+      "tool": "bankrec_check",
+      "args": {
+        "bank": "fixtures/bank.csv",
+        "books": "fixtures/books.csv",
+        "rules": "fixtures/rules.json",
+        "as_of": "2026-03-31",
+        "status": "stale_check"
+      },
+      "expect": {
+        "equals": {
+          "result.items.0.check_no": "10101",
+          "result.items.0.age_days": 131
+        }
+      }
+    },
+    {
+      "id": "deposit-in-transit",
+      "tool": "bankrec_check",
+      "args": {
+        "bank": "fixtures/bank.csv",
+        "books": "fixtures/books.csv",
+        "rules": "fixtures/rules.json",
+        "as_of": "2026-03-31",
+        "status": "deposit_in_transit_long"
+      },
+      "expect": {
+        "equals": {
+          "result.items.0.amount": 2150,
+          "result.items.0.age_days": 11
+        }
+      }
+    },
+    {
+      "id": "new-check-is-normal",
+      "tool": "bankrec_check",
+      "args": {
+        "bank": "fixtures/bank.csv",
+        "books": "fixtures/books.csv",
+        "rules": "fixtures/rules.json",
+        "as_of": "2026-03-31"
+      },
+      "expect": {
+        "not_contains": [
+          "10450"
+        ]
+      }
+    },
+    {
+      "id": "no-balances-no-difference",
+      "tool": "bankrec_check",
+      "args": {
+        "bank": "fixtures/bank.csv",
+        "books": "fixtures/books.csv",
+        "as_of": "2026-03-31"
+      },
+      "expect": {
+        "not_contains": [
+          "unexplained_difference"
+        ]
+      }
+    },
+    {
+      "id": "typo-rules-refused",
+      "tool": "bankrec_check",
+      "args": {
+        "bank": "fixtures/bank.csv",
+        "books": "fixtures/books.csv",
+        "rules": "fixtures/rules-typo.json",
+        "as_of": "2026-03-31"
+      },
+      "expect": {
+        "status": "error",
+        "contains": [
+          "stale"
+        ]
+      }
+    },
+    {
+      "id": "account-and-memo-masked",
+      "tool": "bankrec_check",
+      "args": {
+        "bank": "fixtures/bank.csv",
+        "books": "fixtures/books.csv",
+        "rules": "fixtures/rules.json",
+        "as_of": "2026-03-31"
+      },
+      "expect": {
+        "not_contains": [
+          "88120034",
+          "Dora Pell"
+        ],
+        "matches": [
+          "ACCT-[0-9a-f]{8}"
+        ]
+      }
+    },
+    {
+      "id": "report",
+      "tool": "bankrec_write_report",
+      "args": {
+        "bank": "fixtures/bank.csv",
+        "books": "fixtures/books.csv",
+        "rules": "fixtures/rules.json",
+        "as_of": "2026-03-31"
+      },
+      "expect": {
+        "status": "executed",
+        "contains": [
+          "bankrec-bank-rec.csv"
+        ]
+      }
+    },
+    {
+      "id": "transfer-refused",
+      "tool": "bank_transfer",
+      "args": {},
+      "expect": {
+        "status": "blocked",
+        "decision": "block"
+      }
+    },
+    {
+      "id": "recall-empty",
+      "tool": "bankrec_recall",
+      "args": {},
+      "expect": {
+        "status": "executed",
+        "contains": [
+          "memory is empty",
+          "recurring_item"
+        ]
+      }
+    },
+    {
+      "id": "file-outside-root-refused",
+      "tool": "bankrec_check",
+      "args": {
+        "bank": "../../outside-root.csv",
+        "books": "fixtures/books.csv",
+        "rules": "fixtures/rules.json",
+        "as_of": "2026-03-31"
+      },
+      "expect": {
+        "status": "error",
+        "contains": [
+          "outside the allowed root"
+        ]
+      }
+    },
+    {
+      "id": "missing-file-named",
+      "tool": "bankrec_check",
+      "args": {
+        "bank": "fixtures/missing-export.csv",
+        "books": "fixtures/books.csv",
+        "rules": "fixtures/rules.json",
+        "as_of": "2026-03-31"
+      },
+      "expect": {
+        "status": "error",
+        "contains": [
+          "not found",
+          "missing-export.csv"
+        ]
+      }
+    }
+  ]
+}

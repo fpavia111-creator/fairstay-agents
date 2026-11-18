@@ -1,0 +1,12 @@
+{
+  "mcpServers": {
+    "fairstay-payables-review": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "fairstay-payables-review@0.1.0",
+        "mcp"
+      ]
+    }
+  }
+}

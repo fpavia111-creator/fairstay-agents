@@ -1,0 +1,59 @@
+{
+  "name": "fairstay-next-payer-planning",
+  "version": "0.1.0",
+  "mcpName": "io.github.fpavia111-creator/fairstay-next-payer-planning",
+  "description": "Next payer planning for long stays: residents whose Medicare days, managed care authorizations or private funds run out with no next payer planned, and when to start a Medicaid application.",
+  "type": "module",
+  "license": "MIT",
+  "author": "Kurt Francisco",
+  "engines": {
+    "node": ">=20"
+  },
+  "main": "src/index.js",
+  "exports": {
+    ".": "./src/index.js",
+    "./package.json": "./package.json"
+  },
+  "bin": {
+    "fairstay-next-payer-planning": "bin/fairstay-next-payer-planning.js"
+  },
+  "files": [
+    "src",
+    "bin",
+    "fixtures",
+    "evals",
+    "README.md",
+    "CHANGELOG.md",
+    "LICENSE",
+    "server.json"
+  ],
+  "scripts": {
+    "test": "node scripts/run-tests.cjs",
+    "demo": "node bin/fairstay-next-payer-planning.js demo",
+    "eval": "node bin/fairstay-next-payer-planning.js eval"
+  },
+  "dependencies": {
+    "fairstay-core": "^0.1.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/fpavia111-creator/fairstay-agents.git",
+    "directory": "packages/fairstay-next-payer-planning"
+  },
+  "homepage": "https://github.com/fpavia111-creator/fairstay-agents/tree/main/packages/fairstay-next-payer-planning#readme",
+  "bugs": {
+    "url": "https://github.com/fpavia111-creator/fairstay-agents/issues"
+  },
+  "keywords": [
+    "mcp",
+    "mcp-server",
+    "nursing-home",
+    "skilled-nursing",
+    "snf",
+    "long-term-care",
+    "evergreen",
+    "payer-planning",
+    "long-term-care",
+    "medicaid"
+  ]
+}

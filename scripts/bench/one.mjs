@@ -1,7 +1,7 @@
 // Child process for bench.mjs: runs one tool once and prints timing as JSON.
 import { pathToFileURL } from 'node:url';
 const [pkgDir, root, tool, argsJson] = process.argv.slice(2);
-const { AgentRuntime } = await import(pathToFileURL(`${pkgDir}/../remedy-core/src/index.js`).href);
+const { AgentRuntime } = await import(pathToFileURL(`${pkgDir}/../fairclaim-core/src/index.js`).href);
 const { manifest } = await import(pathToFileURL(`${pkgDir}/src/index.js`).href);
 const rt = new AgentRuntime(manifest, { root, audit: false, caps: { maxSteps: 10, maxSpendUsd: 0 } });
 let peak = 0; const tick = setInterval(() => { peak = Math.max(peak, process.memoryUsage().rss); }, 5);

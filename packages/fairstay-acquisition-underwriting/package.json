@@ -1,0 +1,60 @@
+{
+  "name": "fairstay-acquisition-underwriting",
+  "version": "0.1.0",
+  "mcpName": "io.github.fpavia111-creator/fairstay-acquisition-underwriting",
+  "description": "Acquisition underwriting packet for a nursing home: trailing-twelve-month summary with one-time items removed, occupancy and payer mix, year-one projection, staffing model, value at your cap rate and valuation of receivables.",
+  "type": "module",
+  "license": "MIT",
+  "author": "Kurt Francisco",
+  "engines": {
+    "node": ">=20"
+  },
+  "main": "src/index.js",
+  "exports": {
+    ".": "./src/index.js",
+    "./package.json": "./package.json"
+  },
+  "bin": {
+    "fairstay-acquisition-underwriting": "bin/fairstay-acquisition-underwriting.js"
+  },
+  "files": [
+    "src",
+    "bin",
+    "fixtures",
+    "evals",
+    "README.md",
+    "CHANGELOG.md",
+    "LICENSE",
+    "server.json"
+  ],
+  "scripts": {
+    "test": "node scripts/run-tests.cjs",
+    "demo": "node bin/fairstay-acquisition-underwriting.js demo",
+    "eval": "node bin/fairstay-acquisition-underwriting.js eval"
+  },
+  "dependencies": {
+    "fairstay-core": "^0.1.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/fpavia111-creator/fairstay-agents.git",
+    "directory": "packages/fairstay-acquisition-underwriting"
+  },
+  "homepage": "https://github.com/fpavia111-creator/fairstay-agents/tree/main/packages/fairstay-acquisition-underwriting#readme",
+  "bugs": {
+    "url": "https://github.com/fpavia111-creator/fairstay-agents/issues"
+  },
+  "keywords": [
+    "mcp",
+    "mcp-server",
+    "nursing-home",
+    "skilled-nursing",
+    "snf",
+    "long-term-care",
+    "evergreen",
+    "underwriting",
+    "acquisitions",
+    "valuation",
+    "t12"
+  ]
+}

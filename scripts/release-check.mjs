@@ -34,7 +34,7 @@ const add = (area, status, message, detail = null) => { checks.push({ area, stat
 const rootPkg = JSON.parse(readFileSync(join(ROOT, 'package.json'), 'utf8'));
 const dirs = [...new Set(rootPkg.workspaces.flatMap((w) => (w.endsWith('/*') ? readdirSync(join(ROOT, w.slice(0, -2))).filter((n) => existsSync(join(ROOT, w.slice(0, -2), n, 'package.json'))).map((n) => join(ROOT, w.slice(0, -2), n)) : [join(ROOT, w)])))];
 const pkgs = dirs.map((d) => ({ dir: d, rel: relative(ROOT, d).split('\\').join('/'), json: JSON.parse(readFileSync(join(d, 'package.json'), 'utf8')) }));
-const core = pkgs.find((p) => p.json.name === 'remedy-core');
+const core = pkgs.find((p) => p.json.name === 'fairclaim-core');
 const onDisk = readdirSync(PK).filter((n) => existsSync(join(PK, n, 'package.json')));
 const missingWs = onDisk.filter((n) => !pkgs.some((p) => p.rel === `packages/${n}`));
 missingWs.length ? add('workspaces', 'fail', `packages not listed in the root workspaces: ${missingWs.join(', ')}`) : add('workspaces', 'pass', `${pkgs.length} packages, all listed`);
@@ -45,16 +45,16 @@ for (const p of pkgs) {
   if (!/^\d+\.\d+\.\d+$/.test(j.version || '')) metaProblems.push(`${n}: version "${j.version}" is not x.y.z`);
   if (j.private) metaProblems.push(`${n}: marked private`);
   if (j.license !== 'MIT') metaProblems.push(`${n}: license is "${j.license}", expected MIT`);
-  for (const f of ['README.md', 'LICENSE', 'CHANGELOG.md']) if (!existsSync(join(p.dir, f)) && !(f === 'CHANGELOG.md' && n === 'remedy-core' && existsSync(join(p.dir, 'CHANGELOG.md')))) if (!existsSync(join(p.dir, f))) metaProblems.push(`${n}: no ${f}`);
+  for (const f of ['README.md', 'LICENSE', 'CHANGELOG.md']) if (!existsSync(join(p.dir, f)) && !(f === 'CHANGELOG.md' && n === 'fairclaim-core' && existsSync(join(p.dir, 'CHANGELOG.md')))) if (!existsSync(join(p.dir, f))) metaProblems.push(`${n}: no ${f}`);
   if (existsSync(join(p.dir, 'CHANGELOG.md')) && !readFileSync(join(p.dir, 'CHANGELOG.md'), 'utf8').includes(`## ${j.version}`)) metaProblems.push(`${n}: CHANGELOG.md has no "## ${j.version}" section`);
   if (!j.files || !j.files.length) metaProblems.push(`${n}: no "files" list (the whole folder would be published)`);
   if (!j.engines || !/>=\s*20/.test(j.engines.node || '')) metaProblems.push(`${n}: engines.node should be ">=20"`);
-  const dep = (j.dependencies || {})['remedy-core']; const famDep = (j.dependencies || {})['evergreen-core'];
-  const famCore = pkgs.find((x) => x.json.name === 'evergreen-core');
-  if (n !== 'remedy-core' && n !== 'evergreen-core') {
-    if (!dep && !famDep) metaProblems.push(`${n}: depends on neither remedy-core nor evergreen-core`);
-    if (dep && dep !== `^${core.json.version}`) metaProblems.push(`${n}: depends on remedy-core ${dep}, core is ${core.json.version}`);
-    if (famDep && famDep !== `^${famCore.json.version}`) metaProblems.push(`${n}: depends on evergreen-core ${famDep}, it is ${famCore.json.version}`);
+  const dep = (j.dependencies || {})['fairclaim-core']; const famDep = (j.dependencies || {})['fairstay-core'];
+  const famCore = pkgs.find((x) => x.json.name === 'fairstay-core');
+  if (n !== 'fairclaim-core' && n !== 'fairstay-core') {
+    if (!dep && !famDep) metaProblems.push(`${n}: depends on neither fairclaim-core nor fairstay-core`);
+    if (dep && dep !== `^${core.json.version}`) metaProblems.push(`${n}: depends on fairclaim-core ${dep}, core is ${core.json.version}`);
+    if (famDep && famDep !== `^${famCore.json.version}`) metaProblems.push(`${n}: depends on fairstay-core ${famDep}, it is ${famCore.json.version}`);
   }
   for (const [k, v] of Object.entries({ ...(j.dependencies || {}), ...(j.devDependencies || {}) })) if (/^(file:|link:|workspace:|git|https?:)/.test(String(v))) metaProblems.push(`${n}: dependency ${k} points at "${v}"`);
   for (const [b, f] of Object.entries(j.bin || {})) if (!existsSync(join(p.dir, f))) metaProblems.push(`${n}: bin ${b} -> ${f} does not exist`); else if (!readFileSync(join(p.dir, f), 'utf8').startsWith('#!/usr/bin/env node')) metaProblems.push(`${n}: bin ${f} has no "#!/usr/bin/env node" line`);
@@ -132,7 +132,7 @@ else {
   for (const p of pkgs) { const r = run(process.execPath, ['scripts/run-tests.cjs'], { cwd: p.dir }); const pa = +((/^(?:#|ℹ) pass (\d+)/m.exec(r.out) || [])[1] || 0), fa = +((/^(?:#|ℹ) fail (\d+)/m.exec(r.out) || [])[1] || 0); pass += pa; fail += fa; if (r.code !== 0 || fa || !pa) failed.push(`${p.json.name}: ${fa} failing${pa ? '' : ' (no test count found in the output)'}`); }
   failed.length ? add('tests', 'fail', `${pass} passed, ${fail} failed on Node ${process.version}`, failed) : add('tests', 'pass', `${pass} passed on Node ${process.version}`);
   let ep = 0, et = 0; const efail = [];
-  for (const p of pkgs.filter((x) => x !== core && x.json.name !== 'evergreen-core')) { const r = run(process.execPath, [`bin/${p.json.name}.js`, 'eval'], { cwd: p.dir }); const m = /(\d+)\/(\d+)\s*$/.exec(r.out.trim().split('\n').pop() || '') || /(\d+)\/(\d+)/.exec(r.out.trim().split('\n').pop() || ''); if (!m) { efail.push(`${p.json.name}: no eval result`); continue; } ep += +m[1]; et += +m[2]; if (m[1] !== m[2] || r.code !== 0) efail.push(`${p.json.name}: ${m[1]}/${m[2]}`); }
+  for (const p of pkgs.filter((x) => x !== core && x.json.name !== 'fairstay-core')) { const r = run(process.execPath, [`bin/${p.json.name}.js`, 'eval'], { cwd: p.dir }); const m = /(\d+)\/(\d+)\s*$/.exec(r.out.trim().split('\n').pop() || '') || /(\d+)\/(\d+)/.exec(r.out.trim().split('\n').pop() || ''); if (!m) { efail.push(`${p.json.name}: no eval result`); continue; } ep += +m[1]; et += +m[2]; if (m[1] !== m[2] || r.code !== 0) efail.push(`${p.json.name}: ${m[1]}/${m[2]}`); }
   efail.length ? add('evals', 'fail', `${ep}/${et}`, efail) : add('evals', 'pass', `${ep}/${et}`);
   const h = run(process.execPath, ['scripts/hostile.mjs', ...(FULL ? ['--args'] : [])], { timeout: 60 * 60 * 1000 });
   const hl = (/(\d+) finding\(s\)/.exec(h.out) || [])[1];

@@ -1,0 +1,60 @@
+{
+  "name": "fairstay-payroll-accruals",
+  "version": "0.1.0",
+  "mcpName": "io.github.fpavia111-creator/fairstay-payroll-accruals",
+  "description": "Payroll and PTO accruals at month end: wages earned but not paid by department, employer taxes, PTO liability change, and the difference from what is booked, as journal entry lines.",
+  "type": "module",
+  "license": "MIT",
+  "author": "Kurt Francisco",
+  "engines": {
+    "node": ">=20"
+  },
+  "main": "src/index.js",
+  "exports": {
+    ".": "./src/index.js",
+    "./package.json": "./package.json"
+  },
+  "bin": {
+    "fairstay-payroll-accruals": "bin/fairstay-payroll-accruals.js"
+  },
+  "files": [
+    "src",
+    "bin",
+    "fixtures",
+    "evals",
+    "README.md",
+    "CHANGELOG.md",
+    "LICENSE",
+    "server.json"
+  ],
+  "scripts": {
+    "test": "node scripts/run-tests.cjs",
+    "demo": "node bin/fairstay-payroll-accruals.js demo",
+    "eval": "node bin/fairstay-payroll-accruals.js eval"
+  },
+  "dependencies": {
+    "fairstay-core": "^0.1.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/fpavia111-creator/fairstay-agents.git",
+    "directory": "packages/fairstay-payroll-accruals"
+  },
+  "homepage": "https://github.com/fpavia111-creator/fairstay-agents/tree/main/packages/fairstay-payroll-accruals#readme",
+  "bugs": {
+    "url": "https://github.com/fpavia111-creator/fairstay-agents/issues"
+  },
+  "keywords": [
+    "mcp",
+    "mcp-server",
+    "nursing-home",
+    "skilled-nursing",
+    "snf",
+    "long-term-care",
+    "evergreen",
+    "accruals",
+    "payroll",
+    "pto",
+    "month-end"
+  ]
+}

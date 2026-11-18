@@ -1,0 +1,12 @@
+{
+  "mcpServers": {
+    "fairstay-month-end-close": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "fairstay-month-end-close@0.1.0",
+        "mcp"
+      ]
+    }
+  }
+}

@@ -1,0 +1,59 @@
+{
+  "name": "fairstay-vendor-contracts",
+  "version": "0.1.0",
+  "mcpName": "io.github.fpavia111-creator/fairstay-vendor-contracts",
+  "description": "Vendor contract analysis: renewal notice dates, expired contracts still billing, spend with no contract, price increases above the contract escalator and charges above contracted rates.",
+  "type": "module",
+  "license": "MIT",
+  "author": "Kurt Francisco",
+  "engines": {
+    "node": ">=20"
+  },
+  "main": "src/index.js",
+  "exports": {
+    ".": "./src/index.js",
+    "./package.json": "./package.json"
+  },
+  "bin": {
+    "fairstay-vendor-contracts": "bin/fairstay-vendor-contracts.js"
+  },
+  "files": [
+    "src",
+    "bin",
+    "fixtures",
+    "evals",
+    "README.md",
+    "CHANGELOG.md",
+    "LICENSE",
+    "server.json"
+  ],
+  "scripts": {
+    "test": "node scripts/run-tests.cjs",
+    "demo": "node bin/fairstay-vendor-contracts.js demo",
+    "eval": "node bin/fairstay-vendor-contracts.js eval"
+  },
+  "dependencies": {
+    "fairstay-core": "^0.1.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/fpavia111-creator/fairstay-agents.git",
+    "directory": "packages/fairstay-vendor-contracts"
+  },
+  "homepage": "https://github.com/fpavia111-creator/fairstay-agents/tree/main/packages/fairstay-vendor-contracts#readme",
+  "bugs": {
+    "url": "https://github.com/fpavia111-creator/fairstay-agents/issues"
+  },
+  "keywords": [
+    "mcp",
+    "mcp-server",
+    "nursing-home",
+    "skilled-nursing",
+    "snf",
+    "long-term-care",
+    "evergreen",
+    "vendor-contracts",
+    "renewals",
+    "escalators"
+  ]
+}

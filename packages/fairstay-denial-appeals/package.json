@@ -1,0 +1,59 @@
+{
+  "name": "fairstay-denial-appeals",
+  "version": "0.1.0",
+  "mcpName": "io.github.fpavia111-creator/fairstay-denial-appeals",
+  "description": "Denial appeals for nursing homes: deadlines by payer and level, appeals past due, decisions overdue, the next appeal level, and appeal letter drafts a person approves and sends.",
+  "type": "module",
+  "license": "MIT",
+  "author": "Kurt Francisco",
+  "engines": {
+    "node": ">=20"
+  },
+  "main": "src/index.js",
+  "exports": {
+    ".": "./src/index.js",
+    "./package.json": "./package.json"
+  },
+  "bin": {
+    "fairstay-denial-appeals": "bin/fairstay-denial-appeals.js"
+  },
+  "files": [
+    "src",
+    "bin",
+    "fixtures",
+    "evals",
+    "README.md",
+    "CHANGELOG.md",
+    "LICENSE",
+    "server.json"
+  ],
+  "scripts": {
+    "test": "node scripts/run-tests.cjs",
+    "demo": "node bin/fairstay-denial-appeals.js demo",
+    "eval": "node bin/fairstay-denial-appeals.js eval"
+  },
+  "dependencies": {
+    "fairstay-core": "^0.1.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/fpavia111-creator/fairstay-agents.git",
+    "directory": "packages/fairstay-denial-appeals"
+  },
+  "homepage": "https://github.com/fpavia111-creator/fairstay-agents/tree/main/packages/fairstay-denial-appeals#readme",
+  "bugs": {
+    "url": "https://github.com/fpavia111-creator/fairstay-agents/issues"
+  },
+  "keywords": [
+    "mcp",
+    "mcp-server",
+    "nursing-home",
+    "skilled-nursing",
+    "snf",
+    "long-term-care",
+    "evergreen",
+    "appeals",
+    "denials",
+    "medicare-redetermination"
+  ]
+}

@@ -1,0 +1,60 @@
+{
+  "name": "fairstay-crossover-claims",
+  "version": "0.1.0",
+  "mcpName": "io.github.fpavia111-creator/fairstay-crossover-claims",
+  "description": "Medicare-to-Medicaid crossovers for dual-eligible residents: Medicare coinsurance never crossed over, crossovers billed for the wrong amount, zero-paid crossovers to check against the state's lesser-of rule, and unpaid coinsurance to keep for the bad debt log.",
+  "type": "module",
+  "license": "MIT",
+  "author": "Kurt Francisco",
+  "engines": {
+    "node": ">=20"
+  },
+  "main": "src/index.js",
+  "exports": {
+    ".": "./src/index.js",
+    "./package.json": "./package.json"
+  },
+  "bin": {
+    "fairstay-crossover-claims": "bin/fairstay-crossover-claims.js"
+  },
+  "files": [
+    "src",
+    "bin",
+    "fixtures",
+    "evals",
+    "README.md",
+    "CHANGELOG.md",
+    "LICENSE",
+    "server.json"
+  ],
+  "scripts": {
+    "test": "node scripts/run-tests.cjs",
+    "demo": "node bin/fairstay-crossover-claims.js demo",
+    "eval": "node bin/fairstay-crossover-claims.js eval"
+  },
+  "dependencies": {
+    "fairstay-core": "^0.1.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/fpavia111-creator/fairstay-agents.git",
+    "directory": "packages/fairstay-crossover-claims"
+  },
+  "homepage": "https://github.com/fpavia111-creator/fairstay-agents/tree/main/packages/fairstay-crossover-claims#readme",
+  "bugs": {
+    "url": "https://github.com/fpavia111-creator/fairstay-agents/issues"
+  },
+  "keywords": [
+    "mcp",
+    "mcp-server",
+    "nursing-home",
+    "skilled-nursing",
+    "snf",
+    "long-term-care",
+    "evergreen",
+    "crossover",
+    "dual-eligible",
+    "coinsurance",
+    "bad-debt"
+  ]
+}

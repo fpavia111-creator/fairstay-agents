@@ -1,0 +1,12 @@
+{
+  "mcpServers": {
+    "fairstay-managed-care-authorizations": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "fairstay-managed-care-authorizations@0.1.0",
+        "mcp"
+      ]
+    }
+  }
+}

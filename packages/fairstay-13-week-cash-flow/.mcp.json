@@ -1,0 +1,12 @@
+{
+  "mcpServers": {
+    "fairstay-13-week-cash-flow": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "fairstay-13-week-cash-flow@0.1.0",
+        "mcp"
+      ]
+    }
+  }
+}

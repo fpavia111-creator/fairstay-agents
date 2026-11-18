@@ -1,0 +1,12 @@
+{
+  "mcpServers": {
+    "fairstay-cost-report": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "fairstay-cost-report@0.1.0",
+        "mcp"
+      ]
+    }
+  }
+}

@@ -1,0 +1,12 @@
+{
+  "mcpServers": {
+    "fairstay-change-of-ownership": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "fairstay-change-of-ownership@0.1.0",
+        "mcp"
+      ]
+    }
+  }
+}

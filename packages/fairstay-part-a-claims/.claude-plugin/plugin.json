@@ -1,0 +1,23 @@
+{
+  "name": "fairstay-part-a-claims",
+  "version": "0.1.0",
+  "description": "Medicare Part A SNF claim checks (UB-04 / 837I lines): HIPPS codes on revenue code 0022, default ZZZZZ rates, covered days against the census, coinsurance days after day 20, the qualifying-stay span, claims that cross a month and through dates in the future.",
+  "author": {
+    "name": "Kurt Francisco"
+  },
+  "license": "MIT",
+  "homepage": "https://github.com/fpavia111-creator/fairstay-agents/tree/main/packages/fairstay-part-a-claims#readme",
+  "keywords": [
+    "mcp",
+    "mcp-server",
+    "nursing-home",
+    "skilled-nursing",
+    "snf",
+    "long-term-care",
+    "evergreen",
+    "medicare-part-a",
+    "pdpm",
+    "hipps",
+    "ub-04"
+  ]
+}

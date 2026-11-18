@@ -1,11 +1,11 @@
 #!/usr/bin/env node
-// Evergreen package boilerplate for every agent in scripts/agents.json: package.json, bin,
+// Fairstay package boilerplate for every agent in scripts/agents.json: package.json, bin,
 // index, test runner, licence, changelog, plugin files, and the shared and contract tests.
 // The agent's own logic, manifest, demo, fixtures, evals, README and domain tests are
 // written by hand and never overwritten.
 //
 //   node scripts/new-agent.mjs            (all agents)
-//   node scripts/new-agent.mjs oak-of-census
+//   node scripts/new-agent.mjs fairstay-census-billing
 import { mkdirSync, writeFileSync, existsSync, readFileSync } from 'node:fs';
 import { join, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
@@ -14,32 +14,32 @@ const repo = join(dirname(fileURLToPath(import.meta.url)), '..');
 const VERSION = '0.1.0';
 const list = JSON.parse(readFileSync(join(repo, 'scripts/agents.json'), 'utf8'));
 const only = process.argv[2];
-const corePkg = JSON.parse(readFileSync(join(repo, 'packages/evergreen-core/package.json'), 'utf8'));
+const corePkg = JSON.parse(readFileSync(join(repo, 'packages/fairstay-core/package.json'), 'utf8'));
 
 for (const [name, description, kw] of list) {
   if (only && only !== name) continue;
   const root = join(repo, 'packages', name);
   const write = (f, text, { keep = false } = {}) => { const p = join(root, f); if (keep && existsSync(p)) return; mkdirSync(dirname(p), { recursive: true }); writeFileSync(p, text); };
   const keywords = ['mcp', 'mcp-server', 'nursing-home', 'skilled-nursing', 'snf', 'long-term-care', 'evergreen', ...kw.split(',').filter(Boolean)];
-  const home = `https://github.com/fpavia111-creator/evergreen-agents/tree/main/packages/${name}#readme`;
+  const home = `https://github.com/fpavia111-creator/fairstay-agents/tree/main/packages/${name}#readme`;
   write('package.json', JSON.stringify({
     name, version: VERSION, description, type: 'module', license: 'MIT', author: 'Kurt Francisco', engines: { node: '>=20' },
     main: 'src/index.js', exports: { '.': './src/index.js', './package.json': './package.json' }, bin: { [name]: `bin/${name}.js` },
     files: ['src', 'bin', 'fixtures', 'evals', 'README.md', 'CHANGELOG.md', 'LICENSE'],
     scripts: { test: 'node scripts/run-tests.cjs', demo: `node bin/${name}.js demo`, eval: `node bin/${name}.js eval` },
-    dependencies: { 'evergreen-core': `^${corePkg.version}` },
-    repository: { type: 'git', url: 'git+https://github.com/fpavia111-creator/evergreen-agents.git', directory: `packages/${name}` },
-    homepage: home, bugs: { url: 'https://github.com/fpavia111-creator/evergreen-agents/issues' }, keywords,
+    dependencies: { 'fairstay-core': `^${corePkg.version}` },
+    repository: { type: 'git', url: 'git+https://github.com/fpavia111-creator/fairstay-agents.git', directory: `packages/${name}` },
+    homepage: home, bugs: { url: 'https://github.com/fpavia111-creator/fairstay-agents/issues' }, keywords,
   }, null, 2) + '\n');
-  write(`bin/${name}.js`, `#!/usr/bin/env node\nimport { fileURLToPath } from 'node:url';\nimport { main } from 'evergreen-core';\nimport { manifest } from '../src/manifest.js';\nimport { demo } from '../src/demo.js';\n\nmain(manifest, { bin: '${name}', demo, evalFile: fileURLToPath(new URL('../evals/cases.json', import.meta.url)) });\n`);
+  write(`bin/${name}.js`, `#!/usr/bin/env node\nimport { fileURLToPath } from 'node:url';\nimport { main } from 'fairstay-core';\nimport { manifest } from '../src/manifest.js';\nimport { demo } from '../src/demo.js';\n\nmain(manifest, { bin: '${name}', demo, evalFile: fileURLToPath(new URL('../evals/cases.json', import.meta.url)) });\n`);
   write('src/index.js', `export { manifest } from './manifest.js';\nexport * from './logic.js';\n`);
-  write('scripts/run-tests.cjs', readFileSync(join(repo, 'packages/remedy-core/scripts/run-tests.cjs'), 'utf8'));
+  write('scripts/run-tests.cjs', readFileSync(join(repo, 'packages/fairclaim-core/scripts/run-tests.cjs'), 'utf8'));
   write('LICENSE', readFileSync(join(repo, 'LICENSE'), 'utf8'));
-  write('CHANGELOG.md', `# Changelog\n\n## ${VERSION} (unreleased)\n\n- First version (Evergreen ver 1).\n`, { keep: true });
+  write('CHANGELOG.md', `# Changelog\n\n## ${VERSION} (unreleased)\n\n- First version (Fairstay ver 1).\n`, { keep: true });
   write('.mcp.json', JSON.stringify({ mcpServers: { [name]: { command: 'npx', args: ['-y', `${name}@${VERSION}`, 'mcp'] } } }, null, 2) + '\n');
   write('.claude-plugin/plugin.json', JSON.stringify({ name, version: VERSION, description, author: { name: 'Kurt Francisco' }, license: 'MIT', homepage: home, keywords }, null, 2) + '\n');
-  write('test/contract.test.js', `// Shared contract checks on this agent's own manifest, fixtures and eval cases.\nimport { fileURLToPath } from 'node:url';\nimport { agentContract } from 'evergreen-core/testkit';\nimport { manifest } from '../src/index.js';\n\nagentContract({ manifest, casesFile: fileURLToPath(new URL('../evals/cases.json', import.meta.url)) });\n`);
-  write('test/shared.test.js', `// Shared checks every Evergreen agent passes. Generated by scripts/new-agent.mjs.
+  write('test/contract.test.js', `// Shared contract checks on this agent's own manifest, fixtures and eval cases.\nimport { fileURLToPath } from 'node:url';\nimport { agentContract } from 'fairstay-core/testkit';\nimport { manifest } from '../src/index.js';\n\nagentContract({ manifest, casesFile: fileURLToPath(new URL('../evals/cases.json', import.meta.url)) });\n`);
+  write('test/shared.test.js', `// Shared checks every Fairstay agent passes. Generated by scripts/new-agent.mjs.
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { spawn } from 'node:child_process';
@@ -47,7 +47,7 @@ import { mkdtempSync, existsSync, readFileSync, cpSync, writeFileSync } from 'no
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 import { fileURLToPath } from 'node:url';
-import { runEvalFile, undocumentedArgs, ONE_CLICK_CATEGORIES, AgentRuntime } from 'evergreen-core';
+import { runEvalFile, undocumentedArgs, ONE_CLICK_CATEGORIES, AgentRuntime } from 'fairstay-core';
 import { manifest } from '../src/index.js';
 
 const bin = fileURLToPath(new URL('../bin/${name}.js', import.meta.url));

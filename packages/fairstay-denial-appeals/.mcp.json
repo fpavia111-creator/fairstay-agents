@@ -1,0 +1,12 @@
+{
+  "mcpServers": {
+    "fairstay-denial-appeals": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "fairstay-denial-appeals@0.1.0",
+        "mcp"
+      ]
+    }
+  }
+}

@@ -1,0 +1,22 @@
+{
+  "name": "fairstay-licensing-calendar",
+  "version": "0.1.0",
+  "description": "Licensing and credentialing calendar: facility licenses, Medicare and Medicaid revalidations, CLIA and other certificates, administrator and nurse licenses, expired or expiring items, and standard items missing for a facility.",
+  "author": {
+    "name": "Kurt Francisco"
+  },
+  "license": "MIT",
+  "homepage": "https://github.com/fpavia111-creator/fairstay-agents/tree/main/packages/fairstay-licensing-calendar#readme",
+  "keywords": [
+    "mcp",
+    "mcp-server",
+    "nursing-home",
+    "skilled-nursing",
+    "snf",
+    "long-term-care",
+    "evergreen",
+    "licensing",
+    "revalidation",
+    "credentialing"
+  ]
+}

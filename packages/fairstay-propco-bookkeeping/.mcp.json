@@ -1,0 +1,12 @@
+{
+  "mcpServers": {
+    "fairstay-propco-bookkeeping": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "fairstay-propco-bookkeeping@0.1.0",
+        "mcp"
+      ]
+    }
+  }
+}

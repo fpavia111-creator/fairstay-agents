@@ -1,0 +1,59 @@
+{
+  "name": "fairstay-licensing-calendar",
+  "version": "0.1.0",
+  "mcpName": "io.github.fpavia111-creator/fairstay-licensing-calendar",
+  "description": "Licensing and credentialing calendar: facility licenses, Medicare and Medicaid revalidations, CLIA and other certificates, administrator and nurse licenses, expired or expiring items, and standard items missing for a facility.",
+  "type": "module",
+  "license": "MIT",
+  "author": "Kurt Francisco",
+  "engines": {
+    "node": ">=20"
+  },
+  "main": "src/index.js",
+  "exports": {
+    ".": "./src/index.js",
+    "./package.json": "./package.json"
+  },
+  "bin": {
+    "fairstay-licensing-calendar": "bin/fairstay-licensing-calendar.js"
+  },
+  "files": [
+    "src",
+    "bin",
+    "fixtures",
+    "evals",
+    "README.md",
+    "CHANGELOG.md",
+    "LICENSE",
+    "server.json"
+  ],
+  "scripts": {
+    "test": "node scripts/run-tests.cjs",
+    "demo": "node bin/fairstay-licensing-calendar.js demo",
+    "eval": "node bin/fairstay-licensing-calendar.js eval"
+  },
+  "dependencies": {
+    "fairstay-core": "^0.1.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/fpavia111-creator/fairstay-agents.git",
+    "directory": "packages/fairstay-licensing-calendar"
+  },
+  "homepage": "https://github.com/fpavia111-creator/fairstay-agents/tree/main/packages/fairstay-licensing-calendar#readme",
+  "bugs": {
+    "url": "https://github.com/fpavia111-creator/fairstay-agents/issues"
+  },
+  "keywords": [
+    "mcp",
+    "mcp-server",
+    "nursing-home",
+    "skilled-nursing",
+    "snf",
+    "long-term-care",
+    "evergreen",
+    "licensing",
+    "revalidation",
+    "credentialing"
+  ]
+}

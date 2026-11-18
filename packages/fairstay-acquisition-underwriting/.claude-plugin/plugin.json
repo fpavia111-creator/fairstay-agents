@@ -1,0 +1,23 @@
+{
+  "name": "fairstay-acquisition-underwriting",
+  "version": "0.1.0",
+  "description": "Acquisition underwriting packet for a nursing home: trailing-twelve-month summary with one-time items removed, occupancy and payer mix, year-one projection, staffing model, value at your cap rate and valuation of receivables.",
+  "author": {
+    "name": "Kurt Francisco"
+  },
+  "license": "MIT",
+  "homepage": "https://github.com/fpavia111-creator/fairstay-agents/tree/main/packages/fairstay-acquisition-underwriting#readme",
+  "keywords": [
+    "mcp",
+    "mcp-server",
+    "nursing-home",
+    "skilled-nursing",
+    "snf",
+    "long-term-care",
+    "evergreen",
+    "underwriting",
+    "acquisitions",
+    "valuation",
+    "t12"
+  ]
+}

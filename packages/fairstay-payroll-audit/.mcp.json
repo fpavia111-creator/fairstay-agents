@@ -1,0 +1,12 @@
+{
+  "mcpServers": {
+    "fairstay-payroll-audit": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "fairstay-payroll-audit@0.1.0",
+        "mcp"
+      ]
+    }
+  }
+}

@@ -1,0 +1,12 @@
+{
+  "mcpServers": {
+    "fairstay-medicaid-pending": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "fairstay-medicaid-pending@0.1.0",
+        "mcp"
+      ]
+    }
+  }
+}

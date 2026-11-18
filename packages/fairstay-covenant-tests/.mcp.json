@@ -1,0 +1,12 @@
+{
+  "mcpServers": {
+    "fairstay-covenant-tests": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "fairstay-covenant-tests@0.1.0",
+        "mcp"
+      ]
+    }
+  }
+}

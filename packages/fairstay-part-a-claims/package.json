@@ -1,0 +1,60 @@
+{
+  "name": "fairstay-part-a-claims",
+  "version": "0.1.0",
+  "mcpName": "io.github.fpavia111-creator/fairstay-part-a-claims",
+  "description": "Medicare Part A SNF claim checks (UB-04 / 837I lines): HIPPS codes on revenue code 0022, default ZZZZZ rates, covered days against the census, coinsurance days after day 20, the qualifying-stay span, claims that cross a month and through dates in the future.",
+  "type": "module",
+  "license": "MIT",
+  "author": "Kurt Francisco",
+  "engines": {
+    "node": ">=20"
+  },
+  "main": "src/index.js",
+  "exports": {
+    ".": "./src/index.js",
+    "./package.json": "./package.json"
+  },
+  "bin": {
+    "fairstay-part-a-claims": "bin/fairstay-part-a-claims.js"
+  },
+  "files": [
+    "src",
+    "bin",
+    "fixtures",
+    "evals",
+    "README.md",
+    "CHANGELOG.md",
+    "LICENSE",
+    "server.json"
+  ],
+  "scripts": {
+    "test": "node scripts/run-tests.cjs",
+    "demo": "node bin/fairstay-part-a-claims.js demo",
+    "eval": "node bin/fairstay-part-a-claims.js eval"
+  },
+  "dependencies": {
+    "fairstay-core": "^0.1.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/fpavia111-creator/fairstay-agents.git",
+    "directory": "packages/fairstay-part-a-claims"
+  },
+  "homepage": "https://github.com/fpavia111-creator/fairstay-agents/tree/main/packages/fairstay-part-a-claims#readme",
+  "bugs": {
+    "url": "https://github.com/fpavia111-creator/fairstay-agents/issues"
+  },
+  "keywords": [
+    "mcp",
+    "mcp-server",
+    "nursing-home",
+    "skilled-nursing",
+    "snf",
+    "long-term-care",
+    "evergreen",
+    "medicare-part-a",
+    "pdpm",
+    "hipps",
+    "ub-04"
+  ]
+}

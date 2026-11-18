@@ -1,0 +1,59 @@
+{
+  "name": "fairstay-13-week-cash-flow",
+  "version": "0.1.0",
+  "mcpName": "io.github.fpavia111-creator/fairstay-13-week-cash-flow",
+  "description": "13-week cash projection for a nursing home from opening cash, AR collection rates by payer type, payroll dates, bills due and fixed payments, with the weeks below your minimum cash.",
+  "type": "module",
+  "license": "MIT",
+  "author": "Kurt Francisco",
+  "engines": {
+    "node": ">=20"
+  },
+  "main": "src/index.js",
+  "exports": {
+    ".": "./src/index.js",
+    "./package.json": "./package.json"
+  },
+  "bin": {
+    "fairstay-13-week-cash-flow": "bin/fairstay-13-week-cash-flow.js"
+  },
+  "files": [
+    "src",
+    "bin",
+    "fixtures",
+    "evals",
+    "README.md",
+    "CHANGELOG.md",
+    "LICENSE",
+    "server.json"
+  ],
+  "scripts": {
+    "test": "node scripts/run-tests.cjs",
+    "demo": "node bin/fairstay-13-week-cash-flow.js demo",
+    "eval": "node bin/fairstay-13-week-cash-flow.js eval"
+  },
+  "dependencies": {
+    "fairstay-core": "^0.1.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/fpavia111-creator/fairstay-agents.git",
+    "directory": "packages/fairstay-13-week-cash-flow"
+  },
+  "homepage": "https://github.com/fpavia111-creator/fairstay-agents/tree/main/packages/fairstay-13-week-cash-flow#readme",
+  "bugs": {
+    "url": "https://github.com/fpavia111-creator/fairstay-agents/issues"
+  },
+  "keywords": [
+    "mcp",
+    "mcp-server",
+    "nursing-home",
+    "skilled-nursing",
+    "snf",
+    "long-term-care",
+    "evergreen",
+    "cash-flow",
+    "13-week",
+    "projection"
+  ]
+}

@@ -1,0 +1,12 @@
+{
+  "mcpServers": {
+    "fairstay-acquisition-underwriting": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "fairstay-acquisition-underwriting@0.1.0",
+        "mcp"
+      ]
+    }
+  }
+}

@@ -1,0 +1,12 @@
+{
+  "mcpServers": {
+    "fairstay-eligibility-checks": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "fairstay-eligibility-checks@0.1.0",
+        "mcp"
+      ]
+    }
+  }
+}

@@ -1,0 +1,59 @@
+{
+  "name": "fairstay-borrowing-base",
+  "version": "0.1.0",
+  "mcpName": "io.github.fpavia111-creator/fairstay-borrowing-base",
+  "description": "Borrowing base certificate preparation: eligible receivables by payer type, ineligibles by reason (age, Medicaid pending, credits, cross-aging, concentration), availability at your advance rates and the room left on the line.",
+  "type": "module",
+  "license": "MIT",
+  "author": "Kurt Francisco",
+  "engines": {
+    "node": ">=20"
+  },
+  "main": "src/index.js",
+  "exports": {
+    ".": "./src/index.js",
+    "./package.json": "./package.json"
+  },
+  "bin": {
+    "fairstay-borrowing-base": "bin/fairstay-borrowing-base.js"
+  },
+  "files": [
+    "src",
+    "bin",
+    "fixtures",
+    "evals",
+    "README.md",
+    "CHANGELOG.md",
+    "LICENSE",
+    "server.json"
+  ],
+  "scripts": {
+    "test": "node scripts/run-tests.cjs",
+    "demo": "node bin/fairstay-borrowing-base.js demo",
+    "eval": "node bin/fairstay-borrowing-base.js eval"
+  },
+  "dependencies": {
+    "fairstay-core": "^0.1.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/fpavia111-creator/fairstay-agents.git",
+    "directory": "packages/fairstay-borrowing-base"
+  },
+  "homepage": "https://github.com/fpavia111-creator/fairstay-agents/tree/main/packages/fairstay-borrowing-base#readme",
+  "bugs": {
+    "url": "https://github.com/fpavia111-creator/fairstay-agents/issues"
+  },
+  "keywords": [
+    "mcp",
+    "mcp-server",
+    "nursing-home",
+    "skilled-nursing",
+    "snf",
+    "long-term-care",
+    "evergreen",
+    "borrowing-base",
+    "abl",
+    "receivables"
+  ]
+}

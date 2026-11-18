@@ -1,0 +1,12 @@
+{
+  "mcpServers": {
+    "fairstay-payroll-accruals": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "fairstay-payroll-accruals@0.1.0",
+        "mcp"
+      ]
+    }
+  }
+}

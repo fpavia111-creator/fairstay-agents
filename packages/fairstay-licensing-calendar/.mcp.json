@@ -1,0 +1,12 @@
+{
+  "mcpServers": {
+    "fairstay-licensing-calendar": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "fairstay-licensing-calendar@0.1.0",
+        "mcp"
+      ]
+    }
+  }
+}

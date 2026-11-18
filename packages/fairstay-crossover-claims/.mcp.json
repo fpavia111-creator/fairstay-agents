@@ -1,0 +1,12 @@
+{
+  "mcpServers": {
+    "fairstay-crossover-claims": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "fairstay-crossover-claims@0.1.0",
+        "mcp"
+      ]
+    }
+  }
+}

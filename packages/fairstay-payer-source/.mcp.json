@@ -1,0 +1,12 @@
+{
+  "mcpServers": {
+    "fairstay-payer-source": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "fairstay-payer-source@0.1.0",
+        "mcp"
+      ]
+    }
+  }
+}

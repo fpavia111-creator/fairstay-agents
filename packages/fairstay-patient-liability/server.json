@@ -1,0 +1,37 @@
+{
+  "$schema": "https://static.modelcontextprotocol.io/schemas/2025-12-11/server.schema.json",
+  "name": "io.github.fpavia111-creator/fairstay-patient-liability",
+  "title": "Fairstay Patient Liability",
+  "description": "Patient liability (Medicaid share of cost) and private pay",
+  "version": "0.1.0",
+  "repository": {
+    "url": "https://github.com/fpavia111-creator/fairstay-agents",
+    "source": "github",
+    "subfolder": "packages/fairstay-patient-liability"
+  },
+  "websiteUrl": "https://fair-agents.com/fairstay.html",
+  "packages": [
+    {
+      "registryType": "npm",
+      "identifier": "fairstay-patient-liability",
+      "version": "0.1.0",
+      "transport": {
+        "type": "stdio"
+      },
+      "packageArguments": [
+        {
+          "type": "positional",
+          "value": "mcp"
+        },
+        {
+          "type": "named",
+          "name": "--root",
+          "description": "Folder holding the exports this agent may read and write (it cannot reach outside it)",
+          "isRequired": true,
+          "format": "filepath",
+          "valueHint": "exports_folder"
+        }
+      ]
+    }
+  ]
+}

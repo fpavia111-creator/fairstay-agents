@@ -1,0 +1,12 @@
+{
+  "mcpServers": {
+    "fairstay-census-billing": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "fairstay-census-billing@0.1.0",
+        "mcp"
+      ]
+    }
+  }
+}

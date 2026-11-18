@@ -1,0 +1,12 @@
+{
+  "mcpServers": {
+    "fairstay-ancillary-invoices": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "fairstay-ancillary-invoices@0.1.0",
+        "mcp"
+      ]
+    }
+  }
+}

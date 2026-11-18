@@ -1,0 +1,59 @@
+{
+  "name": "fairstay-hospice-room-and-board",
+  "version": "0.1.0",
+  "mcpName": "io.github.fpavia111-creator/fairstay-hospice-room-and-board",
+  "description": "Hospice room and board for nursing-home residents: days not invoiced to the hospice, invoiced days that differ from the census, rates below the hospice contract, unpaid invoices, hospices with no contract and Medicaid billed directly for hospice days.",
+  "type": "module",
+  "license": "MIT",
+  "author": "Kurt Francisco",
+  "engines": {
+    "node": ">=20"
+  },
+  "main": "src/index.js",
+  "exports": {
+    ".": "./src/index.js",
+    "./package.json": "./package.json"
+  },
+  "bin": {
+    "fairstay-hospice-room-and-board": "bin/fairstay-hospice-room-and-board.js"
+  },
+  "files": [
+    "src",
+    "bin",
+    "fixtures",
+    "evals",
+    "README.md",
+    "CHANGELOG.md",
+    "LICENSE",
+    "server.json"
+  ],
+  "scripts": {
+    "test": "node scripts/run-tests.cjs",
+    "demo": "node bin/fairstay-hospice-room-and-board.js demo",
+    "eval": "node bin/fairstay-hospice-room-and-board.js eval"
+  },
+  "dependencies": {
+    "fairstay-core": "^0.1.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/fpavia111-creator/fairstay-agents.git",
+    "directory": "packages/fairstay-hospice-room-and-board"
+  },
+  "homepage": "https://github.com/fpavia111-creator/fairstay-agents/tree/main/packages/fairstay-hospice-room-and-board#readme",
+  "bugs": {
+    "url": "https://github.com/fpavia111-creator/fairstay-agents/issues"
+  },
+  "keywords": [
+    "mcp",
+    "mcp-server",
+    "nursing-home",
+    "skilled-nursing",
+    "snf",
+    "long-term-care",
+    "evergreen",
+    "hospice",
+    "room-and-board",
+    "pass-through"
+  ]
+}

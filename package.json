@@ -1,11 +1,11 @@
 {
-  "name": "evergreen-agents",
+  "name": "fairstay-agents",
   "private": true,
-  "description": "Evergreen: nursing-home (skilled nursing) back-office agents monorepo, built on remedy-core.",
+  "description": "Fairstay: nursing-home (skilled nursing) back-office agents monorepo, built on fairclaim-core.",
   "license": "MIT",
   "workspaces": [
-    "packages/remedy-core",
-    "packages/evergreen-core",
+    "packages/fairclaim-core",
+    "packages/fairstay-core",
     "packages/*"
   ],
   "scripts": {

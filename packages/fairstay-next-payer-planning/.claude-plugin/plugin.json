@@ -1,0 +1,22 @@
+{
+  "name": "fairstay-next-payer-planning",
+  "version": "0.1.0",
+  "description": "Next payer planning for long stays: residents whose Medicare days, managed care authorizations or private funds run out with no next payer planned, and when to start a Medicaid application.",
+  "author": {
+    "name": "Kurt Francisco"
+  },
+  "license": "MIT",
+  "homepage": "https://github.com/fpavia111-creator/fairstay-agents/tree/main/packages/fairstay-next-payer-planning#readme",
+  "keywords": [
+    "mcp",
+    "mcp-server",
+    "nursing-home",
+    "skilled-nursing",
+    "snf",
+    "long-term-care",
+    "evergreen",
+    "payer-planning",
+    "long-term-care",
+    "medicaid"
+  ]
+}

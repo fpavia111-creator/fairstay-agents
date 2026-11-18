@@ -1,0 +1,59 @@
+{
+  "name": "fairstay-managed-care-claims",
+  "version": "0.1.0",
+  "mcpName": "io.github.fpavia111-creator/fairstay-managed-care-claims",
+  "description": "Managed care (HMO, Medicare Advantage, Medicaid MCO) claim checks: no contract rate, billed or paid below contract, levels not authorized, days past the authorization and claims missing the authorization number.",
+  "type": "module",
+  "license": "MIT",
+  "author": "Kurt Francisco",
+  "engines": {
+    "node": ">=20"
+  },
+  "main": "src/index.js",
+  "exports": {
+    ".": "./src/index.js",
+    "./package.json": "./package.json"
+  },
+  "bin": {
+    "fairstay-managed-care-claims": "bin/fairstay-managed-care-claims.js"
+  },
+  "files": [
+    "src",
+    "bin",
+    "fixtures",
+    "evals",
+    "README.md",
+    "CHANGELOG.md",
+    "LICENSE",
+    "server.json"
+  ],
+  "scripts": {
+    "test": "node scripts/run-tests.cjs",
+    "demo": "node bin/fairstay-managed-care-claims.js demo",
+    "eval": "node bin/fairstay-managed-care-claims.js eval"
+  },
+  "dependencies": {
+    "fairstay-core": "^0.1.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/fpavia111-creator/fairstay-agents.git",
+    "directory": "packages/fairstay-managed-care-claims"
+  },
+  "homepage": "https://github.com/fpavia111-creator/fairstay-agents/tree/main/packages/fairstay-managed-care-claims#readme",
+  "bugs": {
+    "url": "https://github.com/fpavia111-creator/fairstay-agents/issues"
+  },
+  "keywords": [
+    "mcp",
+    "mcp-server",
+    "nursing-home",
+    "skilled-nursing",
+    "snf",
+    "long-term-care",
+    "evergreen",
+    "managed-care",
+    "medicare-advantage",
+    "per-diem"
+  ]
+}

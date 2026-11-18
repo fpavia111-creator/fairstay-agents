@@ -1,0 +1,59 @@
+{
+  "name": "fairstay-medicaid-pending",
+  "version": "0.1.0",
+  "mcpName": "io.github.fpavia111-creator/fairstay-medicaid-pending",
+  "description": "Medicaid pending oversight: applications past the decision deadline, document requests due, no follow-up, approvals not yet billed, approvals with no patient liability set, denials with no appeal and pending residents with no application on file.",
+  "type": "module",
+  "license": "MIT",
+  "author": "Kurt Francisco",
+  "engines": {
+    "node": ">=20"
+  },
+  "main": "src/index.js",
+  "exports": {
+    ".": "./src/index.js",
+    "./package.json": "./package.json"
+  },
+  "bin": {
+    "fairstay-medicaid-pending": "bin/fairstay-medicaid-pending.js"
+  },
+  "files": [
+    "src",
+    "bin",
+    "fixtures",
+    "evals",
+    "README.md",
+    "CHANGELOG.md",
+    "LICENSE",
+    "server.json"
+  ],
+  "scripts": {
+    "test": "node scripts/run-tests.cjs",
+    "demo": "node bin/fairstay-medicaid-pending.js demo",
+    "eval": "node bin/fairstay-medicaid-pending.js eval"
+  },
+  "dependencies": {
+    "fairstay-core": "^0.1.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/fpavia111-creator/fairstay-agents.git",
+    "directory": "packages/fairstay-medicaid-pending"
+  },
+  "homepage": "https://github.com/fpavia111-creator/fairstay-agents/tree/main/packages/fairstay-medicaid-pending#readme",
+  "bugs": {
+    "url": "https://github.com/fpavia111-creator/fairstay-agents/issues"
+  },
+  "keywords": [
+    "mcp",
+    "mcp-server",
+    "nursing-home",
+    "skilled-nursing",
+    "snf",
+    "long-term-care",
+    "evergreen",
+    "medicaid-pending",
+    "long-term-care",
+    "applications"
+  ]
+}

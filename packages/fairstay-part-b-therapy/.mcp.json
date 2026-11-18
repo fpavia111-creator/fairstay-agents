@@ -1,0 +1,12 @@
+{
+  "mcpServers": {
+    "fairstay-part-b-therapy": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "fairstay-part-b-therapy@0.1.0",
+        "mcp"
+      ]
+    }
+  }
+}

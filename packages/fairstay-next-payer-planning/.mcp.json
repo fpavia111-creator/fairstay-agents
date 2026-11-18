@@ -1,0 +1,12 @@
+{
+  "mcpServers": {
+    "fairstay-next-payer-planning": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "fairstay-next-payer-planning@0.1.0",
+        "mcp"
+      ]
+    }
+  }
+}

@@ -1,0 +1,12 @@
+{
+  "mcpServers": {
+    "fairstay-staffing-and-pbj": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "fairstay-staffing-and-pbj@0.1.0",
+        "mcp"
+      ]
+    }
+  }
+}

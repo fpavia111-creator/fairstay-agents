@@ -1,0 +1,12 @@
+{
+  "mcpServers": {
+    "fairstay-length-of-stay": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "fairstay-length-of-stay@0.1.0",
+        "mcp"
+      ]
+    }
+  }
+}

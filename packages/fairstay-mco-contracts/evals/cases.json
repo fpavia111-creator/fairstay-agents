@@ -1,0 +1,270 @@
+{
+  "suite": "fairstay-mco-contracts",
+  "root": "..",
+  "data_note": "Fictional plans, contracts and remittances in ../fixtures. Deterministic checks; no model is called.",
+  "cases": [
+    {
+      "id": "totals",
+      "tool": "mco_check",
+      "args": {
+        "contracts": "fixtures/contracts.csv",
+        "payments": "fixtures/payments.csv",
+        "rules": "fixtures/rules.json",
+        "as_of": "2026-04-01"
+      },
+      "expect": {
+        "status": "executed",
+        "equals": {
+          "result.contracts": 7,
+          "result.payers": 4,
+          "result.underpaid": 700,
+          "result.below_benchmark": 1500
+        }
+      }
+    },
+    {
+      "id": "underpaid-first",
+      "tool": "mco_check",
+      "args": {
+        "contracts": "fixtures/contracts.csv",
+        "payments": "fixtures/payments.csv",
+        "rules": "fixtures/rules.json",
+        "as_of": "2026-04-01"
+      },
+      "expect": {
+        "equals": {
+          "result.items.0.status": "paid_below_contract",
+          "result.items.0.expected": 9800,
+          "result.items.0.amount": 700
+        }
+      }
+    },
+    {
+      "id": "prairie-expired",
+      "tool": "mco_check",
+      "args": {
+        "contracts": "fixtures/contracts.csv",
+        "payments": "fixtures/payments.csv",
+        "rules": "fixtures/rules.json",
+        "as_of": "2026-04-01",
+        "status": "contract_expired"
+      },
+      "expect": {
+        "equals": {
+          "result.items.length": 1,
+          "result.items.0.payer": "Prairie Star Plus"
+        }
+      }
+    },
+    {
+      "id": "gulf-notice",
+      "tool": "mco_check",
+      "args": {
+        "contracts": "fixtures/contracts.csv",
+        "payments": "fixtures/payments.csv",
+        "rules": "fixtures/rules.json",
+        "as_of": "2026-04-01",
+        "status": "notice_window_open"
+      },
+      "expect": {
+        "equals": {
+          "result.items.0.notice_by": "2026-05-01",
+          "result.items.0.days_left": 30
+        }
+      }
+    },
+    {
+      "id": "hill-country-no-contract",
+      "tool": "mco_check",
+      "args": {
+        "contracts": "fixtures/contracts.csv",
+        "payments": "fixtures/payments.csv",
+        "rules": "fixtures/rules.json",
+        "as_of": "2026-04-01",
+        "status": "no_contract"
+      },
+      "expect": {
+        "equals": {
+          "result.items.0.payer": "Hill Country Health",
+          "result.items.0.days": 9
+        }
+      }
+    },
+    {
+      "id": "gulf-below-benchmark",
+      "tool": "mco_check",
+      "args": {
+        "contracts": "fixtures/contracts.csv",
+        "payments": "fixtures/payments.csv",
+        "rules": "fixtures/rules.json",
+        "as_of": "2026-04-01",
+        "status": "below_benchmark"
+      },
+      "expect": {
+        "equals": {
+          "result.items.length": 2,
+          "result.items.0.gap_per_day": 45,
+          "result.items.1.gap_per_day": 60
+        }
+      }
+    },
+    {
+      "id": "rates-stale",
+      "tool": "mco_check",
+      "args": {
+        "contracts": "fixtures/contracts.csv",
+        "payments": "fixtures/payments.csv",
+        "rules": "fixtures/rules.json",
+        "as_of": "2026-04-01",
+        "status": "rate_unchanged"
+      },
+      "expect": {
+        "equals": {
+          "result.items.length": 2,
+          "result.items.0.last_rate_change": "2023-07-01"
+        }
+      }
+    },
+    {
+      "id": "matrix",
+      "tool": "mco_payer_matrix",
+      "args": {
+        "contracts": "fixtures/contracts.csv",
+        "rules": "fixtures/rules.json",
+        "as_of": "2026-04-01"
+      },
+      "expect": {
+        "status": "executed",
+        "equals": {
+          "result.matrix.length": 7,
+          "result.matrix.6.network": "expired",
+          "result.matrix.0.level": "all"
+        }
+      }
+    },
+    {
+      "id": "contracts-only",
+      "tool": "mco_check",
+      "args": {
+        "contracts": "fixtures/contracts.csv",
+        "as_of": "2026-04-01"
+      },
+      "expect": {
+        "equals": {
+          "result.payment_lines": 0,
+          "result.underpaid": 0
+        },
+        "not_contains": [
+          "a day less"
+        ]
+      }
+    },
+    {
+      "id": "typo-rules-refused",
+      "tool": "mco_check",
+      "args": {
+        "contracts": "fixtures/contracts.csv",
+        "payments": "fixtures/payments.csv",
+        "rules": "fixtures/rules-typo.json",
+        "as_of": "2026-04-01"
+      },
+      "expect": {
+        "status": "error",
+        "contains": [
+          "benchmark"
+        ]
+      }
+    },
+    {
+      "id": "residents-masked",
+      "tool": "mco_check",
+      "args": {
+        "contracts": "fixtures/contracts.csv",
+        "payments": "fixtures/payments.csv",
+        "rules": "fixtures/rules.json",
+        "as_of": "2026-04-01"
+      },
+      "expect": {
+        "not_contains": [
+          "Brandt",
+          "Okafor",
+          "LSH-2026-00502"
+        ],
+        "contains": [
+          "PT-",
+          "ACCT-"
+        ]
+      }
+    },
+    {
+      "id": "report",
+      "tool": "mco_write_report",
+      "args": {
+        "contracts": "fixtures/contracts.csv",
+        "payments": "fixtures/payments.csv",
+        "rules": "fixtures/rules.json",
+        "as_of": "2026-04-01"
+      },
+      "expect": {
+        "status": "executed",
+        "contains": [
+          "mco-contracts.csv"
+        ]
+      }
+    },
+    {
+      "id": "notice-refused",
+      "tool": "contract_notice_send",
+      "args": {},
+      "expect": {
+        "status": "blocked",
+        "decision": "block"
+      }
+    },
+    {
+      "id": "recall-empty",
+      "tool": "mco_recall",
+      "args": {},
+      "expect": {
+        "status": "executed",
+        "contains": [
+          "memory is empty",
+          "plan_note"
+        ]
+      }
+    },
+    {
+      "id": "file-outside-root-refused",
+      "tool": "mco_check",
+      "args": {
+        "contracts": "../../outside-root.csv",
+        "payments": "fixtures/payments.csv",
+        "rules": "fixtures/rules.json",
+        "as_of": "2026-04-01"
+      },
+      "expect": {
+        "status": "error",
+        "contains": [
+          "outside the allowed root"
+        ]
+      }
+    },
+    {
+      "id": "missing-file-named",
+      "tool": "mco_check",
+      "args": {
+        "contracts": "fixtures/missing-export.csv",
+        "payments": "fixtures/payments.csv",
+        "rules": "fixtures/rules.json",
+        "as_of": "2026-04-01"
+      },
+      "expect": {
+        "status": "error",
+        "contains": [
+          "not found",
+          "missing-export.csv"
+        ]
+      }
+    }
+  ]
+}

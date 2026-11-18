@@ -1,0 +1,59 @@
+{
+  "name": "fairstay-month-end-close",
+  "version": "0.1.0",
+  "mcpName": "io.github.fpavia111-creator/fairstay-month-end-close",
+  "description": "Month-end close checks for nursing homes: trial balance out of balance, big month-over-month swings, per-patient-day costs outside their usual range, missing recurring accruals, suspense balances, intercompany that does not net out and late close tasks.",
+  "type": "module",
+  "license": "MIT",
+  "author": "Kurt Francisco",
+  "engines": {
+    "node": ">=20"
+  },
+  "main": "src/index.js",
+  "exports": {
+    ".": "./src/index.js",
+    "./package.json": "./package.json"
+  },
+  "bin": {
+    "fairstay-month-end-close": "bin/fairstay-month-end-close.js"
+  },
+  "files": [
+    "src",
+    "bin",
+    "fixtures",
+    "evals",
+    "README.md",
+    "CHANGELOG.md",
+    "LICENSE",
+    "server.json"
+  ],
+  "scripts": {
+    "test": "node scripts/run-tests.cjs",
+    "demo": "node bin/fairstay-month-end-close.js demo",
+    "eval": "node bin/fairstay-month-end-close.js eval"
+  },
+  "dependencies": {
+    "fairstay-core": "^0.1.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/fpavia111-creator/fairstay-agents.git",
+    "directory": "packages/fairstay-month-end-close"
+  },
+  "homepage": "https://github.com/fpavia111-creator/fairstay-agents/tree/main/packages/fairstay-month-end-close#readme",
+  "bugs": {
+    "url": "https://github.com/fpavia111-creator/fairstay-agents/issues"
+  },
+  "keywords": [
+    "mcp",
+    "mcp-server",
+    "nursing-home",
+    "skilled-nursing",
+    "snf",
+    "long-term-care",
+    "evergreen",
+    "month-end-close",
+    "ppd",
+    "trial-balance"
+  ]
+}

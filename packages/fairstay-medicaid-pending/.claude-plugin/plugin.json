@@ -1,0 +1,22 @@
+{
+  "name": "fairstay-medicaid-pending",
+  "version": "0.1.0",
+  "description": "Medicaid pending oversight: applications past the decision deadline, document requests due, no follow-up, approvals not yet billed, approvals with no patient liability set, denials with no appeal and pending residents with no application on file.",
+  "author": {
+    "name": "Kurt Francisco"
+  },
+  "license": "MIT",
+  "homepage": "https://github.com/fpavia111-creator/fairstay-agents/tree/main/packages/fairstay-medicaid-pending#readme",
+  "keywords": [
+    "mcp",
+    "mcp-server",
+    "nursing-home",
+    "skilled-nursing",
+    "snf",
+    "long-term-care",
+    "evergreen",
+    "medicaid-pending",
+    "long-term-care",
+    "applications"
+  ]
+}
