@@ -1,0 +1,12 @@
+{
+  "mcpServers": {
+    "yew-of-length-of-stay": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "yew-of-length-of-stay@0.1.0",
+        "mcp"
+      ]
+    }
+  }
+}
