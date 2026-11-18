@@ -1,6 +1,7 @@
 {
   "name": "hazel-of-borrowing-base",
   "version": "0.1.0",
+  "mcpName": "io.github.fpavia111-creator/hazel-of-borrowing-base",
   "description": "Borrowing base certificate preparation: eligible receivables by payer type, ineligibles by reason (age, Medicaid pending, credits, cross-aging, concentration), availability at your advance rates and the room left on the line.",
   "type": "module",
   "license": "MIT",
@@ -23,7 +24,8 @@
     "evals",
     "README.md",
     "CHANGELOG.md",
-    "LICENSE"
+    "LICENSE",
+    "server.json"
   ],
   "scripts": {
     "test": "node scripts/run-tests.cjs",

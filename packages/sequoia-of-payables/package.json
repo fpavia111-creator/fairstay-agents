@@ -1,6 +1,7 @@
 {
   "name": "sequoia-of-payables",
   "version": "0.1.0",
+  "mcpName": "io.github.fpavia111-creator/sequoia-of-payables",
   "description": "Accounts payable review for nursing homes: duplicate invoices, vendors not on the approved list, invoices over the purchase order, missing purchase orders, past-due bills and goods received but not invoiced for the month-end accrual.",
   "type": "module",
   "license": "MIT",
@@ -23,7 +24,8 @@
     "evals",
     "README.md",
     "CHANGELOG.md",
-    "LICENSE"
+    "LICENSE",
+    "server.json"
   ],
   "scripts": {
     "test": "node scripts/run-tests.cjs",

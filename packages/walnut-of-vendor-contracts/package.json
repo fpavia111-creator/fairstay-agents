@@ -1,6 +1,7 @@
 {
   "name": "walnut-of-vendor-contracts",
   "version": "0.1.0",
+  "mcpName": "io.github.fpavia111-creator/walnut-of-vendor-contracts",
   "description": "Vendor contract analysis: renewal notice dates, expired contracts still billing, spend with no contract, price increases above the contract escalator and charges above contracted rates.",
   "type": "module",
   "license": "MIT",
@@ -23,7 +24,8 @@
     "evals",
     "README.md",
     "CHANGELOG.md",
-    "LICENSE"
+    "LICENSE",
+    "server.json"
   ],
   "scripts": {
     "test": "node scripts/run-tests.cjs",

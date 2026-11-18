@@ -1,6 +1,7 @@
 {
   "name": "beech-of-propco",
   "version": "0.1.0",
+  "mcpName": "io.github.fpavia111-creator/beech-of-propco",
   "description": "Property company bookkeeping for nursing-home real estate: rent short or unpaid, escalators not billed, operator (tenant) rent coverage and occupancy, leases ending and tenant financials not received.",
   "type": "module",
   "license": "MIT",
@@ -23,7 +24,8 @@
     "evals",
     "README.md",
     "CHANGELOG.md",
-    "LICENSE"
+    "LICENSE",
+    "server.json"
   ],
   "scripts": {
     "test": "node scripts/run-tests.cjs",

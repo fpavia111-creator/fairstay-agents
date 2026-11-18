@@ -1,6 +1,7 @@
 {
   "name": "magnolia-of-staffing",
   "version": "0.1.0",
+  "mcpName": "io.github.fpavia111-creator/magnolia-of-staffing",
   "description": "Staffing and PBJ checks: hours per resident day by role against your targets, days without 8 consecutive RN hours, agency invoices against agency timecards and the PBJ due date.",
   "type": "module",
   "license": "MIT",
@@ -23,7 +24,8 @@
     "evals",
     "README.md",
     "CHANGELOG.md",
-    "LICENSE"
+    "LICENSE",
+    "server.json"
   ],
   "scripts": {
     "test": "node scripts/run-tests.cjs",

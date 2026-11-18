@@ -1,6 +1,7 @@
 {
   "name": "fir-of-licensing",
   "version": "0.1.0",
+  "mcpName": "io.github.fpavia111-creator/fir-of-licensing",
   "description": "Licensing and credentialing calendar: facility licenses, Medicare and Medicaid revalidations, CLIA and other certificates, administrator and nurse licenses, expired or expiring items, and standard items missing for a facility.",
   "type": "module",
   "license": "MIT",
@@ -23,7 +24,8 @@
     "evals",
     "README.md",
     "CHANGELOG.md",
-    "LICENSE"
+    "LICENSE",
+    "server.json"
   ],
   "scripts": {
     "test": "node scripts/run-tests.cjs",

@@ -1,6 +1,7 @@
 {
   "name": "aspen-of-part-b",
   "version": "0.1.0",
+  "mcpName": "io.github.fpavia111-creator/aspen-of-part-b",
   "description": "Medicare Part B therapy for long-term residents: units over the 8-minute rule, missing GP/GO/GN modifiers, the KX threshold, therapy billed on days the resident was in a Part A stay, and duplicate lines.",
   "type": "module",
   "license": "MIT",
@@ -23,7 +24,8 @@
     "evals",
     "README.md",
     "CHANGELOG.md",
-    "LICENSE"
+    "LICENSE",
+    "server.json"
   ],
   "scripts": {
     "test": "node scripts/run-tests.cjs",

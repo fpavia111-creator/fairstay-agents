@@ -1,6 +1,7 @@
 {
   "name": "ash-of-ancillaries",
   "version": "0.1.0",
+  "mcpName": "io.github.fpavia111-creator/ash-of-ancillaries",
   "description": "Ancillary invoice review: pharmacy, therapy, lab, radiology and supply charges for residents not in the building, for residents whose payer should be billed instead, outside consolidated billing, above contract rates or duplicated, with credit request drafts.",
   "type": "module",
   "license": "MIT",
@@ -23,7 +24,8 @@
     "evals",
     "README.md",
     "CHANGELOG.md",
-    "LICENSE"
+    "LICENSE",
+    "server.json"
   ],
   "scripts": {
     "test": "node scripts/run-tests.cjs",

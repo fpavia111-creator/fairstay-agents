@@ -1,6 +1,7 @@
 {
   "name": "baobab-of-underwriting",
   "version": "0.1.0",
+  "mcpName": "io.github.fpavia111-creator/baobab-of-underwriting",
   "description": "Acquisition underwriting packet for a nursing home: trailing-twelve-month summary with one-time items removed, occupancy and payer mix, year-one projection, staffing model, value at your cap rate and valuation of receivables.",
   "type": "module",
   "license": "MIT",
@@ -23,7 +24,8 @@
     "evals",
     "README.md",
     "CHANGELOG.md",
-    "LICENSE"
+    "LICENSE",
+    "server.json"
   ],
   "scripts": {
     "test": "node scripts/run-tests.cjs",

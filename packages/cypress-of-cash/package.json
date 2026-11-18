@@ -1,6 +1,7 @@
 {
   "name": "cypress-of-cash",
   "version": "0.1.0",
+  "mcpName": "io.github.fpavia111-creator/cypress-of-cash",
   "description": "Daily bank reconciliation: bank lines with no book entry, book entries not on the bank, stale outstanding checks, deposits in transit too long and the unexplained difference.",
   "type": "module",
   "license": "MIT",
@@ -23,7 +24,8 @@
     "evals",
     "README.md",
     "CHANGELOG.md",
-    "LICENSE"
+    "LICENSE",
+    "server.json"
   ],
   "scripts": {
     "test": "node scripts/run-tests.cjs",

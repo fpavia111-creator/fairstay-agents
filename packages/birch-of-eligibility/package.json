@@ -1,6 +1,7 @@
 {
   "name": "birch-of-eligibility",
   "version": "0.1.0",
+  "mcpName": "io.github.fpavia111-creator/birch-of-eligibility",
   "description": "Eligibility for nursing-home residents: stale or missing checks, inactive or ending coverage, Medicare Part A benefit days running out, missing or short qualifying hospital stays, late admissions after the hospital stay and Medicaid renewals coming due.",
   "type": "module",
   "license": "MIT",
@@ -23,7 +24,8 @@
     "evals",
     "README.md",
     "CHANGELOG.md",
-    "LICENSE"
+    "LICENSE",
+    "server.json"
   ],
   "scripts": {
     "test": "node scripts/run-tests.cjs",

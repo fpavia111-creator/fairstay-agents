@@ -1,6 +1,7 @@
 {
   "name": "yew-of-length-of-stay",
   "version": "0.1.0",
+  "mcpName": "io.github.fpavia111-creator/yew-of-length-of-stay",
   "description": "Case management weekly meeting list for skilled stays: clinical reviews overdue, authorizations ending with no plan, discharges past their date, custodial residents still on a skilled payer, Medicare day 20 and day 100 coming up, and late NOMNC notices.",
   "type": "module",
   "license": "MIT",
@@ -23,7 +24,8 @@
     "evals",
     "README.md",
     "CHANGELOG.md",
-    "LICENSE"
+    "LICENSE",
+    "server.json"
   ],
   "scripts": {
     "test": "node scripts/run-tests.cjs",

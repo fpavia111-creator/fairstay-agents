@@ -1,6 +1,7 @@
 {
   "name": "redwood-of-cashflow",
   "version": "0.1.0",
+  "mcpName": "io.github.fpavia111-creator/redwood-of-cashflow",
   "description": "13-week cash projection for a nursing home from opening cash, AR collection rates by payer type, payroll dates, bills due and fixed payments, with the weeks below your minimum cash.",
   "type": "module",
   "license": "MIT",
@@ -23,7 +24,8 @@
     "evals",
     "README.md",
     "CHANGELOG.md",
-    "LICENSE"
+    "LICENSE",
+    "server.json"
   ],
   "scripts": {
     "test": "node scripts/run-tests.cjs",

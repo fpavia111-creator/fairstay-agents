@@ -1,6 +1,7 @@
 {
   "name": "hemlock-of-next-payer",
   "version": "0.1.0",
+  "mcpName": "io.github.fpavia111-creator/hemlock-of-next-payer",
   "description": "Next payer planning for long stays: residents whose Medicare days, managed care authorizations or private funds run out with no next payer planned, and when to start a Medicaid application.",
   "type": "module",
   "license": "MIT",
@@ -23,7 +24,8 @@
     "evals",
     "README.md",
     "CHANGELOG.md",
-    "LICENSE"
+    "LICENSE",
+    "server.json"
   ],
   "scripts": {
     "test": "node scripts/run-tests.cjs",

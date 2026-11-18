@@ -1,6 +1,7 @@
 {
   "name": "maple-of-medicaid-pending",
   "version": "0.1.0",
+  "mcpName": "io.github.fpavia111-creator/maple-of-medicaid-pending",
   "description": "Medicaid pending oversight: applications past the decision deadline, document requests due, no follow-up, approvals not yet billed, approvals with no patient liability set, denials with no appeal and pending residents with no application on file.",
   "type": "module",
   "license": "MIT",
@@ -23,7 +24,8 @@
     "evals",
     "README.md",
     "CHANGELOG.md",
-    "LICENSE"
+    "LICENSE",
+    "server.json"
   ],
   "scripts": {
     "test": "node scripts/run-tests.cjs",

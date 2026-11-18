@@ -1,6 +1,7 @@
 {
   "name": "spruce-of-liability",
   "version": "0.1.0",
+  "mcpName": "io.github.fpavia111-creator/spruce-of-liability",
   "description": "Patient liability (Medicaid share of cost) and private pay: liability not billed, billed short or over, unpaid balances, credit balances to refund and new liability notices not applied.",
   "type": "module",
   "license": "MIT",
@@ -23,7 +24,8 @@
     "evals",
     "README.md",
     "CHANGELOG.md",
-    "LICENSE"
+    "LICENSE",
+    "server.json"
   ],
   "scripts": {
     "test": "node scripts/run-tests.cjs",

@@ -40,7 +40,9 @@ export function friendlyError(err, root) {
   const r = resolve(root || '.');
   const rel = (p) => { const x = relative(r, String(p)); return x && !x.startsWith('..') && !isAbsolute(x) ? x.split('\\').join('/') : basename(String(p)); };
   let msg = err && err.code && FS_ERRORS[err.code] && err.syscall ? FS_ERRORS[err.code](err.path ? rel(err.path) : '') : String((err && err.message) || err);
-  for (const base of new Set([r, r.split('\\').join('/')])) msg = msg.split(base + sep).join('').split(base + '/').join('').split(base).join('.');
+  // strip the root; the relative path left behind is reported with '/' on every OS
+  const esc = (s) => s.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+  for (const base of new Set([r, r.split('\\').join('/')])) msg = msg.replace(new RegExp(`${esc(base)}[\\\\/]([^\\s'"\`:,;)]*)`, 'g'), (_, p) => p.split('\\').join('/')).split(base).join('.');
   return msg;
 }
 

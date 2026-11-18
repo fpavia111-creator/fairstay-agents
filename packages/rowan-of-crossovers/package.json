@@ -1,6 +1,7 @@
 {
   "name": "rowan-of-crossovers",
   "version": "0.1.0",
+  "mcpName": "io.github.fpavia111-creator/rowan-of-crossovers",
   "description": "Medicare-to-Medicaid crossovers for dual-eligible residents: Medicare coinsurance never crossed over, crossovers billed for the wrong amount, zero-paid crossovers to check against the state's lesser-of rule, and unpaid coinsurance to keep for the bad debt log.",
   "type": "module",
   "license": "MIT",
@@ -23,7 +24,8 @@
     "evals",
     "README.md",
     "CHANGELOG.md",
-    "LICENSE"
+    "LICENSE",
+    "server.json"
   ],
   "scripts": {
     "test": "node scripts/run-tests.cjs",

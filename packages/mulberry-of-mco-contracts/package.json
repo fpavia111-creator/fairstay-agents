@@ -1,6 +1,7 @@
 {
   "name": "mulberry-of-mco-contracts",
   "version": "0.1.0",
+  "mcpName": "io.github.fpavia111-creator/mulberry-of-mco-contracts",
   "description": "Managed care contract review: per-diem rates below your market benchmark, paid below contract, contracts ending or in their notice window, rates unchanged for years, and a payer matrix for the admissions team.",
   "type": "module",
   "license": "MIT",
@@ -23,7 +24,8 @@
     "evals",
     "README.md",
     "CHANGELOG.md",
-    "LICENSE"
+    "LICENSE",
+    "server.json"
   ],
   "scripts": {
     "test": "node scripts/run-tests.cjs",

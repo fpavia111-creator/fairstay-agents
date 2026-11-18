@@ -1,6 +1,7 @@
 {
   "name": "poplar-of-authorizations",
   "version": "0.1.0",
+  "mcpName": "io.github.fpavia111-creator/poplar-of-authorizations",
   "description": "Managed care authorizations against the daily census: days with no authorization, levels that differ from the authorized level, days past the authorized count, authorizations about to end and concurrent reviews due.",
   "type": "module",
   "license": "MIT",
@@ -23,7 +24,8 @@
     "evals",
     "README.md",
     "CHANGELOG.md",
-    "LICENSE"
+    "LICENSE",
+    "server.json"
   ],
   "scripts": {
     "test": "node scripts/run-tests.cjs",
