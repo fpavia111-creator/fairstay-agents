@@ -1,0 +1,11 @@
+Claim #,Resident #,Resident Name,Payer,Service From,Service To,Days,Level of Care,Charges
+C9001,R101,Ada Whitfield,Medicare A,2026-02-01,2026-02-28,28,,18200.00
+C9002,R102,Bruno Kessler,Lone Star Medicaid (fictional),2026-02-01,2026-02-20,20,,4910.00
+C9003,R103,Clara Okafor,Lone Star Medicaid (fictional),2026-02-01,2026-02-28,28,,6874.00
+C9004,R104,Dmitri Varga,Lone Star Medicaid (fictional),2026-02-01,2026-02-28,28,,6874.00
+C9005,R105,Elena Brooks,Private Pay,2026-02-01,2026-02-28,28,,10640.00
+C9006,R106,Felix Amari,Gulf Coast Advantage HMO (fictional),2026-02-01,2026-02-28,28,L3,17080.00
+C9007,R107,Grace Lindqvist,Lone Star Medicaid (fictional),2026-02-01,2026-02-28,28,,6874.00
+C9008,R108,Hiro Tanaka,Lone Star Medicaid (fictional),2026-02-01,2026-02-28,28,,6874.00
+C9009,R108,Hiro Tanaka,Lone Star Medicaid (fictional),2026-02-15,2026-02-28,14,,3437.00
+C9010,R109,Iris Mendel,Lone Star Medicaid (fictional),2026-02-01,2026-02-28,28,,6720.00

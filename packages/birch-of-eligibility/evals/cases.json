@@ -1,0 +1,250 @@
+{
+ "suite": "birch-of-eligibility",
+ "root": "..",
+ "data_note": "Fictional home, residents and payers in ../fixtures. Deterministic checks; no model is called.",
+ "cases": [
+  {
+   "id": "totals",
+   "tool": "birch_check",
+   "args": {
+    "census": "fixtures/census.csv",
+    "eligibility": "fixtures/eligibility.csv",
+    "stays": "fixtures/stays.csv",
+    "rules": "fixtures/rules.json",
+    "as_of": "2026-03-02"
+   },
+   "expect": {
+    "status": "executed",
+    "equals": {
+     "result.residents": 8,
+     "result.findings": 9
+    }
+   }
+  },
+  {
+   "id": "order-most-urgent-first",
+   "tool": "birch_check",
+   "args": {
+    "census": "fixtures/census.csv",
+    "eligibility": "fixtures/eligibility.csv",
+    "stays": "fixtures/stays.csv",
+    "rules": "fixtures/rules.json",
+    "as_of": "2026-03-02"
+   },
+   "expect": {
+    "equals": {
+     "result.items.0.status": "coverage_ended",
+     "result.items.1.status": "inactive",
+     "result.items.2.status": "short_qualifying_stay",
+     "result.items.3.status": "late_admission",
+     "result.items.4.status": "no_check",
+     "result.items.5.status": "stale_check",
+     "result.items.6.status": "benefit_ending",
+     "result.items.7.status": "coverage_ending",
+     "result.items.8.status": "renewal_due"
+    }
+   }
+  },
+  {
+   "id": "part-a-days-left",
+   "tool": "birch_check",
+   "args": {
+    "census": "fixtures/census.csv",
+    "eligibility": "fixtures/eligibility.csv",
+    "stays": "fixtures/stays.csv",
+    "rules": "fixtures/rules.json",
+    "as_of": "2026-03-02",
+    "status": "benefit_ending"
+   },
+   "expect": {
+    "equals": {
+     "result.items.0.days_left": 5,
+     "result.items.0.days_used": 95
+    },
+    "contains": [
+     "12 earlier + 83 this stay"
+    ]
+   }
+  },
+  {
+   "id": "short-stay-two-days",
+   "tool": "birch_check",
+   "args": {
+    "census": "fixtures/census.csv",
+    "eligibility": "fixtures/eligibility.csv",
+    "stays": "fixtures/stays.csv",
+    "rules": "fixtures/rules.json",
+    "as_of": "2026-03-02",
+    "status": "short_qualifying_stay"
+   },
+   "expect": {
+    "equals": {
+     "result.items.0.inpatient_days": 2
+    },
+    "contains": [
+     "discharge day not counted"
+    ]
+   }
+  },
+  {
+   "id": "late-admission-37-days",
+   "tool": "birch_check",
+   "args": {
+    "census": "fixtures/census.csv",
+    "eligibility": "fixtures/eligibility.csv",
+    "stays": "fixtures/stays.csv",
+    "rules": "fixtures/rules.json",
+    "as_of": "2026-03-02",
+    "status": "late_admission"
+   },
+   "expect": {
+    "equals": {
+     "result.items.0.days_after_discharge": 37
+    }
+   }
+  },
+  {
+   "id": "waiver-skips-stay-check",
+   "tool": "birch_check",
+   "args": {
+    "census": "fixtures/census.csv",
+    "eligibility": "fixtures/eligibility.csv",
+    "stays": "fixtures/stays.csv",
+    "rules": "fixtures/rules.json",
+    "as_of": "2026-03-02",
+    "status": "coverage_ending"
+   },
+   "expect": {
+    "equals": {
+     "result.items.0.days_left": 10
+    },
+    "not_contains": [
+     "short_qualifying_stay\",\"resident_id\":\"MRN"
+    ]
+   }
+  },
+  {
+   "id": "default-stale-days-30",
+   "tool": "birch_check",
+   "args": {
+    "census": "fixtures/census.csv",
+    "eligibility": "fixtures/eligibility.csv",
+    "stays": "fixtures/stays.csv",
+    "as_of": "2026-03-02"
+   },
+   "expect": {
+    "equals": {
+     "result.by_status.stale_check": 1
+    }
+   }
+  },
+  {
+   "id": "without-stays-every-part-a-needs-one",
+   "tool": "birch_check",
+   "args": {
+    "census": "fixtures/census.csv",
+    "eligibility": "fixtures/eligibility.csv",
+    "rules": "fixtures/rules.json",
+    "as_of": "2026-03-02"
+   },
+   "expect": {
+    "equals": {
+     "result.by_status.no_qualifying_stay": 3
+    }
+   }
+  },
+  {
+   "id": "earlier-date-more-days-left",
+   "tool": "birch_check",
+   "args": {
+    "census": "fixtures/census.csv",
+    "eligibility": "fixtures/eligibility.csv",
+    "stays": "fixtures/stays.csv",
+    "rules": "fixtures/rules.json",
+    "as_of": "2026-02-21"
+   },
+   "expect": {
+    "equals": {
+     "result.by_status.benefit_ending": 1
+    }
+   }
+  },
+  {
+   "id": "names-masked",
+   "tool": "birch_check",
+   "args": {
+    "census": "fixtures/census.csv",
+    "eligibility": "fixtures/eligibility.csv",
+    "stays": "fixtures/stays.csv",
+    "rules": "fixtures/rules.json",
+    "as_of": "2026-03-02"
+   },
+   "expect": {
+    "matches": [
+     "\"resident_id\":\"MRN-[0-9a-f]{8}\""
+    ],
+    "not_contains": [
+     "Halvorsen",
+     "R205"
+    ]
+   }
+  },
+  {
+   "id": "bad-rules-refused",
+   "tool": "birch_check",
+   "args": {
+    "census": "fixtures/census.csv",
+    "eligibility": "fixtures/eligibility.csv",
+    "stays": "fixtures/stays.csv",
+    "rules": "fixtures/rules-typo.json",
+    "as_of": "2026-03-02"
+   },
+   "expect": {
+    "status": "error",
+    "contains": [
+     "stale_days"
+    ]
+   }
+  },
+  {
+   "id": "report-in-portuguese",
+   "tool": "birch_write_report",
+   "args": {
+    "census": "fixtures/census.csv",
+    "eligibility": "fixtures/eligibility.csv",
+    "stays": "fixtures/stays.csv",
+    "rules": "fixtures/rules.json",
+    "as_of": "2026-03-02",
+    "language": "pt",
+    "out_dir": "evergreen-out/eval-birch"
+   },
+   "expect": {
+    "status": "executed",
+    "equals": {
+     "result.lang": "pt"
+    }
+   }
+  },
+  {
+   "id": "portal-login-refused",
+   "tool": "eligibility_portal_login",
+   "args": {},
+   "expect": {
+    "status": "blocked",
+    "decision": "block"
+   }
+  },
+  {
+   "id": "recall-empty-memory",
+   "tool": "birch_recall",
+   "args": {},
+   "expect": {
+    "status": "executed",
+    "contains": [
+     "memory is empty",
+     "qualifying_stay_waiver"
+    ]
+   }
+  }
+ ]
+}

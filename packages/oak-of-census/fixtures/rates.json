@@ -1,0 +1,10 @@
+{
+  "rates": [
+    { "payer_type": "medicare_a", "rate": 650 },
+    { "payer": "Lone Star Medicaid (fictional)", "rate": 245.5 },
+    { "payer_type": "private", "rate": 380 },
+    { "payer": "Gulf Coast Advantage HMO (fictional)", "level": "L2", "rate": 520 },
+    { "payer": "Gulf Coast Advantage HMO (fictional)", "level": "L3", "rate": 610 }
+  ],
+  "bed_hold_payers": []
+}

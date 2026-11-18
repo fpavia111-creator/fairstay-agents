@@ -1,0 +1,51 @@
+{
+  "name": "remedy-core",
+  "version": "0.2.0",
+  "description": "Shared core for Remedy domain agents: pinned-model pack manifests, allow/ask/block policy, Review/Assist/Auto modes with caps and a kill switch, hash-chained JSONL audit logs, a zero-dependency stdio MCP server and fixture-based evals.",
+  "type": "module",
+  "license": "MIT",
+  "author": "Kurt Francisco",
+  "engines": {
+    "node": ">=20"
+  },
+  "main": "src/index.js",
+  "exports": {
+    ".": "./src/index.js",
+    "./testkit": "./src/testkit.js",
+    "./package.json": "./package.json"
+  },
+  "bin": {
+    "remedy-approve": "bin/remedy-approve.js",
+    "remedy-verify-log": "bin/remedy-verify-log.js",
+    "remedy-new-agent": "bin/remedy-new-agent.js",
+    "remedy-license": "bin/remedy-license.js"
+  },
+  "files": [
+    "src",
+    "bin",
+    "README.md",
+    "LICENSE"
+  ],
+  "scripts": {
+    "test": "node scripts/run-tests.cjs"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/fpavia111-creator/remedy-agents.git",
+    "directory": "packages/remedy-core"
+  },
+  "homepage": "https://github.com/fpavia111-creator/remedy-agents/tree/main/packages/remedy-core#readme",
+  "bugs": {
+    "url": "https://github.com/fpavia111-creator/remedy-agents/issues"
+  },
+  "keywords": [
+    "mcp",
+    "mcp-server",
+    "model-context-protocol",
+    "ai-agents",
+    "guardrails",
+    "human-in-the-loop",
+    "audit-log",
+    "remedy"
+  ]
+}

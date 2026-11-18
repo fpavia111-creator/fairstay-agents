@@ -1,0 +1,10 @@
+Resident #,Resident Name,Payer,Effective Date,End Date,Bed Status
+R301,Tomas Lindgren,Medicare A,2026-01-01,,In House
+R302,Uma Castellanos,Medicare A,2026-02-10,,In House
+R303,Victor Nwosu,,2026-03-05,2026-03-09,In House
+R303,Victor Nwosu,Lone Star Medicaid (fictional),2026-03-09,,In House
+R304,Wren Okoye,Lone Star Medicaid (fictional),2025-10-01,,In House
+R304,Wren Okoye,Private Pay,2026-03-20,,In House
+R305,Xavier Duval,LS Medicaid,2025-06-01,,In House
+R306,Yara Whitcombe,Medicare A,2026-03-01,,In House
+R307,Zane Morrow,Private Pay,2025-12-01,,In House

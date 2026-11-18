@@ -1,0 +1,12 @@
+{
+  "mcpServers": {
+    "oak-of-census": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "oak-of-census@0.1.0",
+        "mcp"
+      ]
+    }
+  }
+}

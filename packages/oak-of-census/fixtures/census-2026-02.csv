@@ -1,0 +1,14 @@
+Resident #,Resident Name,Facility,Payer,Effective Date,End Date,Bed Status,Level of Care,Room
+R101,Ada Whitfield,Cedar Hollow Health and Rehab,Medicare A,2026-01-20,,In House,,101-A
+R102,Bruno Kessler,Cedar Hollow Health and Rehab,Lone Star Medicaid (fictional),2025-06-01,,In House,,102-A
+R103,Clara Okafor,Cedar Hollow Health and Rehab,Medicare A,2026-01-25,2026-02-15,In House,,103-B
+R103,Clara Okafor,Cedar Hollow Health and Rehab,Lone Star Medicaid (fictional),2026-02-15,,In House,,103-B
+R104,Dmitri Varga,Cedar Hollow Health and Rehab,Lone Star Medicaid (fictional),2025-11-01,2026-02-10,In House,,104-A
+R104,Dmitri Varga,Cedar Hollow Health and Rehab,Lone Star Medicaid (fictional),2026-02-10,2026-02-13,Hospital Leave,,104-A
+R104,Dmitri Varga,Cedar Hollow Health and Rehab,Lone Star Medicaid (fictional),2026-02-13,,In House,,104-A
+R105,Elena Brooks,Cedar Hollow Health and Rehab,Private Pay,2025-12-01,2026-02-20,In House,,105-A
+R106,Felix Amari,Cedar Hollow Health and Rehab,Gulf Coast Advantage HMO (fictional),2026-01-28,,In House,L2,106-B
+R107,Grace Lindqvist,Cedar Hollow Health and Rehab,Lone Star Medicaid (fictional),2025-09-01,,In House,,107-A
+R107,Grace Lindqvist,Cedar Hollow Health and Rehab,Medicare A,2026-02-18,,In House,,107-A
+R108,Hiro Tanaka,Cedar Hollow Health and Rehab,Lone Star Medicaid (fictional),2025-03-01,,In House,,108-A
+R109,Iris Mendel,Cedar Hollow Health and Rehab,Lone Star Medicaid (fictional),2025-10-01,,In House,,109-B

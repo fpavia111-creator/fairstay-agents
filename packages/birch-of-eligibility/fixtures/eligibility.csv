@@ -1,0 +1,7 @@
+Resident #,Resident Name,Payer,Status,Checked On,Coverage From,Coverage To,Part A Days Used,Renewal Date
+R201,Jonah Pereira,Medicare A,Active,2026-03-01,,,0,
+R202,Kiri Halvorsen,Medicare A,Active,2026-02-27,,,12,
+R203,Leona Dubois,Medicare A,Active,2026-01-10,,,0,
+R204,Mateo Rinaldi,Lone Star Medicaid (fictional),Active,2026-01-05,2025-04-01,2026-02-28,,2026-04-10
+R205,Nadia Petrov,Lone Star Medicaid (fictional),Not eligible,2026-02-28,,,,
+R206,Omar Haddad,Gulf Coast Advantage HMO (fictional),Active,2026-02-25,2026-01-01,2026-03-12,,

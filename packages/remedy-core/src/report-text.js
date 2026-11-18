@@ -1,0 +1,181 @@
+// Words in the reports people read, in the nine report languages: the page chrome,
+// the column headings every Remedy worklist uses, and the denial categories.
+// Reason sentences inside rows stay in English (they quote codes and amounts the
+// same way in every language). Written by Claude; native review pending.
+//
+// Order in every row: en, de, fr, es, pt (Brazil), it, ja, zh (Simplified), ko.
+import { LANGS, normLang } from './lang.js';
+
+const row = (...v) => Object.fromEntries(LANGS.map((l, i) => [l, v[i] ?? v[0]]));
+
+export const REPORT_TEXT = {
+  all_rows: row('All rows ({n})', 'Alle Zeilen ({n})', 'Toutes les lignes ({n})', 'Todas las filas ({n})', 'Todas as linhas ({n})', 'Tutte le righe ({n})', '全行 ({n})', '全部行 ({n})', '전체 행 ({n})'),
+  limits: row('Limits', 'Grenzen', 'Limites', 'Límites', 'Limites', 'Limiti', '制約', '局限', '한계'),
+  none: row('None.', 'Keine.', 'Aucun.', 'Ninguno.', 'Nenhum.', 'Nessuno.', 'なし。', '无。', '없음.'),
+  footer: row(
+    'Written by a Remedy agent from your files on this computer. Nothing was sent, submitted or paid. This page contains patient information: keep it in your secure folder and do not e-mail it.',
+    'Von einem Remedy-Agenten aus Ihren Dateien auf diesem Rechner erstellt. Nichts wurde gesendet, eingereicht oder bezahlt. Diese Seite enthält Patientendaten: Bewahren Sie sie in Ihrem geschützten Ordner auf und versenden Sie sie nicht per E-Mail.',
+    'Rédigé par un agent Remedy à partir de vos fichiers sur cet ordinateur. Rien n’a été envoyé, transmis ni payé. Cette page contient des données de patients : conservez-la dans votre dossier sécurisé et ne l’envoyez pas par e-mail.',
+    'Generado por un agente de Remedy a partir de sus archivos en este equipo. No se envió, presentó ni pagó nada. Esta página contiene datos de pacientes: guárdela en su carpeta segura y no la envíe por correo electrónico.',
+    'Gerado por um agente Remedy a partir dos seus arquivos neste computador. Nada foi enviado, submetido ou pago. Esta página contém dados de pacientes: guarde-a na sua pasta segura e não a envie por e-mail.',
+    'Prodotto da un agente Remedy dai vostri file su questo computer. Nulla è stato inviato, trasmesso o pagato. Questa pagina contiene dati dei pazienti: conservatela nella cartella protetta e non inviatela per e-mail.',
+    'このコンピューター上のファイルから Remedy エージェントが作成しました。送信・提出・支払いは一切行っていません。このページには患者情報が含まれます。安全なフォルダーに保管し、メールで送らないでください。',
+    '由 Remedy 智能体根据本机文件生成。未发送、未提交、未付款。本页面含有患者信息：请保存在安全文件夹中，不要通过电子邮件发送。',
+    '이 컴퓨터의 파일로 Remedy 에이전트가 작성했습니다. 아무것도 전송·제출·지급하지 않았습니다. 이 페이지에는 환자 정보가 있으니 보안 폴더에 보관하고 이메일로 보내지 마세요.'),
+  review_note: row('', 'Übersetzt von Claude; die Prüfung durch Muttersprachler steht noch aus.', 'Traduit par Claude ; relecture par un locuteur natif en attente.', 'Traducido por Claude; pendiente de revisión por un hablante nativo.', 'Traduzido pelo Claude; revisão por falante nativo pendente.', 'Tradotto da Claude; revisione da parte di un madrelingua in sospeso.', 'Claude による翻訳です。ネイティブ話者による確認はまだです。', '由 Claude 翻译，尚待母语人士审校。', 'Claude가 번역했으며 원어민 검토는 아직 하지 않았습니다.'),
+  reasons_english: row('', 'Die Begründungen in den Zeilen stehen auf Englisch, damit Codes und Beträge überall gleich lauten.', 'Les motifs dans les lignes restent en anglais pour que codes et montants se lisent partout de la même façon.', 'Los motivos de cada fila quedan en inglés para que códigos e importes se lean igual en todas partes.', 'Os motivos em cada linha ficam em inglês para que códigos e valores sejam lidos da mesma forma em todo lugar.', 'Le motivazioni nelle righe restano in inglese, così codici e importi si leggono ovunque allo stesso modo.', '各行の理由はコードと金額をどこでも同じに読めるよう英語のままです。', '各行中的原因说明保留英文，以便代码和金额在各处一致。', '각 행의 사유는 코드와 금액을 어디서나 같게 읽도록 영어로 둡니다.'),
+};
+
+// Column headings (keys are the column names the agents write).
+export const COLUMN_LABELS = {
+  claim_id: row('Claim', 'Abrechnungsfall', 'Demande', 'Reclamación', 'Guia', 'Pratica', '請求番号', '理赔单号', '청구 번호'),
+  payer_claim_id: row('Payer claim number', 'Kostenträger-Fallnummer', 'N° de demande du payeur', 'N.º de reclamación del pagador', 'N.º da guia na operadora', 'N. pratica del pagatore', '支払者側請求番号', '付款方理赔号', '지급자 청구 번호'),
+  payer: row('Payer', 'Kostenträger', 'Payeur', 'Pagador', 'Operadora', 'Pagatore', '支払者', '付款方', '지급자'),
+  patient: row('Patient', 'Patient', 'Patient', 'Paciente', 'Paciente', 'Paziente', '患者', '患者', '환자'),
+  patient_name: row('Patient', 'Patient', 'Patient', 'Paciente', 'Paciente', 'Paziente', '患者', '患者', '환자'),
+  member_id: row('Member id', 'Versichertennummer', 'N° d’adhérent', 'N.º de afiliado', 'N.º da carteirinha', 'N. assistito', '被保険者番号', '会员号', '가입자 번호'),
+  account: row('Account', 'Konto', 'Compte', 'Cuenta', 'Conta', 'Conto', 'アカウント', '账户', '계정'),
+  provider: row('Provider', 'Leistungserbringer', 'Prestataire', 'Proveedor', 'Prestador', 'Erogatore', '診療提供者', '服务提供者', '진료 제공자'),
+  npi: row('NPI', 'NPI', 'NPI', 'NPI', 'NPI', 'NPI', 'NPI', 'NPI', 'NPI'),
+  date_of_service: row('Date of service', 'Leistungsdatum', 'Date de soins', 'Fecha de servicio', 'Data do atendimento', 'Data della prestazione', '診療日', '服务日期', '진료일'),
+  date: row('Date', 'Datum', 'Date', 'Fecha', 'Data', 'Data', '日付', '日期', '날짜'),
+  code: row('Code', 'Code', 'Code', 'Código', 'Código', 'Codice', 'コード', '代码', '코드'),
+  modifiers: row('Modifiers', 'Modifikatoren', 'Modificateurs', 'Modificadores', 'Modificadores', 'Modificatori', 'モディファイア', '修饰符', '수정자'),
+  units: row('Units', 'Einheiten', 'Unités', 'Unidades', 'Unidades', 'Unità', '単位数', '单位', '단위'),
+  billed: row('Billed', 'Berechnet', 'Facturé', 'Facturado', 'Cobrado', 'Fatturato', '請求額', '账单金额', '청구액'),
+  charge: row('Charge', 'Betrag', 'Montant', 'Cargo', 'Valor', 'Importo', '請求額', '收费', '청구액'),
+  allowed: row('Allowed', 'Anerkannt', 'Admis', 'Permitido', 'Permitido', 'Ammesso', '許容額', '允许金额', '인정액'),
+  paid: row('Paid', 'Bezahlt', 'Payé', 'Pagado', 'Pago', 'Pagato', '支払額', '已付', '지급액'),
+  expected: row('Expected', 'Erwartet', 'Attendu', 'Esperado', 'Esperado', 'Atteso', '期待額', '应付', '예상액'),
+  variance: row('Difference', 'Differenz', 'Écart', 'Diferencia', 'Diferença', 'Differenza', '差額', '差额', '차액'),
+  difference: row('Difference', 'Differenz', 'Écart', 'Diferencia', 'Diferença', 'Differenza', '差額', '差额', '차액'),
+  underpaid: row('Underpaid', 'Zu wenig gezahlt', 'Sous-payé', 'Pago de menos', 'Pago a menor', 'Pagato in meno', '過少支払', '少付', '과소 지급'),
+  amount: row('Amount', 'Betrag', 'Montant', 'Importe', 'Valor', 'Importo', '金額', '金额', '금액'),
+  total: row('Total', 'Summe', 'Total', 'Total', 'Total', 'Totale', '合計', '合计', '합계'),
+  count: row('Count', 'Anzahl', 'Nombre', 'Cantidad', 'Quantidade', 'Numero', '件数', '数量', '건수'),
+  claims: row('Claims', 'Fälle', 'Demandes', 'Reclamaciones', 'Guias', 'Pratiche', '請求件数', '理赔数', '청구 건수'),
+  status: row('Status', 'Status', 'Statut', 'Estado', 'Situação', 'Stato', '状態', '状态', '상태'),
+  findings: row('Findings', 'Befunde', 'Constats', 'Hallazgos', 'Achados', 'Rilievi', '検出事項', '发现', '발견 사항'),
+  reasons: row('Reasons', 'Gründe', 'Motifs', 'Motivos', 'Motivos', 'Motivi', '理由', '原因', '사유'),
+  reason: row('Reason', 'Grund', 'Motif', 'Motivo', 'Motivo', 'Motivo', '理由', '原因', '사유'),
+  category: row('Category', 'Kategorie', 'Catégorie', 'Categoría', 'Categoria', 'Categoria', '分類', '类别', '분류'),
+  root_cause: row('Root cause', 'Ursache', 'Cause racine', 'Causa raíz', 'Causa raiz', 'Causa principale', '根本原因', '根本原因', '근본 원인'),
+  next_step: row('Next step', 'Nächster Schritt', 'Étape suivante', 'Siguiente paso', 'Próximo passo', 'Passo successivo', '次の対応', '下一步', '다음 단계'),
+  team: row('Team', 'Team', 'Équipe', 'Equipo', 'Equipe', 'Team', '担当チーム', '负责团队', '담당 팀'),
+  priority: row('Priority', 'Priorität', 'Priorité', 'Prioridad', 'Prioridade', 'Priorità', '優先度', '优先级', '우선순위'),
+  days: row('Days', 'Tage', 'Jours', 'Días', 'Dias', 'Giorni', '日数', '天数', '일수'),
+  age_days: row('Age (days)', 'Alter (Tage)', 'Âge (jours)', 'Antigüedad (días)', 'Idade (dias)', 'Età (giorni)', '経過日数', '账龄（天）', '경과 일수'),
+  bucket: row('Aging bucket', 'Altersklasse', 'Tranche d’ancienneté', 'Tramo de antigüedad', 'Faixa de vencimento', 'Fascia di anzianità', 'エイジング区分', '账龄区间', '연령 구간'),
+  balance: row('Balance', 'Saldo', 'Solde', 'Saldo', 'Saldo', 'Saldo', '残高', '余额', '잔액'),
+  deadline: row('Deadline', 'Frist', 'Échéance', 'Plazo', 'Prazo', 'Scadenza', '期限', '截止日期', '기한'),
+  days_left: row('Days left', 'Verbleibende Tage', 'Jours restants', 'Días restantes', 'Dias restantes', 'Giorni rimasti', '残り日数', '剩余天数', '남은 일수'),
+  decision: row('Decision', 'Entscheidung', 'Décision', 'Decisión', 'Decisão', 'Decisione', '判断', '决定', '결정'),
+  decided_by: row('Decided by', 'Entschieden von', 'Décidé par', 'Decidido por', 'Decidido por', 'Deciso da', '判断者', '决定人', '결정자'),
+  notes: row('Notes', 'Notizen', 'Notes', 'Notas', 'Observações', 'Note', 'メモ', '备注', '메모'),
+  denied: row('Denied', 'Abgelehnt', 'Refusé', 'Denegado', 'Glosado', 'Respinto', '拒否', '拒付', '거절'),
+  denial_rate: row('Denial rate %', 'Ablehnungsquote %', 'Taux de refus %', 'Tasa de denegación %', 'Taxa de glosa %', 'Tasso di rifiuto %', '拒否率 %', '拒付率 %', '거절률 %'),
+  days_to_pay: row('Days to pay', 'Tage bis Zahlung', 'Délai de paiement (jours)', 'Días hasta el pago', 'Dias até o pagamento', 'Giorni al pagamento', '支払までの日数', '付款天数', '지급까지 일수'),
+  check_number: row('Check / EFT', 'Scheck / Überweisung', 'Chèque / virement', 'Cheque / transferencia', 'Cheque / transferência', 'Assegno / bonifico', '小切手 / 電子送金', '支票 / 电子转账', '수표 / 전자이체'),
+  deposit: row('Deposit', 'Gutschrift', 'Dépôt', 'Depósito', 'Depósito', 'Accredito', '入金', '入账', '입금'),
+  matched: row('Matched', 'Zugeordnet', 'Rapproché', 'Conciliado', 'Conciliado', 'Abbinato', '照合済み', '已匹配', '대사 완료'),
+  rate: row('Rate', 'Satz', 'Taux', 'Tarifa', 'Taxa', 'Tariffa', '料率', '费率', '요율'),
+  percent: row('%', '%', '%', '%', '%', '%', '%', '%', '%'),
+  auth_number: row('Authorization', 'Genehmigung', 'Autorisation', 'Autorización', 'Autorização', 'Autorizzazione', '事前承認番号', '预授权号', '사전 승인 번호'),
+  expires: row('Expires', 'Läuft ab', 'Expire le', 'Vence', 'Vence em', 'Scade', '有効期限', '到期', '만료'),
+  due: row('Due', 'Fällig', 'Échéance', 'Vence', 'Vencimento', 'Scadenza', '期日', '到期日', '기한'),
+  estimate: row('Estimate', 'Kostenvoranschlag', 'Devis', 'Estimación', 'Estimativa', 'Preventivo', '見積額', '估算', '견적'),
+  final: row('Final bill', 'Endrechnung', 'Facture finale', 'Factura final', 'Conta final', 'Fattura finale', '最終請求', '最终账单', '최종 청구'),
+  fee: row('Fee', 'Gebühr', 'Tarif', 'Tarifa', 'Tarifa', 'Tariffa', '料金', '费用', '수가'),
+  medicare: row('Medicare', 'Medicare', 'Medicare', 'Medicare', 'Medicare', 'Medicare', 'Medicare', 'Medicare', 'Medicare'),
+  ratio: row('Ratio', 'Verhältnis', 'Ratio', 'Proporción', 'Proporção', 'Rapporto', '比率', '比率', '비율'),
+  installment: row('Installment', 'Rate', 'Échéance', 'Cuota', 'Parcela', 'Rata', '分割払額', '分期金额', '분할 납부액'),
+  missed: row('Missed', 'Versäumt', 'Manqué', 'Omitido', 'Em atraso', 'Saltato', '未払回数', '未付期数', '미납'),
+  next_due: row('Next due', 'Nächste Fälligkeit', 'Prochaine échéance', 'Próximo vencimiento', 'Próximo vencimento', 'Prossima scadenza', '次回期日', '下次到期', '다음 기한'),
+  refund_due: row('Refund due', 'Erstattung fällig', 'Remboursement dû', 'Reembolso debido', 'Reembolso devido', 'Rimborso dovuto', '返金期限', '应退款', '환불 기한'),
+  credit: row('Credit', 'Guthaben', 'Crédit', 'Crédito', 'Crédito', 'Credito', '貸方残高', '贷方余额', '대변 잔액'),
+  document: row('Document', 'Unterlage', 'Document', 'Documento', 'Documento', 'Documento', '書類', '文件', '서류'),
+  missing: row('Missing', 'Fehlt', 'Manquant', 'Falta', 'Faltando', 'Mancante', '不足', '缺失', '누락'),
+  file: row('File', 'Datei', 'Fichier', 'Archivo', 'Arquivo', 'File', 'ファイル', '文件', '파일'),
+  agent: row('Agent', 'Agent', 'Agent', 'Agente', 'Agente', 'Agente', 'エージェント', '智能体', '에이전트'),
+  metric: row('Measure', 'Kennzahl', 'Indicateur', 'Indicador', 'Indicador', 'Indicatore', '指標', '指标', '지표'),
+  value: row('Value', 'Wert', 'Valeur', 'Valor', 'Valor', 'Valore', '値', '数值', '값'),
+  target: row('Target', 'Ziel', 'Objectif', 'Objetivo', 'Meta', 'Obiettivo', '目標', '目标', '목표'),
+  minutes: row('Minutes', 'Minuten', 'Minutes', 'Minutos', 'Minutos', 'Minuti', '分', '分钟', '분'),
+  base_units: row('Base units', 'Basiseinheiten', 'Unités de base', 'Unidades base', 'Unidades base', 'Unità base', '基本単位', '基本单位', '기본 단위'),
+  time_units: row('Time units', 'Zeiteinheiten', 'Unités de temps', 'Unidades de tiempo', 'Unidades de tempo', 'Unità di tempo', '時間単位', '时间单位', '시간 단위'),
+  tooth: row('Tooth', 'Zahn', 'Dent', 'Diente', 'Dente', 'Dente', '歯番号', '牙位', '치아'),
+  severity: row('Severity', 'Schweregrad', 'Gravité', 'Gravedad', 'Gravidade', 'Gravità', '重大度', '严重程度', '심각도'),
+  field: row('Field', 'Feld', 'Champ', 'Campo', 'Campo', 'Campo', '項目', '字段', '필드'),
+  message: row('Finding', 'Befund', 'Constat', 'Hallazgo', 'Achado', 'Rilievo', '指摘', '发现', '지적 사항'),
+  fix: row('How to fix', 'Behebung', 'Correction', 'Cómo corregir', 'Como corrigir', 'Come correggere', '修正方法', '修正方法', '수정 방법'),
+  line: row('Line', 'Zeile', 'Ligne', 'Línea', 'Linha', 'Riga', '行', '行', '행'),
+  diagnoses: row('Diagnoses', 'Diagnosen', 'Diagnostics', 'Diagnósticos', 'Diagnósticos', 'Diagnosi', '診断', '诊断', '진단'),
+  pos: row('Place of service', 'Leistungsort', 'Lieu de soins', 'Lugar de servicio', 'Local do atendimento', 'Luogo della prestazione', '診療場所', '服务地点', '진료 장소'),
+  trace_number: row('Trace number', 'Referenznummer', 'N° de trace', 'N.º de rastreo', 'N.º de rastreio', 'N. di traccia', 'トレース番号', '追踪号', '추적 번호'),
+  payment_date: row('Payment date', 'Zahlungsdatum', 'Date de paiement', 'Fecha de pago', 'Data do pagamento', 'Data di pagamento', '支払日', '付款日期', '지급일'),
+  issue: row('Issue', 'Problem', 'Problème', 'Problema', 'Problema', 'Problema', '問題', '问题', '문제'),
+  source: row('Source', 'Quelle', 'Source', 'Fuente', 'Fonte', 'Fonte', '出典', '来源', '출처'),
+  modifier: row('Modifier', 'Modifikator', 'Modificateur', 'Modificador', 'Modificador', 'Modificatore', 'モディファイア', '修饰符', '수정자'),
+  segment: row('Segment', 'Segment', 'Segment', 'Segmento', 'Segmento', 'Segmento', 'セグメント', '段', '세그먼트'),
+  payer_id: row('Payer id', 'Kostenträger-ID', 'Identifiant du payeur', 'ID del pagador', 'ID da operadora', 'ID pagatore', '支払者ID', '付款方编号', '지급자 ID'),
+  appointment_id: row('Appointment', 'Termin', 'Rendez-vous', 'Cita', 'Agendamento', 'Appuntamento', '予約', '预约', '예약'),
+  plan: row('Plan', 'Tarif', 'Régime', 'Plan', 'Plano', 'Piano', 'プラン', '计划', '플랜'),
+  action: row('Action', 'Maßnahme', 'Action', 'Acción', 'Ação', 'Azione', '対応', '操作', '조치'),
+  owner: row('Owner', 'Verantwortlich', 'Responsable', 'Responsable', 'Responsável', 'Responsabile', '担当者', '负责人', '담당자'),
+  month: row('Month', 'Monat', 'Mois', 'Mes', 'Mês', 'Mese', '月', '月份', '월'),
+  share: row('Share', 'Anteil', 'Part', 'Proporción', 'Participação', 'Quota', '割合', '占比', '비율'),
+  rule: row('Rule', 'Regel', 'Règle', 'Regla', 'Regra', 'Regola', 'ルール', '规则', '규칙'),
+  risk: row('Risk', 'Risiko', 'Risque', 'Riesgo', 'Risco', 'Rischio', 'リスク', '风险', '위험'),
+  service: row('Service', 'Leistung', 'Prestation', 'Servicio', 'Serviço', 'Prestazione', 'サービス', '服务', '서비스'),
+};
+
+/** Denial category labels for reports. */
+export const CATEGORY_LABELS = {
+  eligibility: row('Eligibility or coverage', 'Anspruch oder Versicherungsschutz', 'Droits ou couverture', 'Elegibilidad o cobertura', 'Elegibilidade ou cobertura', 'Idoneità o copertura', '資格・補償範囲', '资格或承保', '자격 또는 보장'),
+  registration: row('Registration or demographics', 'Aufnahme- oder Stammdaten', 'Admission ou données démographiques', 'Registro o datos demográficos', 'Cadastro ou dados demográficos', 'Accettazione o dati anagrafici', '受付・患者基本情報', '登记或人口信息', '등록 또는 인적 정보'),
+  authorization: row('Prior authorization or referral', 'Vorabgenehmigung oder Überweisung', 'Accord préalable ou adressage', 'Autorización previa o derivación', 'Autorização prévia ou encaminhamento', 'Autorizzazione preventiva o invio', '事前承認・紹介', '预授权或转诊', '사전 승인 또는 의뢰'),
+  coding: row('Coding (code, modifier, diagnosis)', 'Kodierung (Code, Modifikator, Diagnose)', 'Codage (code, modificateur, diagnostic)', 'Codificación (código, modificador, diagnóstico)', 'Codificação (código, modificador, diagnóstico)', 'Codifica (codice, modificatore, diagnosi)', 'コーディング（コード・モディファイア・診断）', '编码（代码、修饰符、诊断）', '코딩(코드, 수정자, 진단)'),
+  bundling: row('Bundling or code-pair edit', 'Bündelung oder Code-Paar-Prüfung', 'Regroupement ou règle de paires de codes', 'Agrupación o edición de pares de códigos', 'Agrupamento ou edição de pares de códigos', 'Accorpamento o controllo coppie di codici', '包括・コードペア編集', '捆绑或代码对校验', '묶음 또는 코드 쌍 편집'),
+  medical_necessity: row('Medical necessity', 'Medizinische Notwendigkeit', 'Nécessité médicale', 'Necesidad médica', 'Necessidade médica', 'Necessità medica', '医学的必要性', '医疗必要性', '의학적 필요성'),
+  documentation: row('Missing information or records', 'Fehlende Angaben oder Unterlagen', 'Informations ou dossiers manquants', 'Falta de información o registros', 'Informações ou registros ausentes', 'Informazioni o documenti mancanti', '情報・記録の不足', '信息或记录缺失', '정보 또는 기록 누락'),
+  timely_filing: row('Timely filing', 'Einreichungsfrist', 'Délai de soumission', 'Plazo de presentación', 'Prazo de envio', 'Termine di presentazione', '請求期限', '提交时限', '청구 기한'),
+  duplicate: row('Duplicate claim', 'Doppelte Abrechnung', 'Demande en double', 'Reclamación duplicada', 'Guia duplicada', 'Pratica duplicata', '重複請求', '重复理赔', '중복 청구'),
+  coordination_of_benefits: row('Coordination of benefits', 'Leistungskoordinierung', 'Coordination des prestations', 'Coordinación de beneficios', 'Coordenação de benefícios', 'Coordinamento delle prestazioni', '給付調整', '福利协调', '급여 조정'),
+  provider_enrollment: row('Provider enrolment or credentialing', 'Zulassung oder Akkreditierung', 'Adhésion ou accréditation du prestataire', 'Afiliación o acreditación del proveedor', 'Credenciamento do prestador', 'Accreditamento dell’erogatore', '提供者登録・資格認定', '服务提供者注册或资质', '제공자 등록 또는 자격 인증'),
+  non_covered: row('Non-covered service or benefit limit', 'Nicht versicherte Leistung oder Leistungsgrenze', 'Prestation non couverte ou plafond', 'Servicio no cubierto o límite de beneficio', 'Serviço não coberto ou limite de benefício', 'Prestazione non coperta o limite', '対象外サービス・給付上限', '不承保服务或福利上限', '비보장 서비스 또는 급여 한도'),
+  pricing: row('Pricing or fee schedule', 'Preis oder Gebührenordnung', 'Tarification ou barème', 'Precio o tarifario', 'Preço ou tabela de honorários', 'Prezzo o tariffario', '価格・料金表', '定价或收费表', '가격 또는 수가표'),
+  payer_error: row('Payer processing or reversal', 'Bearbeitung oder Storno durch Kostenträger', 'Traitement ou annulation par le payeur', 'Procesamiento o reverso del pagador', 'Processamento ou estorno da operadora', 'Elaborazione o storno del pagatore', '支払者の処理・取消', '付款方处理或冲销', '지급자 처리 또는 취소'),
+  not_denial: row('Expected adjustment (not a denial)', 'Erwartete Korrektur (keine Ablehnung)', 'Ajustement attendu (pas un refus)', 'Ajuste esperado (no es denegación)', 'Ajuste esperado (não é glosa)', 'Rettifica attesa (non un rifiuto)', '想定内の調整（拒否ではない）', '预期调整（非拒付）', '예상된 조정(거절 아님)'),
+  unknown: row('Unknown code', 'Unbekannter Code', 'Code inconnu', 'Código desconocido', 'Código desconhecido', 'Codice sconosciuto', '不明なコード', '未知代码', '알 수 없는 코드'),
+};
+
+/** Section titles the agents' report pages share. */
+export const SECTION_TITLES = {
+  by_payer: row('By payer', 'Nach Kostenträger', 'Par payeur', 'Por pagador', 'Por operadora', 'Per pagatore', '支払者別', '按付款方', '지급자별'),
+  by_category: row('By category', 'Nach Kategorie', 'Par catégorie', 'Por categoría', 'Por categoria', 'Per categoria', '分類別', '按类别', '분류별'),
+  by_provider: row('By provider', 'Nach Leistungserbringer', 'Par prestataire', 'Por proveedor', 'Por prestador', 'Per erogatore', '診療提供者別', '按服务提供者', '제공자별'),
+  by_code: row('By code', 'Nach Code', 'Par code', 'Por código', 'Por código', 'Per codice', 'コード別', '按代码', '코드별'),
+  by_rule: row('By check', 'Nach Prüfung', 'Par contrôle', 'Por verificación', 'Por verificação', 'Per controllo', 'チェック別', '按检查项', '점검 항목별'),
+  by_severity: row('By severity', 'Nach Schweregrad', 'Par gravité', 'Por gravedad', 'Por gravidade', 'Per gravità', '重大度別', '按严重程度', '심각도별'),
+  by_month: row('By month', 'Nach Monat', 'Par mois', 'Por mes', 'Por mês', 'Per mese', '月別', '按月份', '월별'),
+  by_team: row('By team', 'Nach Team', 'Par équipe', 'Por equipo', 'Por equipe', 'Per team', 'チーム別', '按团队', '팀별'),
+  by_status: row('By status', 'Nach Status', 'Par statut', 'Por estado', 'Por status', 'Per stato', 'ステータス別', '按状态', '상태별'),
+  by_bucket: row('By age bucket', 'Nach Altersklasse', 'Par tranche d’âge', 'Por antigüedad', 'Por faixa de idade', 'Per fascia di anzianità', '経過日数別', '按账龄', '경과 기간별'),
+  summary: row('Summary', 'Zusammenfassung', 'Résumé', 'Resumen', 'Resumo', 'Riepilogo', '概要', '摘要', '요약'),
+};
+/** A shared section title as { en, de, ... } for writeWorklist. */
+export const sectionTitle = (key) => SECTION_TITLES[key] || { en: key };
+
+/** Text and labels for one language. */
+export function reportText(lang) {
+  const l = normLang(lang);
+  const pick = (e, fallback) => (e ? e[l] || e.en : fallback);
+  return {
+    lang: l,
+    t: (key, vars = {}) => String(pick(REPORT_TEXT[key], key)).replace(/\{(\w+)\}/g, (m, k) => (vars[k] === undefined ? m : String(vars[k]))),
+    column: (c) => pick(COLUMN_LABELS[c], c.replace(/_/g, ' ')),
+    category: (c) => pick(CATEGORY_LABELS[c], c),
+    /** A title given as a string, or as { en, de, ... }. */
+    title: (x) => (x && typeof x === 'object' ? x[l] || x.en : String(x ?? '')),
+  };
+}

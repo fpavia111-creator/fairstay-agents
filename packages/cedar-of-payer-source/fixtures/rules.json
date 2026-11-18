@@ -1,0 +1,1 @@
+{ "payers": [ { "name": "Medicare A", "type": "medicare_a" }, { "name": "Lone Star Medicaid (fictional)", "type": "medicaid" }, { "name": "Private Pay", "type": "private" } ], "coinsurance_rate": 200 }

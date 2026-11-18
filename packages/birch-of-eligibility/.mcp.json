@@ -1,0 +1,12 @@
+{
+  "mcpServers": {
+    "birch-of-eligibility": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "birch-of-eligibility@0.1.0",
+        "mcp"
+      ]
+    }
+  }
+}

@@ -1,0 +1,10 @@
+Resident #,Resident Name,Payer,Effective Date,End Date,Bed Status
+R201,Jonah Pereira,Medicare A,2026-02-02,,In House
+R202,Kiri Halvorsen,Medicare A,2025-12-10,,In House
+R203,Leona Dubois,Medicare A,2026-02-20,,In House
+R204,Mateo Rinaldi,Lone Star Medicaid (fictional),2025-04-01,,In House
+R205,Nadia Petrov,Lone Star Medicaid (fictional),2025-08-01,,In House
+R206,Omar Haddad,Gulf Coast Advantage HMO (fictional),2026-02-25,,In House
+R207,Priya Raman,Private Pay,2025-01-01,,In House
+R208,Quinn Abara,Lone Star Medicaid (fictional),2025-02-01,2026-01-15,In House
+R209,Silas Ferreira,Lone Star Medicaid (fictional),2026-01-10,,In House

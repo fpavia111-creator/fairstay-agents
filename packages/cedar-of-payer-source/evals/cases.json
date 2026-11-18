@@ -1,0 +1,257 @@
+{
+ "suite": "cedar-of-payer-source",
+ "root": "..",
+ "data_note": "Fictional home, residents and payers in ../fixtures. Deterministic checks; no model is called.",
+ "cases": [
+  {
+   "id": "totals",
+   "tool": "cedar_check",
+   "args": {
+    "census": "fixtures/census.csv",
+    "residents": "fixtures/residents.csv",
+    "rules": "fixtures/rules.json",
+    "month": "2026-03"
+   },
+   "expect": {
+    "status": "executed",
+    "equals": {
+     "result.residents": 7,
+     "result.resident_days": 213,
+     "result.days_with_findings": 169,
+     "result.coinsurance_at_risk": 6000
+    }
+   }
+  },
+  {
+   "id": "order",
+   "tool": "cedar_check",
+   "args": {
+    "census": "fixtures/census.csv",
+    "residents": "fixtures/residents.csv",
+    "rules": "fixtures/rules.json",
+    "month": "2026-03"
+   },
+   "expect": {
+    "equals": {
+     "result.items.0.status": "no_payer",
+     "result.items.1.status": "payer_overlap",
+     "result.items.2.status": "part_a_over_100",
+     "result.items.3.status": "unknown_payer",
+     "result.items.4.status": "hospice_on_part_a",
+     "result.items.5.status": "coinsurance_no_secondary",
+     "result.items.6.status": "private_no_guarantor"
+    }
+   }
+  },
+  {
+   "id": "no-payer-four-days",
+   "tool": "cedar_check",
+   "args": {
+    "census": "fixtures/census.csv",
+    "residents": "fixtures/residents.csv",
+    "rules": "fixtures/rules.json",
+    "month": "2026-03",
+    "status": "no_payer"
+   },
+   "expect": {
+    "equals": {
+     "result.items.0.days": 4,
+     "result.items.0.to": "2026-03-08"
+    }
+   }
+  },
+  {
+   "id": "part-a-day-101-on",
+   "tool": "cedar_check",
+   "args": {
+    "census": "fixtures/census.csv",
+    "residents": "fixtures/residents.csv",
+    "rules": "fixtures/rules.json",
+    "month": "2026-03",
+    "status": "part_a_over_100"
+   },
+   "expect": {
+    "equals": {
+     "result.items.0.days": 30,
+     "result.items.0.from": "2026-03-02"
+    },
+    "contains": [
+     "days 101 to 130"
+    ]
+   }
+  },
+  {
+   "id": "coinsurance-from-day-21",
+   "tool": "cedar_check",
+   "args": {
+    "census": "fixtures/census.csv",
+    "residents": "fixtures/residents.csv",
+    "rules": "fixtures/rules.json",
+    "month": "2026-03",
+    "status": "coinsurance_no_secondary"
+   },
+   "expect": {
+    "equals": {
+     "result.items.0.from": "2026-03-02",
+     "result.items.0.amount": 6000
+    },
+    "contains": [
+     "days 21 to 50"
+    ]
+   }
+  },
+  {
+   "id": "overlap-from-the-20th",
+   "tool": "cedar_check",
+   "args": {
+    "census": "fixtures/census.csv",
+    "residents": "fixtures/residents.csv",
+    "rules": "fixtures/rules.json",
+    "month": "2026-03",
+    "status": "payer_overlap"
+   },
+   "expect": {
+    "equals": {
+     "result.items.0.days": 12
+    }
+   }
+  },
+  {
+   "id": "without-payer-list-no-unknown",
+   "tool": "cedar_check",
+   "args": {
+    "census": "fixtures/census.csv",
+    "residents": "fixtures/residents.csv",
+    "month": "2026-03"
+   },
+   "expect": {
+    "equals": {
+     "result.coinsurance_at_risk": 0
+    },
+    "not_contains": [
+     "unknown_payer"
+    ]
+   }
+  },
+  {
+   "id": "without-resident-file",
+   "tool": "cedar_check",
+   "args": {
+    "census": "fixtures/census.csv",
+    "rules": "fixtures/rules.json",
+    "month": "2026-03"
+   },
+   "expect": {
+    "not_contains": [
+     "hospice_on_part_a"
+    ],
+    "min": {
+     "result.by_status.private_no_guarantor": 1
+    }
+   }
+  },
+  {
+   "id": "short-period",
+   "tool": "cedar_check",
+   "args": {
+    "census": "fixtures/census.csv",
+    "residents": "fixtures/residents.csv",
+    "rules": "fixtures/rules.json",
+    "start": "2026-03-01",
+    "end": "2026-03-04"
+   },
+   "expect": {
+    "not_contains": [
+     "no_payer",
+     "payer_overlap"
+    ]
+   }
+  },
+  {
+   "id": "names-masked",
+   "tool": "cedar_check",
+   "args": {
+    "census": "fixtures/census.csv",
+    "residents": "fixtures/residents.csv",
+    "rules": "fixtures/rules.json",
+    "month": "2026-03"
+   },
+   "expect": {
+    "matches": [
+     "\"resident_id\":\"MRN-[0-9a-f]{8}\""
+    ],
+    "not_contains": [
+     "Nwosu",
+     "R307"
+    ]
+   }
+  },
+  {
+   "id": "bad-rules-refused",
+   "tool": "cedar_check",
+   "args": {
+    "census": "fixtures/census.csv",
+    "residents": "fixtures/residents.csv",
+    "rules": "fixtures/rules-typo.json",
+    "month": "2026-03"
+   },
+   "expect": {
+    "status": "error",
+    "contains": [
+     "payers"
+    ]
+   }
+  },
+  {
+   "id": "no-period-refused",
+   "tool": "cedar_check",
+   "args": {
+    "census": "fixtures/census.csv"
+   },
+   "expect": {
+    "status": "error",
+    "contains": [
+     "month"
+    ]
+   }
+  },
+  {
+   "id": "report",
+   "tool": "cedar_write_report",
+   "args": {
+    "census": "fixtures/census.csv",
+    "residents": "fixtures/residents.csv",
+    "rules": "fixtures/rules.json",
+    "month": "2026-03",
+    "out_dir": "evergreen-out/eval-cedar"
+   },
+   "expect": {
+    "status": "executed",
+    "equals": {
+     "result.lang": "en"
+    }
+   }
+  },
+  {
+   "id": "census-update-refused",
+   "tool": "census_update",
+   "args": {},
+   "expect": {
+    "status": "blocked",
+    "decision": "block"
+   }
+  },
+  {
+   "id": "recall-empty-memory",
+   "tool": "cedar_recall",
+   "args": {},
+   "expect": {
+    "status": "executed",
+    "contains": [
+     "memory is empty",
+     "payer_alias"
+    ]
+   }
+  }
+ ]
+}
