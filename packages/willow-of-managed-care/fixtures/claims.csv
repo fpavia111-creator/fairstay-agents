@@ -1,0 +1,8 @@
+Claim #,Resident #,Resident Name,Payer,Level of Care,Service From,Service To,Days,Billed,Paid,Auth Number
+M7001,R701,Xenia Holloway,Gulf Coast Advantage HMO (fictional),L2,2026-03-01,2026-03-31,31,16120,16120,GC-4410
+M7002,R702,Yusuf Demir,Gulf Coast Advantage HMO (fictional),L3,2026-03-01,2026-03-31,31,18910,17360,GC-4411
+M7003,R703,Zelda Prescott,Gulf Coast Advantage HMO (fictional),L3,2026-03-01,2026-03-20,20,12200,,GC-4412
+M7004,R704,Amos Whitaker,Bayou Senior Care Plan (fictional),RB2,2026-03-05,2026-03-31,27,10800,,BS-0091
+M7005,R705,Beatrix Nakamura,Bayou Senior Care Plan (fictional),RB1,2026-03-01,2026-03-31,31,11780,,
+M7006,R706,Caspian Rhee,Gulf Coast Advantage HMO (fictional),L1,2026-03-01,2026-03-31,31,13950,,GC-9999
+M7007,R707,Dorothea Vance,Bayou Senior Care Plan (fictional),RB9,2026-03-01,2026-03-31,31,15000,,BS-0093

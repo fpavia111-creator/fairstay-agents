@@ -1,0 +1,22 @@
+{
+  "name": "willow-of-managed-care",
+  "version": "0.1.0",
+  "description": "Managed care (HMO, Medicare Advantage, Medicaid MCO) claim checks: no contract rate, billed or paid below contract, levels not authorized, days past the authorization and claims missing the authorization number.",
+  "author": {
+    "name": "Kurt Francisco"
+  },
+  "license": "MIT",
+  "homepage": "https://github.com/fpavia111-creator/evergreen-agents/tree/main/packages/willow-of-managed-care#readme",
+  "keywords": [
+    "mcp",
+    "mcp-server",
+    "nursing-home",
+    "skilled-nursing",
+    "snf",
+    "long-term-care",
+    "evergreen",
+    "managed-care",
+    "medicare-advantage",
+    "per-diem"
+  ]
+}
