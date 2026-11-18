@@ -17,9 +17,12 @@ export function rentDue(lease, period) {
  */
 export function checkPropco(leases, rent, financials, { asOf, endingWarnDays = 365, tolerance = 0.01 } = {}) {
   const items = [];
+  // Rent and financial rows grouped by lease once, in file order (filtering both files for every lease took minutes at 10,000 rows).
+  const group = (rows) => { const m = new Map(); for (const r of rows) { const k = idKey(r.lease_no); if (!m.has(k)) m.set(k, []); m.get(k).push(r); } return m; };
+  const rentBy = group(rent); const finBy = group(financials);
   for (const l of leases) {
     const key = idKey(l.lease_no); const base = { lease_no: str(l.lease_no), operator: str(l.operator), facility: str(l.facility) || null };
-    const R = rent.filter((r) => idKey(r.lease_no) === key); const dueDay = num(l.rent_due_day) || 5;
+    const R = rentBy.get(key) || []; const dueDay = num(l.rent_due_day) || 5;
     for (const r of R) {
       const period = str(r.period).slice(0, 7); const billed = num(r.billed) || 0; const paid = num(r.paid) || 0; const due = `${period}-${String(dueDay).padStart(2, '0')}`;
       const exp = rentDue(l, period);
@@ -28,7 +31,7 @@ export function checkPropco(leases, rent, financials, { asOf, endingWarnDays = 3
       else if (due < asOf && paid + tolerance < billed) items.push({ status: 'rent_short', ...base, period, amount: round2(billed - paid), message: `${period} rent paid ${paid} of ${billed}.`, fix: 'Ask the operator for the balance and the reason.' });
     }
     // Operator financials: coverage on the trailing months received (up to 12), occupancy on the latest month, and months overdue.
-    const F = financials.filter((f) => idKey(f.lease_no) === key).map((f) => ({ ...f, period: str(f.period).slice(0, 7) })).sort((a, b) => a.period.localeCompare(b.period));
+    const F = (finBy.get(key) || []).map((f) => ({ ...f, period: str(f.period).slice(0, 7) })).sort((a, b) => a.period.localeCompare(b.period));
     const last12 = F.slice(-12); const eb = last12.reduce((s, f) => s + (num(f.ebitdar) || 0), 0); const rt = last12.reduce((s, f) => s + (num(f.rent) || 0), 0);
     const cov = rt ? round2(eb / rt) : null; const minCov = num(l.min_coverage);
     if (cov !== null && minCov !== null && cov < minCov) items.push({ status: 'coverage_below', ...base, period: last12.at(-1).period, amount: 0, coverage: cov, months: last12.length, message: `${base.operator}'s rent coverage is ${cov}x over ${last12.length} month(s) to ${last12.at(-1).period}; the lease requires ${minCov}x.`, fix: 'Ask the operator for a plan; check the lease default and cure terms and the guaranty.' });

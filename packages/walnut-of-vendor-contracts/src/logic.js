@@ -9,7 +9,10 @@ const ORDER = { expired_still_billing: 0, notice_window_open: 1, above_contract_
  * opts: { asOf, warnDays=60, noContractOver=10000, tolerance=0.01 }
  */
 export function checkVendorContracts(contracts, spend, prices = [], { asOf, warnDays = 60, noContractOver = 10000, tolerance = 0.01 } = {}) {
-  const C = new Map(); for (const c of contracts) { const k = payerKey(c.vendor); C.set(k, [...(C.get(k) || []), c]); }
+  // Contracts, spend and prices grouped by vendor once (scanning or copying them per row took seconds at 10,000 rows).
+  const groupBy = (rows, f) => { const m = new Map(); for (const r of rows) { const k = f(r); if (!m.has(k)) m.set(k, []); m.get(k).push(r); } return m; };
+  const C = groupBy(contracts, (c) => payerKey(c.vendor)); const spendBy = groupBy(spend, (s) => payerKey(s.vendor));
+  const priceOf = new Map(); for (const x of prices) { const k = `${payerKey(x.vendor)}|${idKey(x.code)}`; if (!priceOf.has(k)) priceOf.set(k, x); }
   const items = [];
   for (const c of contracts) {
     const end = isoDate(c.end); if (!end) continue;
@@ -20,23 +23,23 @@ export function checkVendorContracts(contracts, spend, prices = [], { asOf, warn
       else if (left < 0) items.push({ status: 'auto_renewed', ...base, amount: 0, notice_by: deadline, days_left: left, message: `The notice date for ${base.vendor} passed on ${deadline}; it will renew on ${end}.`, fix: 'Put next year\'s notice date in the calendar now.' });
     }
     if (!yes(c.auto_renew) && end < asOf) {
-      const after = spend.filter((s) => payerKey(s.vendor) === payerKey(c.vendor) && isoDate(s.date) > end);
+      const after = (spendBy.get(payerKey(c.vendor)) || []).filter((s) => isoDate(s.date) > end);
       const later = (C.get(payerKey(c.vendor)) || []).some((x) => x !== c && isoDate(x.start) && isoDate(x.start) <= asOf && (!isoDate(x.end) || isoDate(x.end) >= asOf));
       if (after.length && !later) items.push({ status: 'expired_still_billing', ...base, amount: total(after, (s) => num(s.amount) || 0), message: `${base.vendor}'s contract ended ${end}, and ${after.length} charge(s) came after it.`, fix: 'Sign a renewal or a new contract; without one, prices and terms are not protected.' });
     }
   }
-  const byVendor = new Map(); for (const s of spend) { const k = payerKey(s.vendor); byVendor.set(k, [...(byVendor.get(k) || []), s]); }
+  const byVendor = spendBy;
   for (const [k, ss] of byVendor) {
     const amt = total(ss, (s) => num(s.amount) || 0);
     if (!C.has(k) && amt >= noContractOver) items.push({ status: 'spend_no_contract', vendor: str(ss[0].vendor), contract_no: null, amount: amt, message: `${amt} spent with ${str(ss[0].vendor)} and no contract on file.`, fix: 'Put a contract in place, or bid it out; also check the vendor is not excluded from federal programs.' });
     const esc = Math.max(0, ...(C.get(k) || []).map((c) => num(c.escalator_pct) || 0));
-    const byCode = new Map(); for (const s of ss) { if (!s.code || num(s.unit_price) === null) continue; const ck = idKey(s.code); byCode.set(ck, [...(byCode.get(ck) || []), s]); }
+    const byCode = new Map(); for (const s of ss) { if (!s.code || num(s.unit_price) === null) continue; const ck = idKey(s.code); if (!byCode.has(ck)) byCode.set(ck, []); byCode.get(ck).push(s); }
     for (const [ck, list] of byCode) {
       list.sort((a, b) => str(isoDate(a.date)).localeCompare(str(isoDate(b.date))));
       const first = num(list[0].unit_price); const last = num(list.at(-1).unit_price);
       const rise = first ? round2((last - first) / first * 100) : 0;
       if (C.has(k) && first && rise > esc + 0.005) items.push({ status: 'price_increase_above_escalator', vendor: str(list[0].vendor), contract_no: str(C.get(k)[0].contract_no) || null, code: str(list[0].code), amount: round2((last - first * (1 + esc / 100)) * (num(list.at(-1).qty) || 1)), increase_pct: rise, escalator_pct: esc, message: `${str(list[0].code)} went from ${first} to ${last} (${rise}%); the contract escalator is ${esc}%.`, fix: 'Ask for the price allowed by the escalator and a credit for the difference.' });
-      const p = prices.find((x) => payerKey(x.vendor) === k && idKey(x.code) === ck);
+      const p = priceOf.get(`${k}|${ck}`);
       if (p) { const over = list.filter((s) => num(s.unit_price) > num(p.rate) + tolerance); if (over.length) items.push({ status: 'above_contract_rate', vendor: str(list[0].vendor), contract_no: C.has(k) ? str(C.get(k)[0].contract_no) || null : null, code: str(list[0].code), amount: round2(over.reduce((t, s) => t + (num(s.unit_price) - num(p.rate)) * (num(s.qty) || 1), 0)), message: `${over.length} charge(s) for ${str(list[0].code)} above the contract rate of ${num(p.rate)}.`, fix: 'Ask for a credit and correct the vendor\'s price file.' }); }
     }
   }

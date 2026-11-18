@@ -13,16 +13,21 @@ export function reconcile(bank, books, { asOf, matchDays = 3, staleDays = 90, tr
   const B = bank.map((r, i) => ({ account: str(r.account), date: isoDate(r.date), amount: round2(num(r.amount) || 0), check_no: idKey(r.check_no), description: str(r.description), line: i + 1, used: false }));
   const K = books.map((r, i) => ({ account: str(r.account), date: isoDate(r.date), amount: round2(num(r.amount) || 0), check_no: idKey(r.check_no), description: str(r.description), line: i + 1, used: false }));
   const items = [];
+  // Bank lines indexed by check number and by amount, per account, in statement order (scanning the whole
+  // statement for every book entry took 10 s at 10,000 rows).
+  const index = (f) => { const m = new Map(); for (const x of B) { const k = f(x); if (k === null) continue; if (!m.has(k)) m.set(k, []); m.get(k).push(x); } return m; };
+  const byCheck = index((x) => (x.check_no ? `${x.check_no}|${acctKey(x.account)}` : null));
+  const cents = (a) => Math.round(a * 100); const byAmount = index((x) => `${acctKey(x.account)}|${cents(x.amount)}`);
   // 1. Checks by number.
   for (const k of K) {
     if (!k.check_no) continue;
-    const b = B.find((x) => !x.used && x.check_no === k.check_no && acctKey(x.account) === acctKey(k.account)); if (!b) continue;
+    const b = (byCheck.get(`${k.check_no}|${acctKey(k.account)}`) || []).find((x) => !x.used); if (!b) continue;
     b.used = k.used = true;
     if (Math.abs(b.amount - k.amount) > 0.005) items.push({ status: 'amount_differs', account: k.account, date: b.date, check_no: k.check_no, amount: round2(Math.abs(b.amount - k.amount)), bank_amount: b.amount, book_amount: k.amount, message: `Check ${k.check_no} cleared for ${b.amount}; the books have ${k.amount}.`, fix: 'Find which is right (the check image) and correct the books or ask the bank to fix the encoding error.' });
   }
   // 2. Everything else by account, amount and date within matchDays (closest date first).
   for (const k of K.filter((x) => !x.used)) {
-    const cands = B.filter((x) => !x.used && acctKey(x.account) === acctKey(k.account) && Math.abs(x.amount - k.amount) < 0.005 && x.date && k.date && Math.abs(daysBetween(k.date, x.date)) <= matchDays && (!x.check_no || !k.check_no));
+    const cands = (byAmount.get(`${acctKey(k.account)}|${cents(k.amount)}`) || []).filter((x) => !x.used && Math.abs(x.amount - k.amount) < 0.005 && x.date && k.date && Math.abs(daysBetween(k.date, x.date)) <= matchDays && (!x.check_no || !k.check_no));
     cands.sort((a, b) => Math.abs(daysBetween(k.date, a.date)) - Math.abs(daysBetween(k.date, b.date)));
     if (cands[0]) { cands[0].used = k.used = true; }
   }

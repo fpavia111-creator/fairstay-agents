@@ -13,6 +13,10 @@ export function checkAuthorizations(census, auths, { start, asOf, warnDays = 3, 
   const days = censusDays(census, start, asOf).filter((d) => need.has(d.payer_type) && d.bed_status === 'in_house');
   const byRes = new Map(); for (const a of auths) { const k = idKey(a.resident_id || a.resident_name); if (!byRes.has(k)) byRes.set(k, []); byRes.get(k).push({ ...a, from: isoDate(a.from), to: isoDate(a.to) || isoDate(a.from) }); }
   const names = new Map(); for (const r of census) if (r.resident_name) names.set(idKey(r.resident_id || r.resident_name), str(r.resident_name));
+  // Is there a next authorization starting after this one and no later than the day after it ends? Start dates
+  // per resident sorted once, then a binary search (it scanned every authorization for every one).
+  const starts = new Map(); for (const [k, list] of byRes) starts.set(k, list.map((x) => x.from).filter(Boolean).sort());
+  const renewedOf = (k, a) => { const s = starts.get(k) || []; const hi = addDays(a.to, 1); let lo = 0, up = s.length; while (lo < up) { const m = (lo + up) >> 1; if (s[m] > a.from) up = m; else lo = m + 1; } return lo < s.length && s[lo] <= hi; };
   const used = new Map(); const finds = [];
   for (const d of days.sort((a, b) => a.date.localeCompare(b.date))) {
     const list = (byRes.get(idKey(d.resident_id)) || []).filter((a) => (!a.payer || payerKey(a.payer) === payerKey(d.payer)) && a.from && a.from <= d.date && a.to >= d.date);
@@ -37,7 +41,7 @@ export function checkAuthorizations(census, auths, { start, asOf, warnDays = 3, 
     for (const a of (byRes.get(idKey(d.resident_id)) || []).filter((x) => x.from <= asOf && x.to >= asOf)) {
       const base = { resident_id: d.resident_id, resident_name: names.get(idKey(d.resident_id)) || null, payer: d.payer, auth_number: str(a.auth_number), level: d.level, from: a.from, to: a.to };
       const left = daysBetween(asOf, a.to);
-      const renewed = (byRes.get(idKey(d.resident_id)) || []).some((x) => x.from && x.from > a.from && x.from <= addDays(a.to, 1));
+      const renewed = renewedOf(idKey(d.resident_id), a);
       if (left <= warnDays && !renewed) items.push({ status: 'auth_ending', ...base, days_left: left, message: `Authorization ${a.auth_number} ends ${a.to} (${left ? `${left} day(s)` : 'today'}) and no next authorization is on file.`, fix: 'Send updated clinicals for the next authorization, or plan the discharge or payer change.' });
       const rev = isoDate(a.next_review);
       if (rev) { const due = daysBetween(asOf, rev); if (due < 0) items.push({ status: 'review_overdue', ...base, review_on: rev, days_left: due, message: `The concurrent review for ${a.auth_number} was due ${rev} (${-due} day(s) ago).`, fix: 'Send the clinical update today and log the call.' }); else if (due <= reviewWarnDays) items.push({ status: 'review_due', ...base, review_on: rev, days_left: due, message: `The concurrent review for ${a.auth_number} is due ${rev}.`, fix: 'Prepare therapy minutes, nursing notes and the care plan for the reviewer.' }); }

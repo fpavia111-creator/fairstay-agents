@@ -28,9 +28,11 @@ export function reviewMco(contractRows, paymentRows = [], { asOf, benchmarks = [
   const bench = (level) => { const b = benchmarks.find((x) => lv(x.level) === lv(level)) || benchmarks.find((x) => !x.level); return b ? num(b.rate) : null; };
   const items = [];
   const base = (c) => ({ payer: c.payer, plan: c.plan, level: c.level, rate: c.rate, start: c.start, end: c.end });
-  const payers = [...new Set(C.map((c) => payerKey(c.payer)))];
+  // Contracts grouped by payer once; payment lines look up only their payer's contracts.
+  const byPayer = new Map(); for (const c of C) { const k = payerKey(c.payer); if (!byPayer.has(k)) byPayer.set(k, []); byPayer.get(k).push(c); }
+  const payers = [...byPayer.keys()];
   for (const pk of payers) {
-    const mine = C.filter((c) => payerKey(c.payer) === pk);
+    const mine = byPayer.get(pk);
     const latestEnd = mine.map((c) => c.end).filter(Boolean).sort().at(-1);
     const openEnded = mine.some((c) => !c.end);
     const c0 = mine.find((c) => c.end === latestEnd) || mine[0];
@@ -57,7 +59,7 @@ export function reviewMco(contractRows, paymentRows = [], { asOf, benchmarks = [
   const noContract = new Map();
   paymentRows.forEach((p, i) => {
     const from = isoDate(p.from); const days = num(p.days) || 0; const paid = num(p.paid);
-    const c = contractFor(C, p.payer, p.level, from);
+    const c = contractFor(byPayer.get(payerKey(p.payer)) || [], p.payer, p.level, from);
     if (!c) { const k = payerKey(p.payer); const x = noContract.get(k) || { payer: str(p.payer), days: 0, paid: 0, lines: 0 }; x.days += days; x.paid = round2(x.paid + (paid || 0)); x.lines++; noContract.set(k, x); return; }
     if (c.rate === null || paid === null || !days) return;
     const due = round2(c.rate * days);

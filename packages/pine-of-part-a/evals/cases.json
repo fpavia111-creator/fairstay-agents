@@ -1,257 +1,290 @@
 {
- "suite": "pine-of-part-a",
- "root": "..",
- "data_note": "Fictional home, residents and made-up PDPM-shaped HIPPS codes in ../fixtures. Deterministic checks; no model is called.",
- "cases": [
-  {
-   "id": "totals",
-   "tool": "pine_check",
-   "args": {
-    "claims": "fixtures/claims-2026-03.csv",
-    "census": "fixtures/census.csv",
-    "prior_days": "fixtures/prior-days.csv",
-    "as_of": "2026-04-02"
-   },
-   "expect": {
-    "status": "executed",
-    "equals": {
-     "result.claims": 7,
-     "result.claims_with_findings": 7,
-     "result.charges_on_flagged_claims": 142160
-    }
-   }
-  },
-  {
-   "id": "order",
-   "tool": "pine_check",
-   "args": {
-    "claims": "fixtures/claims-2026-03.csv",
-    "census": "fixtures/census.csv",
-    "prior_days": "fixtures/prior-days.csv",
-    "as_of": "2026-04-02"
-   },
-   "expect": {
-    "equals": {
-     "result.items.0.status": "no_hipps_line",
-     "result.items.1.status": "hipps_missing",
-     "result.items.2.status": "hipps_invalid",
-     "result.items.2.claim_id": "A1002"
-    }
-   }
-  },
-  {
-   "id": "slp-letter-out-of-range",
-   "tool": "pine_check",
-   "args": {
-    "claims": "fixtures/claims-2026-03.csv",
-    "census": "fixtures/census.csv",
-    "prior_days": "fixtures/prior-days.csv",
-    "as_of": "2026-04-02",
-    "status": "hipps_invalid"
-   },
-   "expect": {
-    "equals": {
-     "result.items.0.hipps": "NMQB1"
-    }
-   }
-  },
-  {
-   "id": "default-days",
-   "tool": "pine_check",
-   "args": {
-    "claims": "fixtures/claims-2026-03.csv",
-    "census": "fixtures/census.csv",
-    "prior_days": "fixtures/prior-days.csv",
-    "as_of": "2026-04-02",
-    "status": "default_hipps"
-   },
-   "expect": {
-    "equals": {
-     "result.items.0.days": 10,
-     "result.items.0.claim_id": "A1003"
+  "suite": "pine-of-part-a",
+  "root": "..",
+  "data_note": "Fictional home, residents and made-up PDPM-shaped HIPPS codes in ../fixtures. Deterministic checks; no model is called.",
+  "cases": [
+    {
+      "id": "totals",
+      "tool": "pine_check",
+      "args": {
+        "claims": "fixtures/claims-2026-03.csv",
+        "census": "fixtures/census.csv",
+        "prior_days": "fixtures/prior-days.csv",
+        "as_of": "2026-04-02"
+      },
+      "expect": {
+        "status": "executed",
+        "equals": {
+          "result.claims": 7,
+          "result.claims_with_findings": 7,
+          "result.charges_on_flagged_claims": 142160
+        }
+      }
     },
-    "contains": [
-     "lowest rate"
-    ]
-   }
-  },
-  {
-   "id": "coinsurance-from-benefit-day-21",
-   "tool": "pine_check",
-   "args": {
-    "claims": "fixtures/claims-2026-03.csv",
-    "census": "fixtures/census.csv",
-    "prior_days": "fixtures/prior-days.csv",
-    "as_of": "2026-04-02",
-    "status": "coinsurance_mismatch"
-   },
-   "expect": {
-    "equals": {
-     "result.items.0.claim_id": "A1001",
-     "result.items.0.expected_coinsurance_days": 26
+    {
+      "id": "order",
+      "tool": "pine_check",
+      "args": {
+        "claims": "fixtures/claims-2026-03.csv",
+        "census": "fixtures/census.csv",
+        "prior_days": "fixtures/prior-days.csv",
+        "as_of": "2026-04-02"
+      },
+      "expect": {
+        "equals": {
+          "result.items.0.status": "no_hipps_line",
+          "result.items.1.status": "hipps_missing",
+          "result.items.2.status": "hipps_invalid",
+          "result.items.2.claim_id": "A1002"
+        }
+      }
     },
-    "contains": [
-     "benefit days 16 to 46"
-    ]
-   }
-  },
-  {
-   "id": "discharge-mid-month",
-   "tool": "pine_check",
-   "args": {
-    "claims": "fixtures/claims-2026-03.csv",
-    "census": "fixtures/census.csv",
-    "prior_days": "fixtures/prior-days.csv",
-    "as_of": "2026-04-02",
-    "status": "days_mismatch"
-   },
-   "expect": {
-    "equals": {
-     "result.items.0.claim_id": "A1006",
-     "result.items.0.census_days": 26,
-     "result.items.0.claim_days": 31
+    {
+      "id": "slp-letter-out-of-range",
+      "tool": "pine_check",
+      "args": {
+        "claims": "fixtures/claims-2026-03.csv",
+        "census": "fixtures/census.csv",
+        "prior_days": "fixtures/prior-days.csv",
+        "as_of": "2026-04-02",
+        "status": "hipps_invalid"
+      },
+      "expect": {
+        "equals": {
+          "result.items.0.hipps": "NMQB1"
+        }
+      }
+    },
+    {
+      "id": "default-days",
+      "tool": "pine_check",
+      "args": {
+        "claims": "fixtures/claims-2026-03.csv",
+        "census": "fixtures/census.csv",
+        "prior_days": "fixtures/prior-days.csv",
+        "as_of": "2026-04-02",
+        "status": "default_hipps"
+      },
+      "expect": {
+        "equals": {
+          "result.items.0.days": 10,
+          "result.items.0.claim_id": "A1003"
+        },
+        "contains": [
+          "lowest rate"
+        ]
+      }
+    },
+    {
+      "id": "coinsurance-from-benefit-day-21",
+      "tool": "pine_check",
+      "args": {
+        "claims": "fixtures/claims-2026-03.csv",
+        "census": "fixtures/census.csv",
+        "prior_days": "fixtures/prior-days.csv",
+        "as_of": "2026-04-02",
+        "status": "coinsurance_mismatch"
+      },
+      "expect": {
+        "equals": {
+          "result.items.0.claim_id": "A1001",
+          "result.items.0.expected_coinsurance_days": 26
+        },
+        "contains": [
+          "benefit days 16 to 46"
+        ]
+      }
+    },
+    {
+      "id": "discharge-mid-month",
+      "tool": "pine_check",
+      "args": {
+        "claims": "fixtures/claims-2026-03.csv",
+        "census": "fixtures/census.csv",
+        "prior_days": "fixtures/prior-days.csv",
+        "as_of": "2026-04-02",
+        "status": "days_mismatch"
+      },
+      "expect": {
+        "equals": {
+          "result.items.0.claim_id": "A1006",
+          "result.items.0.census_days": 26,
+          "result.items.0.claim_days": 31
+        }
+      }
+    },
+    {
+      "id": "month-end-and-future",
+      "tool": "pine_check",
+      "args": {
+        "claims": "fixtures/claims-2026-03.csv",
+        "census": "fixtures/census.csv",
+        "prior_days": "fixtures/prior-days.csv",
+        "as_of": "2026-04-02"
+      },
+      "expect": {
+        "equals": {
+          "result.by_status.crosses_month": 1,
+          "result.by_status.future_through": 1
+        }
+      }
+    },
+    {
+      "id": "short-qualifying-stay",
+      "tool": "pine_check",
+      "args": {
+        "claims": "fixtures/claims-2026-03.csv",
+        "census": "fixtures/census.csv",
+        "prior_days": "fixtures/prior-days.csv",
+        "as_of": "2026-04-02",
+        "status": "qualifying_stay_short"
+      },
+      "expect": {
+        "equals": {
+          "result.items.0.inpatient_days": 2
+        }
+      }
+    },
+    {
+      "id": "without-census-no-day-checks",
+      "tool": "pine_check",
+      "args": {
+        "claims": "fixtures/claims-2026-03.csv",
+        "as_of": "2026-04-02"
+      },
+      "expect": {
+        "not_contains": [
+          "days_mismatch",
+          "coinsurance_mismatch"
+        ],
+        "equals": {
+          "result.by_status.default_hipps": 1
+        }
+      }
+    },
+    {
+      "id": "names-masked",
+      "tool": "pine_check",
+      "args": {
+        "claims": "fixtures/claims-2026-03.csv",
+        "census": "fixtures/census.csv",
+        "prior_days": "fixtures/prior-days.csv",
+        "as_of": "2026-04-02"
+      },
+      "expect": {
+        "not_contains": [
+          "Ellington",
+          "R403"
+        ]
+      }
+    },
+    {
+      "id": "checked-before-month-end",
+      "tool": "pine_check",
+      "args": {
+        "claims": "fixtures/claims-2026-03.csv",
+        "as_of": "2026-03-15"
+      },
+      "expect": {
+        "status": "executed",
+        "min": {
+          "result.by_status.future_through": 6
+        }
+      }
+    },
+    {
+      "id": "report-in-korean",
+      "tool": "pine_write_report",
+      "args": {
+        "claims": "fixtures/claims-2026-03.csv",
+        "census": "fixtures/census.csv",
+        "prior_days": "fixtures/prior-days.csv",
+        "as_of": "2026-04-02",
+        "language": "ko",
+        "out_dir": "evergreen-out/eval-pine"
+      },
+      "expect": {
+        "status": "executed",
+        "equals": {
+          "result.lang": "ko"
+        }
+      }
+    },
+    {
+      "id": "claim-submit-refused",
+      "tool": "claim_submit",
+      "args": {},
+      "expect": {
+        "status": "blocked",
+        "decision": "block"
+      }
+    },
+    {
+      "id": "mds-edit-refused",
+      "tool": "mds_edit",
+      "args": {},
+      "expect": {
+        "status": "blocked",
+        "decision": "block"
+      }
+    },
+    {
+      "id": "recall-empty-memory",
+      "tool": "pine_recall",
+      "args": {},
+      "expect": {
+        "status": "executed",
+        "contains": [
+          "memory is empty",
+          "claim_note"
+        ]
+      }
+    },
+    {
+      "id": "missing-census-file",
+      "tool": "pine_check",
+      "args": {
+        "claims": "fixtures/claims-2026-03.csv",
+        "census": "fixtures/no-such-census.csv",
+        "prior_days": "fixtures/prior-days.csv",
+        "as_of": "2026-04-02"
+      },
+      "expect": {
+        "status": "error"
+      }
+    },
+    {
+      "id": "file-outside-root-refused",
+      "tool": "pine_check",
+      "args": {
+        "claims": "../../outside-root.csv",
+        "census": "fixtures/census.csv",
+        "prior_days": "fixtures/prior-days.csv",
+        "as_of": "2026-04-02"
+      },
+      "expect": {
+        "status": "error",
+        "contains": [
+          "outside the allowed root"
+        ]
+      }
+    },
+    {
+      "id": "missing-file-named",
+      "tool": "pine_check",
+      "args": {
+        "claims": "fixtures/missing-export.csv",
+        "census": "fixtures/census.csv",
+        "prior_days": "fixtures/prior-days.csv",
+        "as_of": "2026-04-02"
+      },
+      "expect": {
+        "status": "error",
+        "contains": [
+          "not found",
+          "missing-export.csv"
+        ]
+      }
     }
-   }
-  },
-  {
-   "id": "month-end-and-future",
-   "tool": "pine_check",
-   "args": {
-    "claims": "fixtures/claims-2026-03.csv",
-    "census": "fixtures/census.csv",
-    "prior_days": "fixtures/prior-days.csv",
-    "as_of": "2026-04-02"
-   },
-   "expect": {
-    "equals": {
-     "result.by_status.crosses_month": 1,
-     "result.by_status.future_through": 1
-    }
-   }
-  },
-  {
-   "id": "short-qualifying-stay",
-   "tool": "pine_check",
-   "args": {
-    "claims": "fixtures/claims-2026-03.csv",
-    "census": "fixtures/census.csv",
-    "prior_days": "fixtures/prior-days.csv",
-    "as_of": "2026-04-02",
-    "status": "qualifying_stay_short"
-   },
-   "expect": {
-    "equals": {
-     "result.items.0.inpatient_days": 2
-    }
-   }
-  },
-  {
-   "id": "without-census-no-day-checks",
-   "tool": "pine_check",
-   "args": {
-    "claims": "fixtures/claims-2026-03.csv",
-    "as_of": "2026-04-02"
-   },
-   "expect": {
-    "not_contains": [
-     "days_mismatch",
-     "coinsurance_mismatch"
-    ],
-    "equals": {
-     "result.by_status.default_hipps": 1
-    }
-   }
-  },
-  {
-   "id": "names-masked",
-   "tool": "pine_check",
-   "args": {
-    "claims": "fixtures/claims-2026-03.csv",
-    "census": "fixtures/census.csv",
-    "prior_days": "fixtures/prior-days.csv",
-    "as_of": "2026-04-02"
-   },
-   "expect": {
-    "not_contains": [
-     "Ellington",
-     "R403"
-    ]
-   }
-  },
-  {
-   "id": "checked-before-month-end",
-   "tool": "pine_check",
-   "args": {
-    "claims": "fixtures/claims-2026-03.csv",
-    "as_of": "2026-03-15"
-   },
-   "expect": {
-    "status": "executed",
-    "min": {
-     "result.by_status.future_through": 6
-    }
-   }
-  },
-  {
-   "id": "report-in-korean",
-   "tool": "pine_write_report",
-   "args": {
-    "claims": "fixtures/claims-2026-03.csv",
-    "census": "fixtures/census.csv",
-    "prior_days": "fixtures/prior-days.csv",
-    "as_of": "2026-04-02",
-    "language": "ko",
-    "out_dir": "evergreen-out/eval-pine"
-   },
-   "expect": {
-    "status": "executed",
-    "equals": {
-     "result.lang": "ko"
-    }
-   }
-  },
-  {
-   "id": "claim-submit-refused",
-   "tool": "claim_submit",
-   "args": {},
-   "expect": {
-    "status": "blocked",
-    "decision": "block"
-   }
-  },
-  {
-   "id": "mds-edit-refused",
-   "tool": "mds_edit",
-   "args": {},
-   "expect": {
-    "status": "blocked",
-    "decision": "block"
-   }
-  },
-  {
-   "id": "recall-empty-memory",
-   "tool": "pine_recall",
-   "args": {},
-   "expect": {
-    "status": "executed",
-    "contains": [
-     "memory is empty",
-     "claim_note"
-    ]
-   }
-  },
-  {
-   "id": "missing-census-file",
-   "tool": "pine_check",
-   "args": {
-    "claims": "fixtures/claims-2026-03.csv",
-    "census": "fixtures/no-such-census.csv",
-    "prior_days": "fixtures/prior-days.csv",
-    "as_of": "2026-04-02"
-   },
-   "expect": {
-    "status": "error"
-   }
-  }
- ]
+  ]
 }

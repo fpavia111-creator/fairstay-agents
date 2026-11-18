@@ -1,234 +1,267 @@
 {
- "suite": "rowan-of-crossovers",
- "root": "..",
- "data_note": "Fictional residents and example settings in ../fixtures. Deterministic checks; no model is called.",
- "cases": [
-  {
-   "id": "totals",
-   "tool": "rowan_check",
-   "args": {
-    "medicare": "fixtures/medicare-claims.csv",
-    "crossovers": "fixtures/crossovers.csv",
-    "rules": "fixtures/rules.json",
-    "as_of": "2026-04-30"
-   },
-   "expect": {
-    "status": "executed",
-    "equals": {
-     "result.dual_claims": 7,
-     "result.cost_sharing": 36462,
-     "result.not_crossed_over": 5768
-    }
-   }
-  },
-  {
-   "id": "missing-crossover-first",
-   "tool": "rowan_check",
-   "args": {
-    "medicare": "fixtures/medicare-claims.csv",
-    "crossovers": "fixtures/crossovers.csv",
-    "rules": "fixtures/rules.json",
-    "as_of": "2026-04-30"
-   },
-   "expect": {
-    "equals": {
-     "result.items.0.status": "not_crossed_over",
-     "result.items.0.claim_id": "MC-26001"
-    }
-   }
-  },
-  {
-   "id": "wrong-amount",
-   "tool": "rowan_check",
-   "args": {
-    "medicare": "fixtures/medicare-claims.csv",
-    "crossovers": "fixtures/crossovers.csv",
-    "rules": "fixtures/rules.json",
-    "as_of": "2026-04-30",
-    "status": "wrong_amount"
-   },
-   "expect": {
-    "equals": {
-     "result.items.0.amount": 600,
-     "result.items.0.billed_coinsurance": 5168
-    }
-   }
-  },
-  {
-   "id": "lesser-of-underpaid",
-   "tool": "rowan_check",
-   "args": {
-    "medicare": "fixtures/medicare-claims.csv",
-    "crossovers": "fixtures/crossovers.csv",
-    "rules": "fixtures/rules.json",
-    "as_of": "2026-04-30",
-    "status": "underpaid"
-   },
-   "expect": {
-    "equals": {
-     "result.items.0.claim_id": "MC-26003",
-     "result.items.0.expected": 3480,
-     "result.items.0.amount": 3480
-    }
-   }
-  },
-  {
-   "id": "lesser-of-zero-is-right",
-   "tool": "rowan_check",
-   "args": {
-    "medicare": "fixtures/medicare-claims.csv",
-    "crossovers": "fixtures/crossovers.csv",
-    "rules": "fixtures/rules.json",
-    "as_of": "2026-04-30",
-    "status": "zero_paid_lesser_of"
-   },
-   "expect": {
-    "equals": {
-     "result.items.0.claim_id": "MC-26002",
-     "result.items.0.expected": 0
-    }
-   }
-  },
-  {
-   "id": "no-rate-no-lesser-of",
-   "tool": "rowan_check",
-   "args": {
-    "medicare": "fixtures/medicare-claims.csv",
-    "crossovers": "fixtures/crossovers.csv",
-    "as_of": "2026-04-30"
-   },
-   "expect": {
-    "not_contains": [
-     "underpaid"
-    ],
-    "contains": [
-     "Give a Medicaid rate"
-    ]
-   }
-  },
-  {
-   "id": "no-response",
-   "tool": "rowan_check",
-   "args": {
-    "medicare": "fixtures/medicare-claims.csv",
-    "crossovers": "fixtures/crossovers.csv",
-    "rules": "fixtures/rules.json",
-    "as_of": "2026-04-30",
-    "status": "no_response"
-   },
-   "expect": {
-    "equals": {
-     "result.items.0.claim_id": "MC-26005",
-     "result.items.0.amount": 2884
-    }
-   }
-  },
-  {
-   "id": "bad-debt-log",
-   "tool": "rowan_check",
-   "args": {
-    "medicare": "fixtures/medicare-claims.csv",
-    "crossovers": "fixtures/crossovers.csv",
-    "rules": "fixtures/rules.json",
-    "as_of": "2026-04-30",
-    "status": "bad_debt_candidate"
-   },
-   "expect": {
-    "equals": {
-     "result.items.0.amount": 5768
+  "suite": "rowan-of-crossovers",
+  "root": "..",
+  "data_note": "Fictional residents and example settings in ../fixtures. Deterministic checks; no model is called.",
+  "cases": [
+    {
+      "id": "totals",
+      "tool": "rowan_check",
+      "args": {
+        "medicare": "fixtures/medicare-claims.csv",
+        "crossovers": "fixtures/crossovers.csv",
+        "rules": "fixtures/rules.json",
+        "as_of": "2026-04-30"
+      },
+      "expect": {
+        "status": "executed",
+        "equals": {
+          "result.dual_claims": 7,
+          "result.cost_sharing": 36462,
+          "result.not_crossed_over": 5768
+        }
+      }
     },
-    "min": {
-     "result.items.length": 4
+    {
+      "id": "missing-crossover-first",
+      "tool": "rowan_check",
+      "args": {
+        "medicare": "fixtures/medicare-claims.csv",
+        "crossovers": "fixtures/crossovers.csv",
+        "rules": "fixtures/rules.json",
+        "as_of": "2026-04-30"
+      },
+      "expect": {
+        "equals": {
+          "result.items.0.status": "not_crossed_over",
+          "result.items.0.claim_id": "MC-26001"
+        }
+      }
+    },
+    {
+      "id": "wrong-amount",
+      "tool": "rowan_check",
+      "args": {
+        "medicare": "fixtures/medicare-claims.csv",
+        "crossovers": "fixtures/crossovers.csv",
+        "rules": "fixtures/rules.json",
+        "as_of": "2026-04-30",
+        "status": "wrong_amount"
+      },
+      "expect": {
+        "equals": {
+          "result.items.0.amount": 600,
+          "result.items.0.billed_coinsurance": 5168
+        }
+      }
+    },
+    {
+      "id": "lesser-of-underpaid",
+      "tool": "rowan_check",
+      "args": {
+        "medicare": "fixtures/medicare-claims.csv",
+        "crossovers": "fixtures/crossovers.csv",
+        "rules": "fixtures/rules.json",
+        "as_of": "2026-04-30",
+        "status": "underpaid"
+      },
+      "expect": {
+        "equals": {
+          "result.items.0.claim_id": "MC-26003",
+          "result.items.0.expected": 3480,
+          "result.items.0.amount": 3480
+        }
+      }
+    },
+    {
+      "id": "lesser-of-zero-is-right",
+      "tool": "rowan_check",
+      "args": {
+        "medicare": "fixtures/medicare-claims.csv",
+        "crossovers": "fixtures/crossovers.csv",
+        "rules": "fixtures/rules.json",
+        "as_of": "2026-04-30",
+        "status": "zero_paid_lesser_of"
+      },
+      "expect": {
+        "equals": {
+          "result.items.0.claim_id": "MC-26002",
+          "result.items.0.expected": 0
+        }
+      }
+    },
+    {
+      "id": "no-rate-no-lesser-of",
+      "tool": "rowan_check",
+      "args": {
+        "medicare": "fixtures/medicare-claims.csv",
+        "crossovers": "fixtures/crossovers.csv",
+        "as_of": "2026-04-30"
+      },
+      "expect": {
+        "not_contains": [
+          "underpaid"
+        ],
+        "contains": [
+          "Give a Medicaid rate"
+        ]
+      }
+    },
+    {
+      "id": "no-response",
+      "tool": "rowan_check",
+      "args": {
+        "medicare": "fixtures/medicare-claims.csv",
+        "crossovers": "fixtures/crossovers.csv",
+        "rules": "fixtures/rules.json",
+        "as_of": "2026-04-30",
+        "status": "no_response"
+      },
+      "expect": {
+        "equals": {
+          "result.items.0.claim_id": "MC-26005",
+          "result.items.0.amount": 2884
+        }
+      }
+    },
+    {
+      "id": "bad-debt-log",
+      "tool": "rowan_check",
+      "args": {
+        "medicare": "fixtures/medicare-claims.csv",
+        "crossovers": "fixtures/crossovers.csv",
+        "rules": "fixtures/rules.json",
+        "as_of": "2026-04-30",
+        "status": "bad_debt_candidate"
+      },
+      "expect": {
+        "equals": {
+          "result.items.0.amount": 5768
+        },
+        "min": {
+          "result.items.length": 4
+        }
+      }
+    },
+    {
+      "id": "waiting-not-flagged",
+      "tool": "rowan_check",
+      "args": {
+        "medicare": "fixtures/medicare-claims.csv",
+        "crossovers": "fixtures/crossovers.csv",
+        "rules": "fixtures/rules.json",
+        "as_of": "2026-04-30"
+      },
+      "expect": {
+        "not_contains": [
+          "MC-26007",
+          "MC-26006"
+        ]
+      }
+    },
+    {
+      "id": "typo-rules-refused",
+      "tool": "rowan_check",
+      "args": {
+        "medicare": "fixtures/medicare-claims.csv",
+        "crossovers": "fixtures/crossovers.csv",
+        "rules": "fixtures/rules-typo.json",
+        "as_of": "2026-04-30"
+      },
+      "expect": {
+        "status": "error",
+        "contains": [
+          "medicaid_rates"
+        ]
+      }
+    },
+    {
+      "id": "masked",
+      "tool": "rowan_check",
+      "args": {
+        "medicare": "fixtures/medicare-claims.csv",
+        "crossovers": "fixtures/crossovers.csv",
+        "rules": "fixtures/rules.json",
+        "as_of": "2026-04-30"
+      },
+      "expect": {
+        "not_contains": [
+          "Nora Castellan",
+          "R1201"
+        ],
+        "matches": [
+          "MRN-[0-9a-f]{8}"
+        ]
+      }
+    },
+    {
+      "id": "report",
+      "tool": "rowan_write_report",
+      "args": {
+        "medicare": "fixtures/medicare-claims.csv",
+        "crossovers": "fixtures/crossovers.csv",
+        "rules": "fixtures/rules.json",
+        "as_of": "2026-04-30"
+      },
+      "expect": {
+        "status": "executed",
+        "contains": [
+          "rowan-crossovers.csv"
+        ]
+      }
+    },
+    {
+      "id": "submit-refused",
+      "tool": "crossover_submit",
+      "args": {},
+      "expect": {
+        "status": "blocked",
+        "decision": "block"
+      }
+    },
+    {
+      "id": "recall-empty",
+      "tool": "rowan_recall",
+      "args": {},
+      "expect": {
+        "status": "executed",
+        "contains": [
+          "memory is empty",
+          "state_crossover_rule"
+        ]
+      }
+    },
+    {
+      "id": "file-outside-root-refused",
+      "tool": "rowan_check",
+      "args": {
+        "medicare": "../../outside-root.csv",
+        "crossovers": "fixtures/crossovers.csv",
+        "rules": "fixtures/rules.json",
+        "as_of": "2026-04-30"
+      },
+      "expect": {
+        "status": "error",
+        "contains": [
+          "outside the allowed root"
+        ]
+      }
+    },
+    {
+      "id": "missing-file-named",
+      "tool": "rowan_check",
+      "args": {
+        "medicare": "fixtures/missing-export.csv",
+        "crossovers": "fixtures/crossovers.csv",
+        "rules": "fixtures/rules.json",
+        "as_of": "2026-04-30"
+      },
+      "expect": {
+        "status": "error",
+        "contains": [
+          "not found",
+          "missing-export.csv"
+        ]
+      }
     }
-   }
-  },
-  {
-   "id": "waiting-not-flagged",
-   "tool": "rowan_check",
-   "args": {
-    "medicare": "fixtures/medicare-claims.csv",
-    "crossovers": "fixtures/crossovers.csv",
-    "rules": "fixtures/rules.json",
-    "as_of": "2026-04-30"
-   },
-   "expect": {
-    "not_contains": [
-     "MC-26007",
-     "MC-26006"
-    ]
-   }
-  },
-  {
-   "id": "typo-rules-refused",
-   "tool": "rowan_check",
-   "args": {
-    "medicare": "fixtures/medicare-claims.csv",
-    "crossovers": "fixtures/crossovers.csv",
-    "rules": "fixtures/rules-typo.json",
-    "as_of": "2026-04-30"
-   },
-   "expect": {
-    "status": "error",
-    "contains": [
-     "medicaid_rates"
-    ]
-   }
-  },
-  {
-   "id": "masked",
-   "tool": "rowan_check",
-   "args": {
-    "medicare": "fixtures/medicare-claims.csv",
-    "crossovers": "fixtures/crossovers.csv",
-    "rules": "fixtures/rules.json",
-    "as_of": "2026-04-30"
-   },
-   "expect": {
-    "not_contains": [
-     "Nora Castellan",
-     "R1201"
-    ],
-    "matches": [
-     "MRN-[0-9a-f]{8}"
-    ]
-   }
-  },
-  {
-   "id": "report",
-   "tool": "rowan_write_report",
-   "args": {
-    "medicare": "fixtures/medicare-claims.csv",
-    "crossovers": "fixtures/crossovers.csv",
-    "rules": "fixtures/rules.json",
-    "as_of": "2026-04-30"
-   },
-   "expect": {
-    "status": "executed",
-    "contains": [
-     "rowan-crossovers.csv"
-    ]
-   }
-  },
-  {
-   "id": "submit-refused",
-   "tool": "crossover_submit",
-   "args": {},
-   "expect": {
-    "status": "blocked",
-    "decision": "block"
-   }
-  },
-  {
-   "id": "recall-empty",
-   "tool": "rowan_recall",
-   "args": {},
-   "expect": {
-    "status": "executed",
-    "contains": [
-     "memory is empty",
-     "state_crossover_rule"
-    ]
-   }
-  }
- ]
+  ]
 }

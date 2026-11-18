@@ -15,7 +15,10 @@ export function checkHospice(census, invoices, contracts, claims = [], { month, 
   const days = []; census.forEach((r) => { const h = hospiceOf(r); if (!h) return; for (const d of censusDays([r], start, end)) days.push({ ...d, hospice: h }); });
   const hDays = new Map(days.map((d) => [`${idKey(d.resident_id)}|${d.date}`, d]));
   const names = new Map(); for (const r of [...census, ...invoices]) if (r.resident_name) names.set(idKey(r.resident_id || r.resident_name), str(r.resident_name));
-  const contractFor = (h, date) => contracts.find((c) => payerKey(c.hospice) === payerKey(h) && (!c.from || isoDate(c.from) <= date) && (!c.to || isoDate(c.to) >= date));
+  // Contracts and hospice days grouped by hospice once (looking through every row for every day took 25 s at 10,000 rows).
+  const hk = new Map(); const hKey = (h) => { const s = String(h ?? ''); if (!hk.has(s)) hk.set(s, payerKey(h)); return hk.get(s); };
+  const contractsBy = new Map(); for (const c of contracts) { const k = hKey(c.hospice); if (!contractsBy.has(k)) contractsBy.set(k, []); contractsBy.get(k).push(c); }
+  const contractFor = (h, date) => (contractsBy.get(hKey(h)) || []).find((c) => (!c.from || isoDate(c.from) <= date) && (!c.to || isoDate(c.to) >= date));
   const invoiced = new Set(); const finds = []; const items = [];
   invoices.forEach((inv, i) => {
     const from = isoDate(inv.from); if (!from) return; const to = isoDate(inv.to) || from; const rid = idKey(inv.resident_id || inv.resident_name);
@@ -31,8 +34,8 @@ export function checkHospice(census, invoices, contracts, claims = [], { month, 
     if (!/medicaid|mcd/i.test(str(cl.payer)) && payerType(cl.payer, cl.payer_type) !== 'medicaid') continue;
     for (const date of dateRange(isoDate(cl.from), isoDate(cl.to) || isoDate(cl.from))) { const h = hDays.get(`${idKey(cl.resident_id || cl.resident_name)}|${date}`); if (h) finds.push({ ...h, status: 'medicaid_billed_directly', amount: num(contractFor(h.hospice, date)?.rate) || 0 }); }
   }
-  const seenNoContract = new Set();
-  for (const d of days) { const k = payerKey(d.hospice); if (!contractFor(d.hospice, d.date) && !seenNoContract.has(k)) { seenNoContract.add(k); const ds = days.filter((x) => payerKey(x.hospice) === k).map((x) => x.date).sort(); items.push({ status: 'no_contract', resident_id: null, resident_name: null, hospice: d.hospice, from: ds[0], to: ds.at(-1), days: ds.length, amount: 0, message: `${d.hospice} has hospice residents this month and no room and board contract on file.`, fix: 'Get a signed hospice agreement before invoicing; Medicare requires one for hospice care in a nursing home.' }); } }
+  const seenNoContract = new Set(); const daysBy = new Map(); for (const x of days) { const k = hKey(x.hospice); if (!daysBy.has(k)) daysBy.set(k, []); daysBy.get(k).push(x); }
+  for (const d of days) { const k = hKey(d.hospice); if (!seenNoContract.has(k) && !contractFor(d.hospice, d.date)) { seenNoContract.add(k); const ds = daysBy.get(k).map((x) => x.date).sort(); items.push({ status: 'no_contract', resident_id: null, resident_name: null, hospice: d.hospice, from: ds[0], to: ds.at(-1), days: ds.length, amount: 0, message: `${d.hospice} has hospice residents this month and no room and board contract on file.`, fix: 'Get a signed hospice agreement before invoicing; Medicare requires one for hospice care in a nursing home.' }); } }
   for (const r of dayRuns(finds, (f) => `${f.resident_id}|${f.status}|${f.hospice}`)) {
     const f = r.first; const span = r.from === r.to ? r.from : `${r.from} to ${r.to}`; const amount = round2(r.items.reduce((s, x) => s + (x.amount || 0), 0));
     const T = {

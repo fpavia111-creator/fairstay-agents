@@ -134,10 +134,11 @@ export const listOf = (v) => (Array.isArray(v) ? v : str(v).split(/[;,|]+/)).map
  * days: [{ date, ...}] ; key(d) -> string. Returns [{ key, first, from, to (inclusive), days, items }].
  */
 export function dayRuns(days, key) {
-  const sorted = days.slice().sort((a, b) => key(a).localeCompare(key(b)) || a.date.localeCompare(b.date));
+  // Keys computed once per day, not twice per comparison while sorting.
+  const sorted = days.map((d) => [key(d), d]).sort((a, b) => a[0].localeCompare(b[0]) || a[1].date.localeCompare(b[1].date));
   const runs = [];
-  for (const d of sorted) {
-    const k = key(d); const last = runs.at(-1);
+  for (const [k, d] of sorted) {
+    const last = runs.at(-1);
     if (last && last.key === k && addDays(last.to, 1) === d.date) { last.to = d.date; last.days++; last.items.push(d); }
     else if (last && last.key === k && last.to === d.date) { last.items.push(d); }
     else runs.push({ key: k, first: d, from: d.date, to: d.date, days: 1, items: [d] });

@@ -43,7 +43,7 @@ for (const [name, description, kw] of list) {
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { spawn } from 'node:child_process';
-import { mkdtempSync, existsSync, readFileSync, cpSync } from 'node:fs';
+import { mkdtempSync, existsSync, readFileSync, cpSync, writeFileSync } from 'node:fs';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 import { fileURLToPath } from 'node:url';
@@ -101,6 +101,41 @@ test('the report keeps real names in the files for staff, while the result to th
   const out = JSON.stringify(r).toLowerCase();
   for (const v of canaries) assert.ok(!out.includes(v.toLowerCase()), \`report result returns "\${v}"\`);
   if (!data.no_names_in_report) assert.ok(canaries.some((v) => csv.includes(v)), 'the CSV for staff keeps at least one real value');
+});
+
+// ver 6 shared checks (18 Nov 2026): same answer twice, nothing outside --root, Windows exports.
+const TABLE = /[.](csv|tsv|txt)$/i;
+function readCase() {
+  const data = JSON.parse(readFileSync(new URL('../evals/cases.json', import.meta.url), 'utf8'));
+  const root = fileURLToPath(new URL('../evals/' + (data.root || '.') + '/', import.meta.url));
+  const allow = (t) => (manifest.policy.rules.find((r) => r.tool === t) || {}).decision === 'allow';
+  const c = data.cases.find((x) => allow(x.tool) && !x.mode && !x.approve && !x.auto_actions && !/_write_report$/.test(x.tool) && (!x.expect || !['error', 'blocked'].includes(x.expect.status)) && Object.values(x.args || {}).some((v) => typeof v === 'string' && TABLE.test(v)));
+  return { root, c };
+}
+const quiet = (root) => new AgentRuntime(manifest, { root, stateDir: null, audit: false, phiKey: '7'.repeat(64) }); // one fixed test key: pseudonyms differ between keys by design
+
+test('the same files give the same answer twice (nothing depends on the clock or on chance)', async () => {
+  const { root, c } = readCase(); assert.ok(c, 'an eval case reads a table file');
+  const a = await quiet(root).call(c.tool, c.args); const b = await quiet(root).call(c.tool, c.args);
+  assert.equal(a.status, 'executed', a.reason); assert.deepEqual(b.result, a.result);
+});
+
+test('a file outside --root is refused before anything is read', async () => {
+  const { root, c } = readCase(); const k = Object.keys(c.args).find((x) => typeof c.args[x] === 'string' && TABLE.test(c.args[x]));
+  const BS = String.fromCharCode(92);
+  for (const bad of ['../../outside.csv', '/etc/passwd', 'C:/Windows/win.ini', '..' + BS + '..' + BS + 'outside.csv']) {
+    const r = await quiet(root).call(c.tool, { ...c.args, [k]: bad });
+    assert.equal(r.status, 'error', bad); assert.match(String(r.reason), /outside the allowed root|not found/i, bad);
+  }
+});
+
+test('a Windows export (CRLF line ends and a byte order mark) reads the same as the plain file', async () => {
+  const { root, c } = readCase(); const tmp = mkdtempSync(join(tmpdir(), (manifest.name || 'agent') + '-crlf-'));
+  cpSync(root, tmp, { recursive: true, filter: (p) => !/(^|[/])(node_modules|[a-z]+-out|[.]remedy)([/]|$)/.test(p.split(String.fromCharCode(92)).join('/')) });
+  const CR = String.fromCharCode(13), LF = String.fromCharCode(10), BOM = String.fromCharCode(0xfeff);
+  for (const v of Object.values(c.args)) if (typeof v === 'string' && TABLE.test(v)) { const f = join(tmp, v); const text = readFileSync(f, 'utf8').replace(BOM, ''); writeFileSync(f, BOM + text.split(CR + LF).join(LF).split(LF).join(CR + LF)); }
+  const a = await quiet(root).call(c.tool, c.args); const b = await quiet(tmp).call(c.tool, c.args);
+  assert.equal(b.status, 'executed', b.reason); assert.deepEqual(b.result, a.result);
 });
 
 test('stdio MCP: initialize, list, refuse an unknown tool, write the audit log', async () => {

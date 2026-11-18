@@ -1,240 +1,275 @@
 {
- "suite": "sycamore-of-close",
- "root": "..",
- "no_names_in_report": true,
- "data_note": "Fictional ledgers and residents in ../fixtures. Deterministic checks; no model is called.",
- "cases": [
-  {
-   "id": "totals",
-   "tool": "sycamore_check",
-   "args": {
-    "tb": "fixtures/tb-2026-03.csv",
-    "tasks": "fixtures/close-tasks.csv",
-    "suspense": "fixtures/suspense-detail.csv",
-    "rules": "fixtures/rules.json",
-    "as_of": "2026-04-06"
-   },
-   "expect": {
-    "status": "executed",
-    "equals": {
-     "result.entities": 2,
-     "result.accounts": 20,
-     "result.tasks_open": 3
-    }
-   }
-  },
-  {
-   "id": "out-of-balance-first",
-   "tool": "sycamore_check",
-   "args": {
-    "tb": "fixtures/tb-2026-03.csv",
-    "tasks": "fixtures/close-tasks.csv",
-    "suspense": "fixtures/suspense-detail.csv",
-    "rules": "fixtures/rules.json",
-    "as_of": "2026-04-06"
-   },
-   "expect": {
-    "equals": {
-     "result.items.0.status": "out_of_balance",
-     "result.items.0.amount": 1200,
-     "result.items.0.entity": "Cedar Hollow OpCo"
-    }
-   }
-  },
-  {
-   "id": "intercompany",
-   "tool": "sycamore_check",
-   "args": {
-    "tb": "fixtures/tb-2026-03.csv",
-    "tasks": "fixtures/close-tasks.csv",
-    "suspense": "fixtures/suspense-detail.csv",
-    "rules": "fixtures/rules.json",
-    "as_of": "2026-04-06",
-    "status": "intercompany_not_netting"
-   },
-   "expect": {
-    "equals": {
-     "result.items.0.amount": 5000
-    }
-   }
-  },
-  {
-   "id": "unapplied-cash-detail",
-   "tool": "sycamore_check",
-   "args": {
-    "tb": "fixtures/tb-2026-03.csv",
-    "tasks": "fixtures/close-tasks.csv",
-    "suspense": "fixtures/suspense-detail.csv",
-    "rules": "fixtures/rules.json",
-    "as_of": "2026-04-06",
-    "status": "suspense_balance"
-   },
-   "expect": {
-    "equals": {
-     "result.items.1.account": "1290",
-     "result.items.1.lines": 3,
-     "result.items.1.oldest_days": 82
-    }
-   }
-  },
-  {
-   "id": "missing-therapy-accrual",
-   "tool": "sycamore_check",
-   "args": {
-    "tb": "fixtures/tb-2026-03.csv",
-    "tasks": "fixtures/close-tasks.csv",
-    "suspense": "fixtures/suspense-detail.csv",
-    "rules": "fixtures/rules.json",
-    "as_of": "2026-04-06",
-    "status": "missing_accrual"
-   },
-   "expect": {
-    "equals": {
-     "result.items.0.account": "5400",
-     "result.items.0.amount": 90000
-    }
-   }
-  },
-  {
-   "id": "utilities-accrual-present",
-   "tool": "sycamore_check",
-   "args": {
-    "tb": "fixtures/tb-2026-03.csv",
-    "tasks": "fixtures/close-tasks.csv",
-    "suspense": "fixtures/suspense-detail.csv",
-    "rules": "fixtures/rules.json",
-    "as_of": "2026-04-06",
-    "status": "missing_accrual"
-   },
-   "expect": {
-    "not_contains": [
-     "Utilities"
-    ]
-   }
-  },
-  {
-   "id": "ppd-pharmacy-low",
-   "tool": "sycamore_check",
-   "args": {
-    "tb": "fixtures/tb-2026-03.csv",
-    "tasks": "fixtures/close-tasks.csv",
-    "suspense": "fixtures/suspense-detail.csv",
-    "rules": "fixtures/rules.json",
-    "as_of": "2026-04-06",
-    "status": "ppd_out_of_range"
-   },
-   "expect": {
-    "equals": {
-     "result.items.1.account": "5300",
-     "result.items.1.ppd": 11.14
-    }
-   }
-  },
-  {
-   "id": "late-task",
-   "tool": "sycamore_check",
-   "args": {
-    "tb": "fixtures/tb-2026-03.csv",
-    "tasks": "fixtures/close-tasks.csv",
-    "suspense": "fixtures/suspense-detail.csv",
-    "rules": "fixtures/rules.json",
-    "as_of": "2026-04-06",
-    "status": "late_task"
-   },
-   "expect": {
-    "equals": {
-     "result.items.0.due_date": "2026-04-04"
+  "suite": "sycamore-of-close",
+  "root": "..",
+  "no_names_in_report": true,
+  "data_note": "Fictional ledgers and residents in ../fixtures. Deterministic checks; no model is called.",
+  "cases": [
+    {
+      "id": "totals",
+      "tool": "sycamore_check",
+      "args": {
+        "tb": "fixtures/tb-2026-03.csv",
+        "tasks": "fixtures/close-tasks.csv",
+        "suspense": "fixtures/suspense-detail.csv",
+        "rules": "fixtures/rules.json",
+        "as_of": "2026-04-06"
+      },
+      "expect": {
+        "status": "executed",
+        "equals": {
+          "result.entities": 2,
+          "result.accounts": 20,
+          "result.tasks_open": 3
+        }
+      }
     },
-    "contains": [
-     "Payroll accrual"
-    ]
-   }
-  },
-  {
-   "id": "no-patient-days-no-ppd",
-   "tool": "sycamore_check",
-   "args": {
-    "tb": "fixtures/tb-2026-03.csv",
-    "as_of": "2026-04-06"
-   },
-   "expect": {
-    "not_contains": [
-     "ppd_out_of_range",
-     "late_task"
-    ]
-   }
-  },
-  {
-   "id": "typo-rules-refused",
-   "tool": "sycamore_check",
-   "args": {
-    "tb": "fixtures/tb-2026-03.csv",
-    "tasks": "fixtures/close-tasks.csv",
-    "suspense": "fixtures/suspense-detail.csv",
-    "rules": "fixtures/rules-typo.json",
-    "as_of": "2026-04-06"
-   },
-   "expect": {
-    "status": "error",
-    "contains": [
-     "swing_percent"
-    ]
-   }
-  },
-  {
-   "id": "residents-masked",
-   "tool": "sycamore_check",
-   "args": {
-    "tb": "fixtures/tb-2026-03.csv",
-    "tasks": "fixtures/close-tasks.csv",
-    "suspense": "fixtures/suspense-detail.csv",
-    "rules": "fixtures/rules.json",
-    "as_of": "2026-04-06"
-   },
-   "expect": {
-    "not_contains": [
-     "Abigail Thorne",
-     "Bastian Cole"
-    ]
-   }
-  },
-  {
-   "id": "report",
-   "tool": "sycamore_write_report",
-   "args": {
-    "tb": "fixtures/tb-2026-03.csv",
-    "tasks": "fixtures/close-tasks.csv",
-    "suspense": "fixtures/suspense-detail.csv",
-    "rules": "fixtures/rules.json",
-    "as_of": "2026-04-06"
-   },
-   "expect": {
-    "status": "executed",
-    "contains": [
-     "sycamore-close.csv"
-    ]
-   }
-  },
-  {
-   "id": "post-refused",
-   "tool": "journal_post",
-   "args": {},
-   "expect": {
-    "status": "blocked",
-    "decision": "block"
-   }
-  },
-  {
-   "id": "recall-empty",
-   "tool": "sycamore_recall",
-   "args": {},
-   "expect": {
-    "status": "executed",
-    "contains": [
-     "memory is empty",
-     "swing_explanation"
-    ]
-   }
-  }
- ]
+    {
+      "id": "out-of-balance-first",
+      "tool": "sycamore_check",
+      "args": {
+        "tb": "fixtures/tb-2026-03.csv",
+        "tasks": "fixtures/close-tasks.csv",
+        "suspense": "fixtures/suspense-detail.csv",
+        "rules": "fixtures/rules.json",
+        "as_of": "2026-04-06"
+      },
+      "expect": {
+        "equals": {
+          "result.items.0.status": "out_of_balance",
+          "result.items.0.amount": 1200,
+          "result.items.0.entity": "Cedar Hollow OpCo"
+        }
+      }
+    },
+    {
+      "id": "intercompany",
+      "tool": "sycamore_check",
+      "args": {
+        "tb": "fixtures/tb-2026-03.csv",
+        "tasks": "fixtures/close-tasks.csv",
+        "suspense": "fixtures/suspense-detail.csv",
+        "rules": "fixtures/rules.json",
+        "as_of": "2026-04-06",
+        "status": "intercompany_not_netting"
+      },
+      "expect": {
+        "equals": {
+          "result.items.0.amount": 5000
+        }
+      }
+    },
+    {
+      "id": "unapplied-cash-detail",
+      "tool": "sycamore_check",
+      "args": {
+        "tb": "fixtures/tb-2026-03.csv",
+        "tasks": "fixtures/close-tasks.csv",
+        "suspense": "fixtures/suspense-detail.csv",
+        "rules": "fixtures/rules.json",
+        "as_of": "2026-04-06",
+        "status": "suspense_balance"
+      },
+      "expect": {
+        "equals": {
+          "result.items.1.account": "1290",
+          "result.items.1.lines": 3,
+          "result.items.1.oldest_days": 82
+        }
+      }
+    },
+    {
+      "id": "missing-therapy-accrual",
+      "tool": "sycamore_check",
+      "args": {
+        "tb": "fixtures/tb-2026-03.csv",
+        "tasks": "fixtures/close-tasks.csv",
+        "suspense": "fixtures/suspense-detail.csv",
+        "rules": "fixtures/rules.json",
+        "as_of": "2026-04-06",
+        "status": "missing_accrual"
+      },
+      "expect": {
+        "equals": {
+          "result.items.0.account": "5400",
+          "result.items.0.amount": 90000
+        }
+      }
+    },
+    {
+      "id": "utilities-accrual-present",
+      "tool": "sycamore_check",
+      "args": {
+        "tb": "fixtures/tb-2026-03.csv",
+        "tasks": "fixtures/close-tasks.csv",
+        "suspense": "fixtures/suspense-detail.csv",
+        "rules": "fixtures/rules.json",
+        "as_of": "2026-04-06",
+        "status": "missing_accrual"
+      },
+      "expect": {
+        "not_contains": [
+          "Utilities"
+        ]
+      }
+    },
+    {
+      "id": "ppd-pharmacy-low",
+      "tool": "sycamore_check",
+      "args": {
+        "tb": "fixtures/tb-2026-03.csv",
+        "tasks": "fixtures/close-tasks.csv",
+        "suspense": "fixtures/suspense-detail.csv",
+        "rules": "fixtures/rules.json",
+        "as_of": "2026-04-06",
+        "status": "ppd_out_of_range"
+      },
+      "expect": {
+        "equals": {
+          "result.items.1.account": "5300",
+          "result.items.1.ppd": 11.14
+        }
+      }
+    },
+    {
+      "id": "late-task",
+      "tool": "sycamore_check",
+      "args": {
+        "tb": "fixtures/tb-2026-03.csv",
+        "tasks": "fixtures/close-tasks.csv",
+        "suspense": "fixtures/suspense-detail.csv",
+        "rules": "fixtures/rules.json",
+        "as_of": "2026-04-06",
+        "status": "late_task"
+      },
+      "expect": {
+        "equals": {
+          "result.items.0.due_date": "2026-04-04"
+        },
+        "contains": [
+          "Payroll accrual"
+        ]
+      }
+    },
+    {
+      "id": "no-patient-days-no-ppd",
+      "tool": "sycamore_check",
+      "args": {
+        "tb": "fixtures/tb-2026-03.csv",
+        "as_of": "2026-04-06"
+      },
+      "expect": {
+        "not_contains": [
+          "ppd_out_of_range",
+          "late_task"
+        ]
+      }
+    },
+    {
+      "id": "typo-rules-refused",
+      "tool": "sycamore_check",
+      "args": {
+        "tb": "fixtures/tb-2026-03.csv",
+        "tasks": "fixtures/close-tasks.csv",
+        "suspense": "fixtures/suspense-detail.csv",
+        "rules": "fixtures/rules-typo.json",
+        "as_of": "2026-04-06"
+      },
+      "expect": {
+        "status": "error",
+        "contains": [
+          "swing_percent"
+        ]
+      }
+    },
+    {
+      "id": "residents-masked",
+      "tool": "sycamore_check",
+      "args": {
+        "tb": "fixtures/tb-2026-03.csv",
+        "tasks": "fixtures/close-tasks.csv",
+        "suspense": "fixtures/suspense-detail.csv",
+        "rules": "fixtures/rules.json",
+        "as_of": "2026-04-06"
+      },
+      "expect": {
+        "not_contains": [
+          "Abigail Thorne",
+          "Bastian Cole"
+        ]
+      }
+    },
+    {
+      "id": "report",
+      "tool": "sycamore_write_report",
+      "args": {
+        "tb": "fixtures/tb-2026-03.csv",
+        "tasks": "fixtures/close-tasks.csv",
+        "suspense": "fixtures/suspense-detail.csv",
+        "rules": "fixtures/rules.json",
+        "as_of": "2026-04-06"
+      },
+      "expect": {
+        "status": "executed",
+        "contains": [
+          "sycamore-close.csv"
+        ]
+      }
+    },
+    {
+      "id": "post-refused",
+      "tool": "journal_post",
+      "args": {},
+      "expect": {
+        "status": "blocked",
+        "decision": "block"
+      }
+    },
+    {
+      "id": "recall-empty",
+      "tool": "sycamore_recall",
+      "args": {},
+      "expect": {
+        "status": "executed",
+        "contains": [
+          "memory is empty",
+          "swing_explanation"
+        ]
+      }
+    },
+    {
+      "id": "file-outside-root-refused",
+      "tool": "sycamore_check",
+      "args": {
+        "tb": "../../outside-root.csv",
+        "tasks": "fixtures/close-tasks.csv",
+        "suspense": "fixtures/suspense-detail.csv",
+        "rules": "fixtures/rules.json",
+        "as_of": "2026-04-06"
+      },
+      "expect": {
+        "status": "error",
+        "contains": [
+          "outside the allowed root"
+        ]
+      }
+    },
+    {
+      "id": "missing-file-named",
+      "tool": "sycamore_check",
+      "args": {
+        "tb": "fixtures/missing-export.csv",
+        "tasks": "fixtures/close-tasks.csv",
+        "suspense": "fixtures/suspense-detail.csv",
+        "rules": "fixtures/rules.json",
+        "as_of": "2026-04-06"
+      },
+      "expect": {
+        "status": "error",
+        "contains": [
+          "not found",
+          "missing-export.csv"
+        ]
+      }
+    }
+  ]
 }

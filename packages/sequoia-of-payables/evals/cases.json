@@ -1,232 +1,267 @@
 {
- "suite": "sequoia-of-payables",
- "root": "..",
- "data_note": "Fictional vendors and example settings in ../fixtures. Deterministic checks; no model is called.",
- "cases": [
-  {
-   "id": "totals",
-   "tool": "sequoia_check",
-   "args": {
-    "invoices": "fixtures/invoices.csv",
-    "vendors": "fixtures/vendors.csv",
-    "pos": "fixtures/pos.csv",
-    "rules": "fixtures/rules.json",
-    "as_of": "2026-03-31"
-   },
-   "expect": {
-    "status": "executed",
-    "equals": {
-     "result.invoices": 7,
-     "result.invoice_total": 44900,
-     "result.past_due": 6380,
-     "result.accrual": 3200
-    }
-   }
-  },
-  {
-   "id": "bank-change-first",
-   "tool": "sequoia_check",
-   "args": {
-    "invoices": "fixtures/invoices.csv",
-    "vendors": "fixtures/vendors.csv",
-    "pos": "fixtures/pos.csv",
-    "rules": "fixtures/rules.json",
-    "as_of": "2026-03-31"
-   },
-   "expect": {
-    "equals": {
-     "result.items.0.status": "bank_account_changed",
-     "result.items.0.amount": 18900
-    }
-   }
-  },
-  {
-   "id": "duplicate",
-   "tool": "sequoia_check",
-   "args": {
-    "invoices": "fixtures/invoices.csv",
-    "vendors": "fixtures/vendors.csv",
-    "pos": "fixtures/pos.csv",
-    "rules": "fixtures/rules.json",
-    "as_of": "2026-03-31",
-    "status": "duplicate_invoice"
-   },
-   "expect": {
-    "equals": {
-     "result.items.0.invoice_no": "LL-2201",
-     "result.items.0.duplicate_of_line": 1
-    }
-   }
-  },
-  {
-   "id": "duplicate-not-counted-on-po",
-   "tool": "sequoia_check",
-   "args": {
-    "invoices": "fixtures/invoices.csv",
-    "vendors": "fixtures/vendors.csv",
-    "pos": "fixtures/pos.csv",
-    "rules": "fixtures/rules.json",
-    "as_of": "2026-03-31",
-    "status": "over_po"
-   },
-   "expect": {
-    "equals": {
-     "result.items.0.po_number": "PO-902",
-     "result.items.0.amount": 880
+  "suite": "sequoia-of-payables",
+  "root": "..",
+  "data_note": "Fictional vendors and example settings in ../fixtures. Deterministic checks; no model is called.",
+  "cases": [
+    {
+      "id": "totals",
+      "tool": "sequoia_check",
+      "args": {
+        "invoices": "fixtures/invoices.csv",
+        "vendors": "fixtures/vendors.csv",
+        "pos": "fixtures/pos.csv",
+        "rules": "fixtures/rules.json",
+        "as_of": "2026-03-31"
+      },
+      "expect": {
+        "status": "executed",
+        "equals": {
+          "result.invoices": 7,
+          "result.invoice_total": 44900,
+          "result.past_due": 6380,
+          "result.accrual": 3200
+        }
+      }
     },
-    "not_contains": [
-     "PO-901"
-    ]
-   }
-  },
-  {
-   "id": "po-exempt-vendor",
-   "tool": "sequoia_check",
-   "args": {
-    "invoices": "fixtures/invoices.csv",
-    "vendors": "fixtures/vendors.csv",
-    "pos": "fixtures/pos.csv",
-    "rules": "fixtures/rules.json",
-    "as_of": "2026-03-31",
-    "status": "missing_po"
-   },
-   "expect": {
-    "not_contains": [
-     "City Power"
-    ],
-    "contains": [
-     "Bluebonnet",
-     "Hilltop"
-    ]
-   }
-  },
-  {
-   "id": "unapproved-vendor",
-   "tool": "sequoia_check",
-   "args": {
-    "invoices": "fixtures/invoices.csv",
-    "vendors": "fixtures/vendors.csv",
-    "pos": "fixtures/pos.csv",
-    "rules": "fixtures/rules.json",
-    "as_of": "2026-03-31",
-    "status": "vendor_not_approved"
-   },
-   "expect": {
-    "equals": {
-     "result.items.0.vendor": "Hilltop Floor Care (fictional)"
+    {
+      "id": "bank-change-first",
+      "tool": "sequoia_check",
+      "args": {
+        "invoices": "fixtures/invoices.csv",
+        "vendors": "fixtures/vendors.csv",
+        "pos": "fixtures/pos.csv",
+        "rules": "fixtures/rules.json",
+        "as_of": "2026-03-31"
+      },
+      "expect": {
+        "equals": {
+          "result.items.0.status": "bank_account_changed",
+          "result.items.0.amount": 18900
+        }
+      }
+    },
+    {
+      "id": "duplicate",
+      "tool": "sequoia_check",
+      "args": {
+        "invoices": "fixtures/invoices.csv",
+        "vendors": "fixtures/vendors.csv",
+        "pos": "fixtures/pos.csv",
+        "rules": "fixtures/rules.json",
+        "as_of": "2026-03-31",
+        "status": "duplicate_invoice"
+      },
+      "expect": {
+        "equals": {
+          "result.items.0.invoice_no": "LL-2201",
+          "result.items.0.duplicate_of_line": 1
+        }
+      }
+    },
+    {
+      "id": "duplicate-not-counted-on-po",
+      "tool": "sequoia_check",
+      "args": {
+        "invoices": "fixtures/invoices.csv",
+        "vendors": "fixtures/vendors.csv",
+        "pos": "fixtures/pos.csv",
+        "rules": "fixtures/rules.json",
+        "as_of": "2026-03-31",
+        "status": "over_po"
+      },
+      "expect": {
+        "equals": {
+          "result.items.0.po_number": "PO-902",
+          "result.items.0.amount": 880
+        },
+        "not_contains": [
+          "PO-901"
+        ]
+      }
+    },
+    {
+      "id": "po-exempt-vendor",
+      "tool": "sequoia_check",
+      "args": {
+        "invoices": "fixtures/invoices.csv",
+        "vendors": "fixtures/vendors.csv",
+        "pos": "fixtures/pos.csv",
+        "rules": "fixtures/rules.json",
+        "as_of": "2026-03-31",
+        "status": "missing_po"
+      },
+      "expect": {
+        "not_contains": [
+          "City Power"
+        ],
+        "contains": [
+          "Bluebonnet",
+          "Hilltop"
+        ]
+      }
+    },
+    {
+      "id": "unapproved-vendor",
+      "tool": "sequoia_check",
+      "args": {
+        "invoices": "fixtures/invoices.csv",
+        "vendors": "fixtures/vendors.csv",
+        "pos": "fixtures/pos.csv",
+        "rules": "fixtures/rules.json",
+        "as_of": "2026-03-31",
+        "status": "vendor_not_approved"
+      },
+      "expect": {
+        "equals": {
+          "result.items.0.vendor": "Hilltop Floor Care (fictional)"
+        }
+      }
+    },
+    {
+      "id": "accrual",
+      "tool": "sequoia_check",
+      "args": {
+        "invoices": "fixtures/invoices.csv",
+        "vendors": "fixtures/vendors.csv",
+        "pos": "fixtures/pos.csv",
+        "rules": "fixtures/rules.json",
+        "as_of": "2026-03-31",
+        "status": "received_not_invoiced"
+      },
+      "expect": {
+        "equals": {
+          "result.items.0.po_number": "PO-904",
+          "result.items.0.amount": 3200
+        }
+      }
+    },
+    {
+      "id": "higher-po-threshold",
+      "tool": "sequoia_check",
+      "args": {
+        "invoices": "fixtures/invoices.csv",
+        "vendors": "fixtures/vendors.csv",
+        "pos": "fixtures/pos.csv",
+        "rules": "fixtures/rules-5000.json",
+        "as_of": "2026-03-31",
+        "status": "missing_po"
+      },
+      "expect": {
+        "not_contains": [
+          "Bluebonnet",
+          "Hilltop"
+        ]
+      }
+    },
+    {
+      "id": "typo-rules-refused",
+      "tool": "sequoia_check",
+      "args": {
+        "invoices": "fixtures/invoices.csv",
+        "vendors": "fixtures/vendors.csv",
+        "pos": "fixtures/pos.csv",
+        "rules": "fixtures/rules-typo.json",
+        "as_of": "2026-03-31"
+      },
+      "expect": {
+        "status": "error",
+        "contains": [
+          "po_over"
+        ]
+      }
+    },
+    {
+      "id": "bank-accounts-masked",
+      "tool": "sequoia_check",
+      "args": {
+        "invoices": "fixtures/invoices.csv",
+        "vendors": "fixtures/vendors.csv",
+        "pos": "fixtures/pos.csv",
+        "rules": "fixtures/rules.json",
+        "as_of": "2026-03-31"
+      },
+      "expect": {
+        "not_contains": [
+          "4401-778812",
+          "9911-000417"
+        ],
+        "matches": [
+          "ACCT-[0-9a-f]{8}"
+        ]
+      }
+    },
+    {
+      "id": "report",
+      "tool": "sequoia_write_report",
+      "args": {
+        "invoices": "fixtures/invoices.csv",
+        "vendors": "fixtures/vendors.csv",
+        "pos": "fixtures/pos.csv",
+        "rules": "fixtures/rules.json",
+        "as_of": "2026-03-31"
+      },
+      "expect": {
+        "status": "executed",
+        "contains": [
+          "sequoia-payables.csv"
+        ]
+      }
+    },
+    {
+      "id": "release-refused",
+      "tool": "payment_release",
+      "args": {},
+      "expect": {
+        "status": "blocked",
+        "decision": "block"
+      }
+    },
+    {
+      "id": "recall-empty",
+      "tool": "sequoia_recall",
+      "args": {},
+      "expect": {
+        "status": "executed",
+        "contains": [
+          "memory is empty",
+          "vendor_note"
+        ]
+      }
+    },
+    {
+      "id": "file-outside-root-refused",
+      "tool": "sequoia_check",
+      "args": {
+        "invoices": "../../outside-root.csv",
+        "vendors": "fixtures/vendors.csv",
+        "pos": "fixtures/pos.csv",
+        "rules": "fixtures/rules.json",
+        "as_of": "2026-03-31"
+      },
+      "expect": {
+        "status": "error",
+        "contains": [
+          "outside the allowed root"
+        ]
+      }
+    },
+    {
+      "id": "missing-file-named",
+      "tool": "sequoia_check",
+      "args": {
+        "invoices": "fixtures/missing-export.csv",
+        "vendors": "fixtures/vendors.csv",
+        "pos": "fixtures/pos.csv",
+        "rules": "fixtures/rules.json",
+        "as_of": "2026-03-31"
+      },
+      "expect": {
+        "status": "error",
+        "contains": [
+          "not found",
+          "missing-export.csv"
+        ]
+      }
     }
-   }
-  },
-  {
-   "id": "accrual",
-   "tool": "sequoia_check",
-   "args": {
-    "invoices": "fixtures/invoices.csv",
-    "vendors": "fixtures/vendors.csv",
-    "pos": "fixtures/pos.csv",
-    "rules": "fixtures/rules.json",
-    "as_of": "2026-03-31",
-    "status": "received_not_invoiced"
-   },
-   "expect": {
-    "equals": {
-     "result.items.0.po_number": "PO-904",
-     "result.items.0.amount": 3200
-    }
-   }
-  },
-  {
-   "id": "higher-po-threshold",
-   "tool": "sequoia_check",
-   "args": {
-    "invoices": "fixtures/invoices.csv",
-    "vendors": "fixtures/vendors.csv",
-    "pos": "fixtures/pos.csv",
-    "rules": "fixtures/rules-5000.json",
-    "as_of": "2026-03-31",
-    "status": "missing_po"
-   },
-   "expect": {
-    "not_contains": [
-     "Bluebonnet",
-     "Hilltop"
-    ]
-   }
-  },
-  {
-   "id": "typo-rules-refused",
-   "tool": "sequoia_check",
-   "args": {
-    "invoices": "fixtures/invoices.csv",
-    "vendors": "fixtures/vendors.csv",
-    "pos": "fixtures/pos.csv",
-    "rules": "fixtures/rules-typo.json",
-    "as_of": "2026-03-31"
-   },
-   "expect": {
-    "status": "error",
-    "contains": [
-     "po_over"
-    ]
-   }
-  },
-  {
-   "id": "bank-accounts-masked",
-   "tool": "sequoia_check",
-   "args": {
-    "invoices": "fixtures/invoices.csv",
-    "vendors": "fixtures/vendors.csv",
-    "pos": "fixtures/pos.csv",
-    "rules": "fixtures/rules.json",
-    "as_of": "2026-03-31"
-   },
-   "expect": {
-    "not_contains": [
-     "4401-778812",
-     "9911-000417"
-    ],
-    "matches": [
-     "ACCT-[0-9a-f]{8}"
-    ]
-   }
-  },
-  {
-   "id": "report",
-   "tool": "sequoia_write_report",
-   "args": {
-    "invoices": "fixtures/invoices.csv",
-    "vendors": "fixtures/vendors.csv",
-    "pos": "fixtures/pos.csv",
-    "rules": "fixtures/rules.json",
-    "as_of": "2026-03-31"
-   },
-   "expect": {
-    "status": "executed",
-    "contains": [
-     "sequoia-payables.csv"
-    ]
-   }
-  },
-  {
-   "id": "release-refused",
-   "tool": "payment_release",
-   "args": {},
-   "expect": {
-    "status": "blocked",
-    "decision": "block"
-   }
-  },
-  {
-   "id": "recall-empty",
-   "tool": "sequoia_recall",
-   "args": {},
-   "expect": {
-    "status": "executed",
-    "contains": [
-     "memory is empty",
-     "vendor_note"
-    ]
-   }
-  }
- ]
+  ]
 }

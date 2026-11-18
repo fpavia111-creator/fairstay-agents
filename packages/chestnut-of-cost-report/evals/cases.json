@@ -1,267 +1,308 @@
 {
- "suite": "chestnut-of-cost-report",
- "root": "..",
- "no_names_in_report": true,
- "data_note": "Fictional residents and figures in ../fixtures. Deterministic checks; no model is called.",
- "cases": [
-  {
-   "id": "census-days",
-   "tool": "chestnut_check",
-   "args": {
-    "census": "fixtures/census-fy2025.csv",
-    "cost_report": "fixtures/cost-report-days.csv",
-    "psr": "fixtures/psr.csv",
-    "pbc": "fixtures/pbc.csv",
-    "rules": "fixtures/rules.json",
-    "start": "2025-01-01",
-    "end": "2025-12-31",
-    "as_of": "2026-04-15"
-   },
-   "expect": {
-    "status": "executed",
-    "equals": {
-     "result.total_days": 1274,
-     "result.census_days_by_group.medicare_a": 99,
-     "result.census_days_by_group.medicaid": 974,
-     "result.census_days_by_group.other": 201
-    }
-   }
-  },
-  {
-   "id": "total-first",
-   "tool": "chestnut_check",
-   "args": {
-    "census": "fixtures/census-fy2025.csv",
-    "cost_report": "fixtures/cost-report-days.csv",
-    "psr": "fixtures/psr.csv",
-    "pbc": "fixtures/pbc.csv",
-    "rules": "fixtures/rules.json",
-    "start": "2025-01-01",
-    "end": "2025-12-31",
-    "as_of": "2026-04-15"
-   },
-   "expect": {
-    "equals": {
-     "result.items.0.status": "total_days_differ",
-     "result.items.0.census_days": 1274,
-     "result.items.0.other_days": 1271
-    }
-   }
-  },
-  {
-   "id": "medicaid-leave-days",
-   "tool": "chestnut_check",
-   "args": {
-    "census": "fixtures/census-fy2025.csv",
-    "cost_report": "fixtures/cost-report-days.csv",
-    "psr": "fixtures/psr.csv",
-    "pbc": "fixtures/pbc.csv",
-    "rules": "fixtures/rules.json",
-    "start": "2025-01-01",
-    "end": "2025-12-31",
-    "as_of": "2026-04-15",
-    "status": "days_differ_cost_report"
-   },
-   "expect": {
-    "equals": {
-     "result.items.0.group": "medicaid",
-     "result.items.0.amount": 3
-    }
-   }
-  },
-  {
-   "id": "leave-days-not-counted",
-   "tool": "chestnut_check",
-   "args": {
-    "census": "fixtures/census-fy2025.csv",
-    "cost_report": "fixtures/cost-report-days.csv",
-    "psr": "fixtures/psr.csv",
-    "pbc": "fixtures/pbc.csv",
-    "rules": "fixtures/rules-no-leave.json",
-    "start": "2025-01-01",
-    "end": "2025-12-31",
-    "as_of": "2026-04-15"
-   },
-   "expect": {
-    "equals": {
-     "result.total_days": 1271
+  "suite": "chestnut-of-cost-report",
+  "root": "..",
+  "no_names_in_report": true,
+  "data_note": "Fictional residents and figures in ../fixtures. Deterministic checks; no model is called.",
+  "cases": [
+    {
+      "id": "census-days",
+      "tool": "chestnut_check",
+      "args": {
+        "census": "fixtures/census-fy2025.csv",
+        "cost_report": "fixtures/cost-report-days.csv",
+        "psr": "fixtures/psr.csv",
+        "pbc": "fixtures/pbc.csv",
+        "rules": "fixtures/rules.json",
+        "start": "2025-01-01",
+        "end": "2025-12-31",
+        "as_of": "2026-04-15"
+      },
+      "expect": {
+        "status": "executed",
+        "equals": {
+          "result.total_days": 1274,
+          "result.census_days_by_group.medicare_a": 99,
+          "result.census_days_by_group.medicaid": 974,
+          "result.census_days_by_group.other": 201
+        }
+      }
     },
-    "not_contains": [
-     "days_differ_cost_report"
-    ]
-   }
-  },
-  {
-   "id": "psr",
-   "tool": "chestnut_check",
-   "args": {
-    "census": "fixtures/census-fy2025.csv",
-    "cost_report": "fixtures/cost-report-days.csv",
-    "psr": "fixtures/psr.csv",
-    "pbc": "fixtures/pbc.csv",
-    "rules": "fixtures/rules.json",
-    "start": "2025-01-01",
-    "end": "2025-12-31",
-    "as_of": "2026-04-15",
-    "status": "days_differ_psr"
-   },
-   "expect": {
-    "equals": {
-     "result.items.0.census_days": 99,
-     "result.items.0.other_days": 95
+    {
+      "id": "total-first",
+      "tool": "chestnut_check",
+      "args": {
+        "census": "fixtures/census-fy2025.csv",
+        "cost_report": "fixtures/cost-report-days.csv",
+        "psr": "fixtures/psr.csv",
+        "pbc": "fixtures/pbc.csv",
+        "rules": "fixtures/rules.json",
+        "start": "2025-01-01",
+        "end": "2025-12-31",
+        "as_of": "2026-04-15"
+      },
+      "expect": {
+        "equals": {
+          "result.items.0.status": "total_days_differ",
+          "result.items.0.census_days": 1274,
+          "result.items.0.other_days": 1271
+        }
+      }
     },
-    "contains": [
-     "unbilled"
-    ]
-   }
-  },
-  {
-   "id": "pbc-overdue",
-   "tool": "chestnut_check",
-   "args": {
-    "census": "fixtures/census-fy2025.csv",
-    "cost_report": "fixtures/cost-report-days.csv",
-    "psr": "fixtures/psr.csv",
-    "pbc": "fixtures/pbc.csv",
-    "rules": "fixtures/rules.json",
-    "start": "2025-01-01",
-    "end": "2025-12-31",
-    "as_of": "2026-04-15",
-    "status": "pbc_overdue"
-   },
-   "expect": {
-    "equals": {
-     "result.items.0.due_date": "2026-04-10"
+    {
+      "id": "medicaid-leave-days",
+      "tool": "chestnut_check",
+      "args": {
+        "census": "fixtures/census-fy2025.csv",
+        "cost_report": "fixtures/cost-report-days.csv",
+        "psr": "fixtures/psr.csv",
+        "pbc": "fixtures/pbc.csv",
+        "rules": "fixtures/rules.json",
+        "start": "2025-01-01",
+        "end": "2025-12-31",
+        "as_of": "2026-04-15",
+        "status": "days_differ_cost_report"
+      },
+      "expect": {
+        "equals": {
+          "result.items.0.group": "medicaid",
+          "result.items.0.amount": 3
+        }
+      }
     },
-    "contains": [
-     "Bad debt listing"
-    ]
-   }
-  },
-  {
-   "id": "pbc-due-soon",
-   "tool": "chestnut_check",
-   "args": {
-    "census": "fixtures/census-fy2025.csv",
-    "cost_report": "fixtures/cost-report-days.csv",
-    "psr": "fixtures/psr.csv",
-    "pbc": "fixtures/pbc.csv",
-    "rules": "fixtures/rules.json",
-    "start": "2025-01-01",
-    "end": "2025-12-31",
-    "as_of": "2026-04-15",
-    "status": "pbc_due_soon"
-   },
-   "expect": {
-    "contains": [
-     "Year-end AR aging"
-    ],
-    "not_contains": [
-     "Fixed asset"
-    ]
-   }
-  },
-  {
-   "id": "tolerance",
-   "tool": "chestnut_check",
-   "args": {
-    "census": "fixtures/census-fy2025.csv",
-    "cost_report": "fixtures/cost-report-days.csv",
-    "psr": "fixtures/psr.csv",
-    "pbc": "fixtures/pbc.csv",
-    "rules": "fixtures/rules-tolerance.json",
-    "start": "2025-01-01",
-    "end": "2025-12-31",
-    "as_of": "2026-04-15"
-   },
-   "expect": {
-    "not_contains": [
-     "days_differ",
-     "total_days_differ"
-    ]
-   }
-  },
-  {
-   "id": "typo-rules-refused",
-   "tool": "chestnut_check",
-   "args": {
-    "census": "fixtures/census-fy2025.csv",
-    "cost_report": "fixtures/cost-report-days.csv",
-    "psr": "fixtures/psr.csv",
-    "pbc": "fixtures/pbc.csv",
-    "rules": "fixtures/rules-typo.json",
-    "start": "2025-01-01",
-    "end": "2025-12-31",
-    "as_of": "2026-04-15"
-   },
-   "expect": {
-    "status": "error",
-    "contains": [
-     "tolerance"
-    ]
-   }
-  },
-  {
-   "id": "masked",
-   "tool": "chestnut_check",
-   "args": {
-    "census": "fixtures/census-fy2025.csv",
-    "cost_report": "fixtures/cost-report-days.csv",
-    "psr": "fixtures/psr.csv",
-    "pbc": "fixtures/pbc.csv",
-    "rules": "fixtures/rules.json",
-    "start": "2025-01-01",
-    "end": "2025-12-31",
-    "as_of": "2026-04-15",
-    "limit": 1
-   },
-   "expect": {
-    "not_contains": [
-     "Isla Moreno",
-     "R1806"
-    ]
-   }
-  },
-  {
-   "id": "report",
-   "tool": "chestnut_write_report",
-   "args": {
-    "census": "fixtures/census-fy2025.csv",
-    "cost_report": "fixtures/cost-report-days.csv",
-    "psr": "fixtures/psr.csv",
-    "pbc": "fixtures/pbc.csv",
-    "rules": "fixtures/rules.json",
-    "start": "2025-01-01",
-    "end": "2025-12-31",
-    "as_of": "2026-04-15"
-   },
-   "expect": {
-    "status": "executed",
-    "contains": [
-     "chestnut-tie-out.csv"
-    ]
-   }
-  },
-  {
-   "id": "file-refused",
-   "tool": "cost_report_file",
-   "args": {},
-   "expect": {
-    "status": "blocked",
-    "decision": "block"
-   }
-  },
-  {
-   "id": "recall-empty",
-   "tool": "chestnut_recall",
-   "args": {},
-   "expect": {
-    "status": "executed",
-    "contains": [
-     "memory is empty",
-     "tie_out_note"
-    ]
-   }
-  }
- ]
+    {
+      "id": "leave-days-not-counted",
+      "tool": "chestnut_check",
+      "args": {
+        "census": "fixtures/census-fy2025.csv",
+        "cost_report": "fixtures/cost-report-days.csv",
+        "psr": "fixtures/psr.csv",
+        "pbc": "fixtures/pbc.csv",
+        "rules": "fixtures/rules-no-leave.json",
+        "start": "2025-01-01",
+        "end": "2025-12-31",
+        "as_of": "2026-04-15"
+      },
+      "expect": {
+        "equals": {
+          "result.total_days": 1271
+        },
+        "not_contains": [
+          "days_differ_cost_report"
+        ]
+      }
+    },
+    {
+      "id": "psr",
+      "tool": "chestnut_check",
+      "args": {
+        "census": "fixtures/census-fy2025.csv",
+        "cost_report": "fixtures/cost-report-days.csv",
+        "psr": "fixtures/psr.csv",
+        "pbc": "fixtures/pbc.csv",
+        "rules": "fixtures/rules.json",
+        "start": "2025-01-01",
+        "end": "2025-12-31",
+        "as_of": "2026-04-15",
+        "status": "days_differ_psr"
+      },
+      "expect": {
+        "equals": {
+          "result.items.0.census_days": 99,
+          "result.items.0.other_days": 95
+        },
+        "contains": [
+          "unbilled"
+        ]
+      }
+    },
+    {
+      "id": "pbc-overdue",
+      "tool": "chestnut_check",
+      "args": {
+        "census": "fixtures/census-fy2025.csv",
+        "cost_report": "fixtures/cost-report-days.csv",
+        "psr": "fixtures/psr.csv",
+        "pbc": "fixtures/pbc.csv",
+        "rules": "fixtures/rules.json",
+        "start": "2025-01-01",
+        "end": "2025-12-31",
+        "as_of": "2026-04-15",
+        "status": "pbc_overdue"
+      },
+      "expect": {
+        "equals": {
+          "result.items.0.due_date": "2026-04-10"
+        },
+        "contains": [
+          "Bad debt listing"
+        ]
+      }
+    },
+    {
+      "id": "pbc-due-soon",
+      "tool": "chestnut_check",
+      "args": {
+        "census": "fixtures/census-fy2025.csv",
+        "cost_report": "fixtures/cost-report-days.csv",
+        "psr": "fixtures/psr.csv",
+        "pbc": "fixtures/pbc.csv",
+        "rules": "fixtures/rules.json",
+        "start": "2025-01-01",
+        "end": "2025-12-31",
+        "as_of": "2026-04-15",
+        "status": "pbc_due_soon"
+      },
+      "expect": {
+        "contains": [
+          "Year-end AR aging"
+        ],
+        "not_contains": [
+          "Fixed asset"
+        ]
+      }
+    },
+    {
+      "id": "tolerance",
+      "tool": "chestnut_check",
+      "args": {
+        "census": "fixtures/census-fy2025.csv",
+        "cost_report": "fixtures/cost-report-days.csv",
+        "psr": "fixtures/psr.csv",
+        "pbc": "fixtures/pbc.csv",
+        "rules": "fixtures/rules-tolerance.json",
+        "start": "2025-01-01",
+        "end": "2025-12-31",
+        "as_of": "2026-04-15"
+      },
+      "expect": {
+        "not_contains": [
+          "days_differ",
+          "total_days_differ"
+        ]
+      }
+    },
+    {
+      "id": "typo-rules-refused",
+      "tool": "chestnut_check",
+      "args": {
+        "census": "fixtures/census-fy2025.csv",
+        "cost_report": "fixtures/cost-report-days.csv",
+        "psr": "fixtures/psr.csv",
+        "pbc": "fixtures/pbc.csv",
+        "rules": "fixtures/rules-typo.json",
+        "start": "2025-01-01",
+        "end": "2025-12-31",
+        "as_of": "2026-04-15"
+      },
+      "expect": {
+        "status": "error",
+        "contains": [
+          "tolerance"
+        ]
+      }
+    },
+    {
+      "id": "masked",
+      "tool": "chestnut_check",
+      "args": {
+        "census": "fixtures/census-fy2025.csv",
+        "cost_report": "fixtures/cost-report-days.csv",
+        "psr": "fixtures/psr.csv",
+        "pbc": "fixtures/pbc.csv",
+        "rules": "fixtures/rules.json",
+        "start": "2025-01-01",
+        "end": "2025-12-31",
+        "as_of": "2026-04-15",
+        "limit": 1
+      },
+      "expect": {
+        "not_contains": [
+          "Isla Moreno",
+          "R1806"
+        ]
+      }
+    },
+    {
+      "id": "report",
+      "tool": "chestnut_write_report",
+      "args": {
+        "census": "fixtures/census-fy2025.csv",
+        "cost_report": "fixtures/cost-report-days.csv",
+        "psr": "fixtures/psr.csv",
+        "pbc": "fixtures/pbc.csv",
+        "rules": "fixtures/rules.json",
+        "start": "2025-01-01",
+        "end": "2025-12-31",
+        "as_of": "2026-04-15"
+      },
+      "expect": {
+        "status": "executed",
+        "contains": [
+          "chestnut-tie-out.csv"
+        ]
+      }
+    },
+    {
+      "id": "file-refused",
+      "tool": "cost_report_file",
+      "args": {},
+      "expect": {
+        "status": "blocked",
+        "decision": "block"
+      }
+    },
+    {
+      "id": "recall-empty",
+      "tool": "chestnut_recall",
+      "args": {},
+      "expect": {
+        "status": "executed",
+        "contains": [
+          "memory is empty",
+          "tie_out_note"
+        ]
+      }
+    },
+    {
+      "id": "file-outside-root-refused",
+      "tool": "chestnut_check",
+      "args": {
+        "census": "../../outside-root.csv",
+        "cost_report": "fixtures/cost-report-days.csv",
+        "psr": "fixtures/psr.csv",
+        "pbc": "fixtures/pbc.csv",
+        "rules": "fixtures/rules.json",
+        "start": "2025-01-01",
+        "end": "2025-12-31",
+        "as_of": "2026-04-15"
+      },
+      "expect": {
+        "status": "error",
+        "contains": [
+          "outside the allowed root"
+        ]
+      }
+    },
+    {
+      "id": "missing-file-named",
+      "tool": "chestnut_check",
+      "args": {
+        "census": "fixtures/missing-export.csv",
+        "cost_report": "fixtures/cost-report-days.csv",
+        "psr": "fixtures/psr.csv",
+        "pbc": "fixtures/pbc.csv",
+        "rules": "fixtures/rules.json",
+        "start": "2025-01-01",
+        "end": "2025-12-31",
+        "as_of": "2026-04-15"
+      },
+      "expect": {
+        "status": "error",
+        "contains": [
+          "not found",
+          "missing-export.csv"
+        ]
+      }
+    }
+  ]
 }

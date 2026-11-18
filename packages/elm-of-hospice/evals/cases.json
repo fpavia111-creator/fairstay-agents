@@ -1,271 +1,310 @@
 {
- "suite": "elm-of-hospice",
- "root": "..",
- "data_note": "Fictional residents and example settings in ../fixtures. Deterministic checks; no model is called.",
- "cases": [
-  {
-   "id": "totals",
-   "tool": "elm_check",
-   "args": {
-    "census": "fixtures/census.csv",
-    "invoices": "fixtures/invoices.csv",
-    "contracts": "fixtures/contracts.csv",
-    "claims": "fixtures/medicaid-claims.csv",
-    "rules": "fixtures/rules.json",
-    "month": "2026-03",
-    "as_of": "2026-04-20"
-   },
-   "expect": {
-    "status": "executed",
-    "equals": {
-     "result.hospice_residents": 4,
-     "result.hospice_days": 104,
-     "result.not_invoiced": 6045,
-     "result.unpaid": 2730
-    }
-   }
-  },
-  {
-   "id": "medicaid-direct-first",
-   "tool": "elm_check",
-   "args": {
-    "census": "fixtures/census.csv",
-    "invoices": "fixtures/invoices.csv",
-    "contracts": "fixtures/contracts.csv",
-    "claims": "fixtures/medicaid-claims.csv",
-    "rules": "fixtures/rules.json",
-    "month": "2026-03",
-    "as_of": "2026-04-20"
-   },
-   "expect": {
-    "equals": {
-     "result.items.0.status": "medicaid_billed_directly",
-     "result.items.0.from": "2026-03-15",
-     "result.items.0.to": "2026-03-20",
-     "result.items.0.days": 6
-    }
-   }
-  },
-  {
-   "id": "not-invoiced-runs",
-   "tool": "elm_check",
-   "args": {
-    "census": "fixtures/census.csv",
-    "invoices": "fixtures/invoices.csv",
-    "contracts": "fixtures/contracts.csv",
-    "claims": "fixtures/medicaid-claims.csv",
-    "rules": "fixtures/rules.json",
-    "month": "2026-03",
-    "as_of": "2026-04-20",
-    "status": "not_invoiced"
-   },
-   "expect": {
-    "equals": {
-     "result.items.0.days": 20,
-     "result.items.0.amount": 3900,
-     "result.items.1.from": "2026-03-21"
-    }
-   }
-  },
-  {
-   "id": "no-claims-file",
-   "tool": "elm_check",
-   "args": {
-    "census": "fixtures/census.csv",
-    "invoices": "fixtures/invoices.csv",
-    "contracts": "fixtures/contracts.csv",
-    "rules": "fixtures/rules.json",
-    "month": "2026-03",
-    "as_of": "2026-04-20"
-   },
-   "expect": {
-    "not_contains": [
-     "medicaid_billed_directly"
-    ]
-   }
-  },
-  {
-   "id": "no-contract",
-   "tool": "elm_check",
-   "args": {
-    "census": "fixtures/census.csv",
-    "invoices": "fixtures/invoices.csv",
-    "contracts": "fixtures/contracts.csv",
-    "claims": "fixtures/medicaid-claims.csv",
-    "rules": "fixtures/rules.json",
-    "month": "2026-03",
-    "as_of": "2026-04-20",
-    "status": "no_contract"
-   },
-   "expect": {
-    "equals": {
-     "result.items.0.hospice": "Prairie Light Hospice (fictional)",
-     "result.items.0.days": 22,
-     "result.items.0.to": "2026-03-31"
-    }
-   }
-  },
-  {
-   "id": "rate-below",
-   "tool": "elm_check",
-   "args": {
-    "census": "fixtures/census.csv",
-    "invoices": "fixtures/invoices.csv",
-    "contracts": "fixtures/contracts.csv",
-    "claims": "fixtures/medicaid-claims.csv",
-    "rules": "fixtures/rules.json",
-    "month": "2026-03",
-    "as_of": "2026-04-20",
-    "status": "rate_below_contract"
-   },
-   "expect": {
-    "equals": {
-     "result.items.0.amount": 300
+  "suite": "elm-of-hospice",
+  "root": "..",
+  "data_note": "Fictional residents and example settings in ../fixtures. Deterministic checks; no model is called.",
+  "cases": [
+    {
+      "id": "totals",
+      "tool": "elm_check",
+      "args": {
+        "census": "fixtures/census.csv",
+        "invoices": "fixtures/invoices.csv",
+        "contracts": "fixtures/contracts.csv",
+        "claims": "fixtures/medicaid-claims.csv",
+        "rules": "fixtures/rules.json",
+        "month": "2026-03",
+        "as_of": "2026-04-20"
+      },
+      "expect": {
+        "status": "executed",
+        "equals": {
+          "result.hospice_residents": 4,
+          "result.hospice_days": 104,
+          "result.not_invoiced": 6045,
+          "result.unpaid": 2730
+        }
+      }
     },
-    "contains": [
-     "Invoiced 180 a day"
-    ]
-   }
-  },
-  {
-   "id": "invoiced-not-hospice",
-   "tool": "elm_check",
-   "args": {
-    "census": "fixtures/census.csv",
-    "invoices": "fixtures/invoices.csv",
-    "contracts": "fixtures/contracts.csv",
-    "claims": "fixtures/medicaid-claims.csv",
-    "rules": "fixtures/rules.json",
-    "month": "2026-03",
-    "as_of": "2026-04-20",
-    "status": "invoiced_not_in_census"
-   },
-   "expect": {
-    "equals": {
-     "result.items.0.days": 5,
-     "result.items.0.amount": 975
+    {
+      "id": "medicaid-direct-first",
+      "tool": "elm_check",
+      "args": {
+        "census": "fixtures/census.csv",
+        "invoices": "fixtures/invoices.csv",
+        "contracts": "fixtures/contracts.csv",
+        "claims": "fixtures/medicaid-claims.csv",
+        "rules": "fixtures/rules.json",
+        "month": "2026-03",
+        "as_of": "2026-04-20"
+      },
+      "expect": {
+        "equals": {
+          "result.items.0.status": "medicaid_billed_directly",
+          "result.items.0.from": "2026-03-15",
+          "result.items.0.to": "2026-03-20",
+          "result.items.0.days": 6
+        }
+      }
+    },
+    {
+      "id": "not-invoiced-runs",
+      "tool": "elm_check",
+      "args": {
+        "census": "fixtures/census.csv",
+        "invoices": "fixtures/invoices.csv",
+        "contracts": "fixtures/contracts.csv",
+        "claims": "fixtures/medicaid-claims.csv",
+        "rules": "fixtures/rules.json",
+        "month": "2026-03",
+        "as_of": "2026-04-20",
+        "status": "not_invoiced"
+      },
+      "expect": {
+        "equals": {
+          "result.items.0.days": 20,
+          "result.items.0.amount": 3900,
+          "result.items.1.from": "2026-03-21"
+        }
+      }
+    },
+    {
+      "id": "no-claims-file",
+      "tool": "elm_check",
+      "args": {
+        "census": "fixtures/census.csv",
+        "invoices": "fixtures/invoices.csv",
+        "contracts": "fixtures/contracts.csv",
+        "rules": "fixtures/rules.json",
+        "month": "2026-03",
+        "as_of": "2026-04-20"
+      },
+      "expect": {
+        "not_contains": [
+          "medicaid_billed_directly"
+        ]
+      }
+    },
+    {
+      "id": "no-contract",
+      "tool": "elm_check",
+      "args": {
+        "census": "fixtures/census.csv",
+        "invoices": "fixtures/invoices.csv",
+        "contracts": "fixtures/contracts.csv",
+        "claims": "fixtures/medicaid-claims.csv",
+        "rules": "fixtures/rules.json",
+        "month": "2026-03",
+        "as_of": "2026-04-20",
+        "status": "no_contract"
+      },
+      "expect": {
+        "equals": {
+          "result.items.0.hospice": "Prairie Light Hospice (fictional)",
+          "result.items.0.days": 22,
+          "result.items.0.to": "2026-03-31"
+        }
+      }
+    },
+    {
+      "id": "rate-below",
+      "tool": "elm_check",
+      "args": {
+        "census": "fixtures/census.csv",
+        "invoices": "fixtures/invoices.csv",
+        "contracts": "fixtures/contracts.csv",
+        "claims": "fixtures/medicaid-claims.csv",
+        "rules": "fixtures/rules.json",
+        "month": "2026-03",
+        "as_of": "2026-04-20",
+        "status": "rate_below_contract"
+      },
+      "expect": {
+        "equals": {
+          "result.items.0.amount": 300
+        },
+        "contains": [
+          "Invoiced 180 a day"
+        ]
+      }
+    },
+    {
+      "id": "invoiced-not-hospice",
+      "tool": "elm_check",
+      "args": {
+        "census": "fixtures/census.csv",
+        "invoices": "fixtures/invoices.csv",
+        "contracts": "fixtures/contracts.csv",
+        "claims": "fixtures/medicaid-claims.csv",
+        "rules": "fixtures/rules.json",
+        "month": "2026-03",
+        "as_of": "2026-04-20",
+        "status": "invoiced_not_in_census"
+      },
+      "expect": {
+        "equals": {
+          "result.items.0.days": 5,
+          "result.items.0.amount": 975
+        }
+      }
+    },
+    {
+      "id": "unpaid-past-terms",
+      "tool": "elm_check",
+      "args": {
+        "census": "fixtures/census.csv",
+        "invoices": "fixtures/invoices.csv",
+        "contracts": "fixtures/contracts.csv",
+        "claims": "fixtures/medicaid-claims.csv",
+        "rules": "fixtures/rules.json",
+        "month": "2026-03",
+        "as_of": "2026-04-20",
+        "status": "unpaid"
+      },
+      "expect": {
+        "equals": {
+          "result.items.0.days_outstanding": 50,
+          "result.items.0.amount": 2730
+        }
+      }
+    },
+    {
+      "id": "bad-month",
+      "tool": "elm_check",
+      "args": {
+        "census": "fixtures/census.csv",
+        "invoices": "fixtures/invoices.csv",
+        "contracts": "fixtures/contracts.csv",
+        "claims": "fixtures/medicaid-claims.csv",
+        "rules": "fixtures/rules.json",
+        "month": "March",
+        "as_of": "2026-04-20"
+      },
+      "expect": {
+        "status": "error",
+        "contains": [
+          "month"
+        ]
+      }
+    },
+    {
+      "id": "typo-rules-refused",
+      "tool": "elm_check",
+      "args": {
+        "census": "fixtures/census.csv",
+        "invoices": "fixtures/invoices.csv",
+        "contracts": "fixtures/contracts.csv",
+        "claims": "fixtures/medicaid-claims.csv",
+        "rules": "fixtures/rules-typo.json",
+        "month": "2026-03",
+        "as_of": "2026-04-20"
+      },
+      "expect": {
+        "status": "error",
+        "contains": [
+          "payment_days"
+        ]
+      }
+    },
+    {
+      "id": "masked",
+      "tool": "elm_check",
+      "args": {
+        "census": "fixtures/census.csv",
+        "invoices": "fixtures/invoices.csv",
+        "contracts": "fixtures/contracts.csv",
+        "claims": "fixtures/medicaid-claims.csv",
+        "rules": "fixtures/rules.json",
+        "month": "2026-03",
+        "as_of": "2026-04-20"
+      },
+      "expect": {
+        "not_contains": [
+          "Jonah Whitlock",
+          "R1102"
+        ],
+        "matches": [
+          "MRN-[0-9a-f]{8}"
+        ]
+      }
+    },
+    {
+      "id": "report",
+      "tool": "elm_write_report",
+      "args": {
+        "census": "fixtures/census.csv",
+        "invoices": "fixtures/invoices.csv",
+        "contracts": "fixtures/contracts.csv",
+        "claims": "fixtures/medicaid-claims.csv",
+        "rules": "fixtures/rules.json",
+        "month": "2026-03",
+        "as_of": "2026-04-20"
+      },
+      "expect": {
+        "status": "executed",
+        "contains": [
+          "elm-hospice.csv"
+        ]
+      }
+    },
+    {
+      "id": "send-refused",
+      "tool": "hospice_invoice_send",
+      "args": {},
+      "expect": {
+        "status": "blocked",
+        "decision": "block"
+      }
+    },
+    {
+      "id": "recall-empty",
+      "tool": "elm_recall",
+      "args": {},
+      "expect": {
+        "status": "executed",
+        "contains": [
+          "memory is empty",
+          "hospice_alias"
+        ]
+      }
+    },
+    {
+      "id": "file-outside-root-refused",
+      "tool": "elm_check",
+      "args": {
+        "census": "../../outside-root.csv",
+        "invoices": "fixtures/invoices.csv",
+        "contracts": "fixtures/contracts.csv",
+        "claims": "fixtures/medicaid-claims.csv",
+        "rules": "fixtures/rules.json",
+        "month": "2026-03",
+        "as_of": "2026-04-20"
+      },
+      "expect": {
+        "status": "error",
+        "contains": [
+          "outside the allowed root"
+        ]
+      }
+    },
+    {
+      "id": "missing-file-named",
+      "tool": "elm_check",
+      "args": {
+        "census": "fixtures/missing-export.csv",
+        "invoices": "fixtures/invoices.csv",
+        "contracts": "fixtures/contracts.csv",
+        "claims": "fixtures/medicaid-claims.csv",
+        "rules": "fixtures/rules.json",
+        "month": "2026-03",
+        "as_of": "2026-04-20"
+      },
+      "expect": {
+        "status": "error",
+        "contains": [
+          "not found",
+          "missing-export.csv"
+        ]
+      }
     }
-   }
-  },
-  {
-   "id": "unpaid-past-terms",
-   "tool": "elm_check",
-   "args": {
-    "census": "fixtures/census.csv",
-    "invoices": "fixtures/invoices.csv",
-    "contracts": "fixtures/contracts.csv",
-    "claims": "fixtures/medicaid-claims.csv",
-    "rules": "fixtures/rules.json",
-    "month": "2026-03",
-    "as_of": "2026-04-20",
-    "status": "unpaid"
-   },
-   "expect": {
-    "equals": {
-     "result.items.0.days_outstanding": 50,
-     "result.items.0.amount": 2730
-    }
-   }
-  },
-  {
-   "id": "bad-month",
-   "tool": "elm_check",
-   "args": {
-    "census": "fixtures/census.csv",
-    "invoices": "fixtures/invoices.csv",
-    "contracts": "fixtures/contracts.csv",
-    "claims": "fixtures/medicaid-claims.csv",
-    "rules": "fixtures/rules.json",
-    "month": "March",
-    "as_of": "2026-04-20"
-   },
-   "expect": {
-    "status": "error",
-    "contains": [
-     "month"
-    ]
-   }
-  },
-  {
-   "id": "typo-rules-refused",
-   "tool": "elm_check",
-   "args": {
-    "census": "fixtures/census.csv",
-    "invoices": "fixtures/invoices.csv",
-    "contracts": "fixtures/contracts.csv",
-    "claims": "fixtures/medicaid-claims.csv",
-    "rules": "fixtures/rules-typo.json",
-    "month": "2026-03",
-    "as_of": "2026-04-20"
-   },
-   "expect": {
-    "status": "error",
-    "contains": [
-     "payment_days"
-    ]
-   }
-  },
-  {
-   "id": "masked",
-   "tool": "elm_check",
-   "args": {
-    "census": "fixtures/census.csv",
-    "invoices": "fixtures/invoices.csv",
-    "contracts": "fixtures/contracts.csv",
-    "claims": "fixtures/medicaid-claims.csv",
-    "rules": "fixtures/rules.json",
-    "month": "2026-03",
-    "as_of": "2026-04-20"
-   },
-   "expect": {
-    "not_contains": [
-     "Jonah Whitlock",
-     "R1102"
-    ],
-    "matches": [
-     "MRN-[0-9a-f]{8}"
-    ]
-   }
-  },
-  {
-   "id": "report",
-   "tool": "elm_write_report",
-   "args": {
-    "census": "fixtures/census.csv",
-    "invoices": "fixtures/invoices.csv",
-    "contracts": "fixtures/contracts.csv",
-    "claims": "fixtures/medicaid-claims.csv",
-    "rules": "fixtures/rules.json",
-    "month": "2026-03",
-    "as_of": "2026-04-20"
-   },
-   "expect": {
-    "status": "executed",
-    "contains": [
-     "elm-hospice.csv"
-    ]
-   }
-  },
-  {
-   "id": "send-refused",
-   "tool": "hospice_invoice_send",
-   "args": {},
-   "expect": {
-    "status": "blocked",
-    "decision": "block"
-   }
-  },
-  {
-   "id": "recall-empty",
-   "tool": "elm_recall",
-   "args": {},
-   "expect": {
-    "status": "executed",
-    "contains": [
-     "memory is empty",
-     "hospice_alias"
-    ]
-   }
-  }
- ]
+  ]
 }

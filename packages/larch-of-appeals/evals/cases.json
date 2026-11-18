@@ -1,285 +1,316 @@
 {
- "suite": "larch-of-appeals",
- "root": "..",
- "data_note": "Fictional residents and example settings in ../fixtures. Deterministic checks; no model is called.",
- "cases": [
-  {
-   "id": "totals",
-   "tool": "larch_check",
-   "args": {
-    "denials": "fixtures/denials.csv",
-    "rules": "fixtures/rules.json",
-    "as_of": "2026-04-15"
-   },
-   "expect": {
-    "status": "executed",
-    "equals": {
-     "result.open_denials": 5,
-     "result.open_amount": 56800,
-     "result.due_soon_amount": 8800,
-     "result.lost_amount": 14200
+  "suite": "larch-of-appeals",
+  "root": "..",
+  "data_note": "Fictional residents and example settings in ../fixtures. Deterministic checks; no model is called.",
+  "cases": [
+    {
+      "id": "totals",
+      "tool": "larch_check",
+      "args": {
+        "denials": "fixtures/denials.csv",
+        "rules": "fixtures/rules.json",
+        "as_of": "2026-04-15"
+      },
+      "expect": {
+        "status": "executed",
+        "equals": {
+          "result.open_denials": 5,
+          "result.open_amount": 56800,
+          "result.due_soon_amount": 8800,
+          "result.lost_amount": 14200
+        }
+      }
+    },
+    {
+      "id": "window-closed-first",
+      "tool": "larch_check",
+      "args": {
+        "denials": "fixtures/denials.csv",
+        "rules": "fixtures/rules.json",
+        "as_of": "2026-04-15"
+      },
+      "expect": {
+        "equals": {
+          "result.items.0.status": "appeal_window_closed",
+          "result.items.0.deadline": "2026-03-20",
+          "result.items.0.level_name": "Redetermination"
+        }
+      }
+    },
+    {
+      "id": "managed-care-60-days",
+      "tool": "larch_check",
+      "args": {
+        "denials": "fixtures/denials.csv",
+        "rules": "fixtures/rules.json",
+        "as_of": "2026-04-15",
+        "status": "appeal_due_soon"
+      },
+      "expect": {
+        "equals": {
+          "result.items.0.claim_id": "D-3002",
+          "result.items.0.deadline": "2026-04-23",
+          "result.items.0.days_left": 8
+        }
+      }
+    },
+    {
+      "id": "decision-overdue",
+      "tool": "larch_check",
+      "args": {
+        "denials": "fixtures/denials.csv",
+        "rules": "fixtures/rules.json",
+        "as_of": "2026-04-15",
+        "status": "decision_overdue"
+      },
+      "expect": {
+        "equals": {
+          "result.items.0.decision_due": "2026-03-11",
+          "result.items.0.days_late": 35
+        }
+      }
+    },
+    {
+      "id": "next-level-after-upheld",
+      "tool": "larch_check",
+      "args": {
+        "denials": "fixtures/denials.csv",
+        "rules": "fixtures/rules.json",
+        "as_of": "2026-04-15",
+        "status": "next_level_open"
+      },
+      "expect": {
+        "equals": {
+          "result.items.0.next_level": 2,
+          "result.items.0.level_name": "Reconsideration (QIC)",
+          "result.items.0.deadline": "2026-05-19"
+        }
+      }
+    },
+    {
+      "id": "overturned-left-alone",
+      "tool": "larch_check",
+      "args": {
+        "denials": "fixtures/denials.csv",
+        "rules": "fixtures/rules.json",
+        "as_of": "2026-04-15"
+      },
+      "expect": {
+        "not_contains": [
+          "D-3006"
+        ]
+      }
+    },
+    {
+      "id": "contract-levels",
+      "tool": "larch_check",
+      "args": {
+        "denials": "fixtures/denials.csv",
+        "rules": "fixtures/rules-contract.json",
+        "as_of": "2026-04-15",
+        "status": "appeal_open"
+      },
+      "expect": {
+        "contains": [
+          "D-3002"
+        ]
+      }
+    },
+    {
+      "id": "typo-rules-refused",
+      "tool": "larch_check",
+      "args": {
+        "denials": "fixtures/denials.csv",
+        "rules": "fixtures/rules-typo.json",
+        "as_of": "2026-04-15"
+      },
+      "expect": {
+        "status": "error",
+        "contains": [
+          "warning"
+        ]
+      }
+    },
+    {
+      "id": "masked",
+      "tool": "larch_check",
+      "args": {
+        "denials": "fixtures/denials.csv",
+        "rules": "fixtures/rules.json",
+        "as_of": "2026-04-15"
+      },
+      "expect": {
+        "not_contains": [
+          "Ivo Brandt",
+          "R1501"
+        ],
+        "matches": [
+          "MRN-[0-9a-f]{8}"
+        ]
+      }
+    },
+    {
+      "id": "draft-needs-a-yes",
+      "tool": "larch_draft_appeal_letter",
+      "args": {
+        "denials": "fixtures/denials.csv",
+        "rules": "fixtures/rules.json",
+        "as_of": "2026-04-15",
+        "claim_id": "D-3002"
+      },
+      "expect": {
+        "status": "needs_approval",
+        "decision": "ask"
+      }
+    },
+    {
+      "id": "draft-written",
+      "tool": "larch_draft_appeal_letter",
+      "args": {
+        "denials": "fixtures/denials.csv",
+        "rules": "fixtures/rules.json",
+        "as_of": "2026-04-15",
+        "claim_id": "D-3002",
+        "out_dir": "evergreen-out/eval-larch-draft"
+      },
+      "expect": {
+        "status": "executed",
+        "contains": [
+          "Nothing was sent",
+          "MISSING: why the services met coverage rules"
+        ]
+      },
+      "approve": "Pat Example"
+    },
+    {
+      "id": "draft-refused-after-deadline",
+      "tool": "larch_draft_appeal_letter",
+      "args": {
+        "denials": "fixtures/denials.csv",
+        "rules": "fixtures/rules.json",
+        "as_of": "2026-04-15",
+        "claim_id": "D-3001",
+        "out_dir": "evergreen-out/eval-larch-draft"
+      },
+      "expect": {
+        "status": "error",
+        "contains": [
+          "good-cause extension"
+        ]
+      },
+      "approve": "Pat Example"
+    },
+    {
+      "id": "request-waits-for-a-named-click",
+      "tool": "larch_request_send",
+      "args": {
+        "draft": "fixtures/drafts/appeal_letter-example000001.md",
+        "draft_sha256": "b42fb03565a11dfb16b6fd930229b8719dbda771f456a198d08c89e8e4e75949",
+        "out_dir": "evergreen-out/eval-larch-request"
+      },
+      "expect": {
+        "status": "needs_approval"
+      }
+    },
+    {
+      "id": "request-approved-records-nothing-sent",
+      "tool": "larch_request_send",
+      "args": {
+        "draft": "fixtures/drafts/appeal_letter-example000001.md",
+        "draft_sha256": "b42fb03565a11dfb16b6fd930229b8719dbda771f456a198d08c89e8e4e75949",
+        "out_dir": "evergreen-out/eval-larch-request"
+      },
+      "expect": {
+        "status": "executed",
+        "contains": [
+          "approved and recorded",
+          "Nothing was sent"
+        ]
+      },
+      "approve": "Pat Example"
+    },
+    {
+      "id": "request-wrong-sha-refused",
+      "tool": "larch_request_send",
+      "args": {
+        "draft": "fixtures/drafts/appeal_letter-example000001.md",
+        "draft_sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+        "out_dir": "evergreen-out/eval-larch-request"
+      },
+      "expect": {
+        "status": "error",
+        "contains": [
+          "does not match"
+        ]
+      },
+      "approve": "Pat Example"
+    },
+    {
+      "id": "report",
+      "tool": "larch_write_report",
+      "args": {
+        "denials": "fixtures/denials.csv",
+        "rules": "fixtures/rules.json",
+        "as_of": "2026-04-15"
+      },
+      "expect": {
+        "status": "executed",
+        "contains": [
+          "larch-appeals.csv"
+        ]
+      }
+    },
+    {
+      "id": "submit-refused",
+      "tool": "appeal_submit",
+      "args": {},
+      "expect": {
+        "status": "blocked",
+        "decision": "block"
+      }
+    },
+    {
+      "id": "recall-empty",
+      "tool": "larch_recall",
+      "args": {},
+      "expect": {
+        "status": "executed",
+        "contains": [
+          "memory is empty",
+          "appeal_tip"
+        ]
+      }
+    },
+    {
+      "id": "file-outside-root-refused",
+      "tool": "larch_check",
+      "args": {
+        "denials": "../../outside-root.csv",
+        "rules": "fixtures/rules.json",
+        "as_of": "2026-04-15"
+      },
+      "expect": {
+        "status": "error",
+        "contains": [
+          "outside the allowed root"
+        ]
+      }
+    },
+    {
+      "id": "missing-file-named",
+      "tool": "larch_check",
+      "args": {
+        "denials": "fixtures/missing-export.csv",
+        "rules": "fixtures/rules.json",
+        "as_of": "2026-04-15"
+      },
+      "expect": {
+        "status": "error",
+        "contains": [
+          "not found",
+          "missing-export.csv"
+        ]
+      }
     }
-   }
-  },
-  {
-   "id": "window-closed-first",
-   "tool": "larch_check",
-   "args": {
-    "denials": "fixtures/denials.csv",
-    "rules": "fixtures/rules.json",
-    "as_of": "2026-04-15"
-   },
-   "expect": {
-    "equals": {
-     "result.items.0.status": "appeal_window_closed",
-     "result.items.0.deadline": "2026-03-20",
-     "result.items.0.level_name": "Redetermination"
-    }
-   }
-  },
-  {
-   "id": "managed-care-60-days",
-   "tool": "larch_check",
-   "args": {
-    "denials": "fixtures/denials.csv",
-    "rules": "fixtures/rules.json",
-    "as_of": "2026-04-15",
-    "status": "appeal_due_soon"
-   },
-   "expect": {
-    "equals": {
-     "result.items.0.claim_id": "D-3002",
-     "result.items.0.deadline": "2026-04-23",
-     "result.items.0.days_left": 8
-    }
-   }
-  },
-  {
-   "id": "decision-overdue",
-   "tool": "larch_check",
-   "args": {
-    "denials": "fixtures/denials.csv",
-    "rules": "fixtures/rules.json",
-    "as_of": "2026-04-15",
-    "status": "decision_overdue"
-   },
-   "expect": {
-    "equals": {
-     "result.items.0.decision_due": "2026-03-11",
-     "result.items.0.days_late": 35
-    }
-   }
-  },
-  {
-   "id": "next-level-after-upheld",
-   "tool": "larch_check",
-   "args": {
-    "denials": "fixtures/denials.csv",
-    "rules": "fixtures/rules.json",
-    "as_of": "2026-04-15",
-    "status": "next_level_open"
-   },
-   "expect": {
-    "equals": {
-     "result.items.0.next_level": 2,
-     "result.items.0.level_name": "Reconsideration (QIC)",
-     "result.items.0.deadline": "2026-05-19"
-    }
-   }
-  },
-  {
-   "id": "overturned-left-alone",
-   "tool": "larch_check",
-   "args": {
-    "denials": "fixtures/denials.csv",
-    "rules": "fixtures/rules.json",
-    "as_of": "2026-04-15"
-   },
-   "expect": {
-    "not_contains": [
-     "D-3006"
-    ]
-   }
-  },
-  {
-   "id": "contract-levels",
-   "tool": "larch_check",
-   "args": {
-    "denials": "fixtures/denials.csv",
-    "rules": "fixtures/rules-contract.json",
-    "as_of": "2026-04-15",
-    "status": "appeal_open"
-   },
-   "expect": {
-    "contains": [
-     "D-3002"
-    ]
-   }
-  },
-  {
-   "id": "typo-rules-refused",
-   "tool": "larch_check",
-   "args": {
-    "denials": "fixtures/denials.csv",
-    "rules": "fixtures/rules-typo.json",
-    "as_of": "2026-04-15"
-   },
-   "expect": {
-    "status": "error",
-    "contains": [
-     "warning"
-    ]
-   }
-  },
-  {
-   "id": "masked",
-   "tool": "larch_check",
-   "args": {
-    "denials": "fixtures/denials.csv",
-    "rules": "fixtures/rules.json",
-    "as_of": "2026-04-15"
-   },
-   "expect": {
-    "not_contains": [
-     "Ivo Brandt",
-     "R1501"
-    ],
-    "matches": [
-     "MRN-[0-9a-f]{8}"
-    ]
-   }
-  },
-  {
-   "id": "draft-needs-a-yes",
-   "tool": "larch_draft_appeal_letter",
-   "args": {
-    "denials": "fixtures/denials.csv",
-    "rules": "fixtures/rules.json",
-    "as_of": "2026-04-15",
-    "claim_id": "D-3002"
-   },
-   "expect": {
-    "status": "needs_approval",
-    "decision": "ask"
-   }
-  },
-  {
-   "id": "draft-written",
-   "tool": "larch_draft_appeal_letter",
-   "args": {
-    "denials": "fixtures/denials.csv",
-    "rules": "fixtures/rules.json",
-    "as_of": "2026-04-15",
-    "claim_id": "D-3002",
-    "out_dir": "evergreen-out/eval-larch-draft"
-   },
-   "expect": {
-    "status": "executed",
-    "contains": [
-     "Nothing was sent",
-     "MISSING: why the services met coverage rules"
-    ]
-   },
-   "approve": "Pat Example"
-  },
-  {
-   "id": "draft-refused-after-deadline",
-   "tool": "larch_draft_appeal_letter",
-   "args": {
-    "denials": "fixtures/denials.csv",
-    "rules": "fixtures/rules.json",
-    "as_of": "2026-04-15",
-    "claim_id": "D-3001",
-    "out_dir": "evergreen-out/eval-larch-draft"
-   },
-   "expect": {
-    "status": "error",
-    "contains": [
-     "good-cause extension"
-    ]
-   },
-   "approve": "Pat Example"
-  },
-  {
-   "id": "request-waits-for-a-named-click",
-   "tool": "larch_request_send",
-   "args": {
-    "draft": "fixtures/drafts/appeal_letter-example000001.md",
-    "draft_sha256": "b42fb03565a11dfb16b6fd930229b8719dbda771f456a198d08c89e8e4e75949",
-    "out_dir": "evergreen-out/eval-larch-request"
-   },
-   "expect": {
-    "status": "needs_approval"
-   }
-  },
-  {
-   "id": "request-approved-records-nothing-sent",
-   "tool": "larch_request_send",
-   "args": {
-    "draft": "fixtures/drafts/appeal_letter-example000001.md",
-    "draft_sha256": "b42fb03565a11dfb16b6fd930229b8719dbda771f456a198d08c89e8e4e75949",
-    "out_dir": "evergreen-out/eval-larch-request"
-   },
-   "expect": {
-    "status": "executed",
-    "contains": [
-     "approved and recorded",
-     "Nothing was sent"
-    ]
-   },
-   "approve": "Pat Example"
-  },
-  {
-   "id": "request-wrong-sha-refused",
-   "tool": "larch_request_send",
-   "args": {
-    "draft": "fixtures/drafts/appeal_letter-example000001.md",
-    "draft_sha256": "0000000000000000000000000000000000000000000000000000000000000000",
-    "out_dir": "evergreen-out/eval-larch-request"
-   },
-   "expect": {
-    "status": "error",
-    "contains": [
-     "does not match"
-    ]
-   },
-   "approve": "Pat Example"
-  },
-  {
-   "id": "report",
-   "tool": "larch_write_report",
-   "args": {
-    "denials": "fixtures/denials.csv",
-    "rules": "fixtures/rules.json",
-    "as_of": "2026-04-15"
-   },
-   "expect": {
-    "status": "executed",
-    "contains": [
-     "larch-appeals.csv"
-    ]
-   }
-  },
-  {
-   "id": "submit-refused",
-   "tool": "appeal_submit",
-   "args": {},
-   "expect": {
-    "status": "blocked",
-    "decision": "block"
-   }
-  },
-  {
-   "id": "recall-empty",
-   "tool": "larch_recall",
-   "args": {},
-   "expect": {
-    "status": "executed",
-    "contains": [
-     "memory is empty",
-     "appeal_tip"
-    ]
-   }
-  }
- ]
+  ]
 }

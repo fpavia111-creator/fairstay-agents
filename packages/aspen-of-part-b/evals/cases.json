@@ -1,199 +1,230 @@
 {
- "suite": "aspen-of-part-b",
- "root": "..",
- "data_note": "Fictional residents and example thresholds in ../fixtures. Deterministic checks; no model is called.",
- "cases": [
-  {
-   "id": "totals",
-   "tool": "aspen_check",
-   "args": {
-    "therapy": "fixtures/therapy-2026-03.csv",
-    "census": "fixtures/census.csv",
-    "rules": "fixtures/rules.json"
-   },
-   "expect": {
-    "status": "executed",
-    "equals": {
-     "result.lines": 10,
-     "result.residents": 6,
-     "result.charges_at_risk": 315
+  "suite": "aspen-of-part-b",
+  "root": "..",
+  "data_note": "Fictional residents and example thresholds in ../fixtures. Deterministic checks; no model is called.",
+  "cases": [
+    {
+      "id": "totals",
+      "tool": "aspen_check",
+      "args": {
+        "therapy": "fixtures/therapy-2026-03.csv",
+        "census": "fixtures/census.csv",
+        "rules": "fixtures/rules.json"
+      },
+      "expect": {
+        "status": "executed",
+        "equals": {
+          "result.lines": 10,
+          "result.residents": 6,
+          "result.charges_at_risk": 315
+        }
+      }
+    },
+    {
+      "id": "part-a-first",
+      "tool": "aspen_check",
+      "args": {
+        "therapy": "fixtures/therapy-2026-03.csv",
+        "census": "fixtures/census.csv",
+        "rules": "fixtures/rules.json"
+      },
+      "expect": {
+        "equals": {
+          "result.items.0.status": "part_a_overlap",
+          "result.items.0.date": "2026-03-15",
+          "result.items.0.amount": 90
+        }
+      }
+    },
+    {
+      "id": "eight-minute-rule",
+      "tool": "aspen_check",
+      "args": {
+        "therapy": "fixtures/therapy-2026-03.csv",
+        "census": "fixtures/census.csv",
+        "rules": "fixtures/rules.json",
+        "status": "units_over_8_minute_rule"
+      },
+      "expect": {
+        "equals": {
+          "result.items.0.minutes": 46,
+          "result.items.0.units_allowed": 3,
+          "result.items.0.units": 4,
+          "result.items.1.minutes": 22,
+          "result.items.1.units_allowed": 1
+        }
+      }
+    },
+    {
+      "id": "untimed-code-not-counted",
+      "tool": "aspen_check",
+      "args": {
+        "therapy": "fixtures/therapy-2026-03.csv",
+        "census": "fixtures/census.csv",
+        "rules": "fixtures/rules.json",
+        "status": "units_over_8_minute_rule"
+      },
+      "expect": {
+        "not_contains": [
+          "92526"
+        ]
+      }
+    },
+    {
+      "id": "kx",
+      "tool": "aspen_check",
+      "args": {
+        "therapy": "fixtures/therapy-2026-03.csv",
+        "census": "fixtures/census.csv",
+        "rules": "fixtures/rules.json",
+        "status": "kx_needed"
+      },
+      "expect": {
+        "equals": {
+          "result.items.0.year_to_date": 2500,
+          "result.items.0.date": "2026-03-12"
+        }
+      }
+    },
+    {
+      "id": "no-kx-without-thresholds",
+      "tool": "aspen_check",
+      "args": {
+        "therapy": "fixtures/therapy-2026-03.csv",
+        "census": "fixtures/census.csv"
+      },
+      "expect": {
+        "not_contains": [
+          "kx_needed"
+        ]
+      }
+    },
+    {
+      "id": "no-part-a-without-census",
+      "tool": "aspen_check",
+      "args": {
+        "therapy": "fixtures/therapy-2026-03.csv",
+        "rules": "fixtures/rules.json"
+      },
+      "expect": {
+        "not_contains": [
+          "part_a_overlap"
+        ]
+      }
+    },
+    {
+      "id": "modifier",
+      "tool": "aspen_check",
+      "args": {
+        "therapy": "fixtures/therapy-2026-03.csv",
+        "census": "fixtures/census.csv",
+        "rules": "fixtures/rules.json",
+        "status": "missing_discipline_modifier"
+      },
+      "expect": {
+        "equals": {
+          "result.items.0.cpt": "97112"
+        }
+      }
+    },
+    {
+      "id": "names-masked",
+      "tool": "aspen_check",
+      "args": {
+        "therapy": "fixtures/therapy-2026-03.csv",
+        "census": "fixtures/census.csv",
+        "rules": "fixtures/rules.json"
+      },
+      "expect": {
+        "not_contains": [
+          "Montgomery",
+          "R806"
+        ]
+      }
+    },
+    {
+      "id": "bad-rules-refused",
+      "tool": "aspen_check",
+      "args": {
+        "therapy": "fixtures/therapy-2026-03.csv",
+        "census": "fixtures/census.csv",
+        "rules": "fixtures/rules-typo.json"
+      },
+      "expect": {
+        "status": "error",
+        "contains": [
+          "kx_threshold_pt_slp"
+        ]
+      }
+    },
+    {
+      "id": "report",
+      "tool": "aspen_write_report",
+      "args": {
+        "therapy": "fixtures/therapy-2026-03.csv",
+        "census": "fixtures/census.csv",
+        "rules": "fixtures/rules.json",
+        "out_dir": "evergreen-out/eval-aspen",
+        "language": "ja"
+      },
+      "expect": {
+        "status": "executed",
+        "equals": {
+          "result.lang": "ja"
+        }
+      }
+    },
+    {
+      "id": "claim-submit-refused",
+      "tool": "claim_submit",
+      "args": {},
+      "expect": {
+        "status": "blocked",
+        "decision": "block"
+      }
+    },
+    {
+      "id": "recall-empty-memory",
+      "tool": "aspen_recall",
+      "args": {},
+      "expect": {
+        "status": "executed",
+        "contains": [
+          "memory is empty",
+          "timed_code"
+        ]
+      }
+    },
+    {
+      "id": "file-outside-root-refused",
+      "tool": "aspen_check",
+      "args": {
+        "therapy": "../../outside-root.csv",
+        "census": "fixtures/census.csv",
+        "rules": "fixtures/rules.json"
+      },
+      "expect": {
+        "status": "error",
+        "contains": [
+          "outside the allowed root"
+        ]
+      }
+    },
+    {
+      "id": "missing-file-named",
+      "tool": "aspen_check",
+      "args": {
+        "therapy": "fixtures/missing-export.csv",
+        "census": "fixtures/census.csv",
+        "rules": "fixtures/rules.json"
+      },
+      "expect": {
+        "status": "error",
+        "contains": [
+          "not found",
+          "missing-export.csv"
+        ]
+      }
     }
-   }
-  },
-  {
-   "id": "part-a-first",
-   "tool": "aspen_check",
-   "args": {
-    "therapy": "fixtures/therapy-2026-03.csv",
-    "census": "fixtures/census.csv",
-    "rules": "fixtures/rules.json"
-   },
-   "expect": {
-    "equals": {
-     "result.items.0.status": "part_a_overlap",
-     "result.items.0.date": "2026-03-15",
-     "result.items.0.amount": 90
-    }
-   }
-  },
-  {
-   "id": "eight-minute-rule",
-   "tool": "aspen_check",
-   "args": {
-    "therapy": "fixtures/therapy-2026-03.csv",
-    "census": "fixtures/census.csv",
-    "rules": "fixtures/rules.json",
-    "status": "units_over_8_minute_rule"
-   },
-   "expect": {
-    "equals": {
-     "result.items.0.minutes": 46,
-     "result.items.0.units_allowed": 3,
-     "result.items.0.units": 4,
-     "result.items.1.minutes": 22,
-     "result.items.1.units_allowed": 1
-    }
-   }
-  },
-  {
-   "id": "untimed-code-not-counted",
-   "tool": "aspen_check",
-   "args": {
-    "therapy": "fixtures/therapy-2026-03.csv",
-    "census": "fixtures/census.csv",
-    "rules": "fixtures/rules.json",
-    "status": "units_over_8_minute_rule"
-   },
-   "expect": {
-    "not_contains": [
-     "92526"
-    ]
-   }
-  },
-  {
-   "id": "kx",
-   "tool": "aspen_check",
-   "args": {
-    "therapy": "fixtures/therapy-2026-03.csv",
-    "census": "fixtures/census.csv",
-    "rules": "fixtures/rules.json",
-    "status": "kx_needed"
-   },
-   "expect": {
-    "equals": {
-     "result.items.0.year_to_date": 2500,
-     "result.items.0.date": "2026-03-12"
-    }
-   }
-  },
-  {
-   "id": "no-kx-without-thresholds",
-   "tool": "aspen_check",
-   "args": {
-    "therapy": "fixtures/therapy-2026-03.csv",
-    "census": "fixtures/census.csv"
-   },
-   "expect": {
-    "not_contains": [
-     "kx_needed"
-    ]
-   }
-  },
-  {
-   "id": "no-part-a-without-census",
-   "tool": "aspen_check",
-   "args": {
-    "therapy": "fixtures/therapy-2026-03.csv",
-    "rules": "fixtures/rules.json"
-   },
-   "expect": {
-    "not_contains": [
-     "part_a_overlap"
-    ]
-   }
-  },
-  {
-   "id": "modifier",
-   "tool": "aspen_check",
-   "args": {
-    "therapy": "fixtures/therapy-2026-03.csv",
-    "census": "fixtures/census.csv",
-    "rules": "fixtures/rules.json",
-    "status": "missing_discipline_modifier"
-   },
-   "expect": {
-    "equals": {
-     "result.items.0.cpt": "97112"
-    }
-   }
-  },
-  {
-   "id": "names-masked",
-   "tool": "aspen_check",
-   "args": {
-    "therapy": "fixtures/therapy-2026-03.csv",
-    "census": "fixtures/census.csv",
-    "rules": "fixtures/rules.json"
-   },
-   "expect": {
-    "not_contains": [
-     "Montgomery",
-     "R806"
-    ]
-   }
-  },
-  {
-   "id": "bad-rules-refused",
-   "tool": "aspen_check",
-   "args": {
-    "therapy": "fixtures/therapy-2026-03.csv",
-    "census": "fixtures/census.csv",
-    "rules": "fixtures/rules-typo.json"
-   },
-   "expect": {
-    "status": "error",
-    "contains": [
-     "kx_threshold_pt_slp"
-    ]
-   }
-  },
-  {
-   "id": "report",
-   "tool": "aspen_write_report",
-   "args": {
-    "therapy": "fixtures/therapy-2026-03.csv",
-    "census": "fixtures/census.csv",
-    "rules": "fixtures/rules.json",
-    "out_dir": "evergreen-out/eval-aspen",
-    "language": "ja"
-   },
-   "expect": {
-    "status": "executed",
-    "equals": {
-     "result.lang": "ja"
-    }
-   }
-  },
-  {
-   "id": "claim-submit-refused",
-   "tool": "claim_submit",
-   "args": {},
-   "expect": {
-    "status": "blocked",
-    "decision": "block"
-   }
-  },
-  {
-   "id": "recall-empty-memory",
-   "tool": "aspen_recall",
-   "args": {},
-   "expect": {
-    "status": "executed",
-    "contains": [
-     "memory is empty",
-     "timed_code"
-    ]
-   }
-  }
- ]
+  ]
 }
