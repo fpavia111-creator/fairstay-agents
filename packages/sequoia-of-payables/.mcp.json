@@ -1,0 +1,12 @@
+{
+  "mcpServers": {
+    "sequoia-of-payables": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "sequoia-of-payables@0.1.0",
+        "mcp"
+      ]
+    }
+  }
+}

@@ -1,0 +1,57 @@
+{
+  "name": "sequoia-of-payables",
+  "version": "0.1.0",
+  "description": "Accounts payable review for nursing homes: duplicate invoices, vendors not on the approved list, invoices over the purchase order, missing purchase orders, past-due bills and goods received but not invoiced for the month-end accrual.",
+  "type": "module",
+  "license": "MIT",
+  "author": "Kurt Francisco",
+  "engines": {
+    "node": ">=20"
+  },
+  "main": "src/index.js",
+  "exports": {
+    ".": "./src/index.js",
+    "./package.json": "./package.json"
+  },
+  "bin": {
+    "sequoia-of-payables": "bin/sequoia-of-payables.js"
+  },
+  "files": [
+    "src",
+    "bin",
+    "fixtures",
+    "evals",
+    "README.md",
+    "CHANGELOG.md",
+    "LICENSE"
+  ],
+  "scripts": {
+    "test": "node scripts/run-tests.cjs",
+    "demo": "node bin/sequoia-of-payables.js demo",
+    "eval": "node bin/sequoia-of-payables.js eval"
+  },
+  "dependencies": {
+    "evergreen-core": "^0.1.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/fpavia111-creator/evergreen-agents.git",
+    "directory": "packages/sequoia-of-payables"
+  },
+  "homepage": "https://github.com/fpavia111-creator/evergreen-agents/tree/main/packages/sequoia-of-payables#readme",
+  "bugs": {
+    "url": "https://github.com/fpavia111-creator/evergreen-agents/issues"
+  },
+  "keywords": [
+    "mcp",
+    "mcp-server",
+    "nursing-home",
+    "skilled-nursing",
+    "snf",
+    "long-term-care",
+    "evergreen",
+    "accounts-payable",
+    "duplicates",
+    "accruals"
+  ]
+}
