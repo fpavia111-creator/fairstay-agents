@@ -1,0 +1,8 @@
+Payer,Plan,Level,Per Diem,Effective Date,Term End,Auto Renew,Notice Days,Last Rate Change
+Lone Star Health Advantage,Medicare Advantage,Level 1,520,2025-01-01,2026-12-31,Y,90,2025-01-01
+Lone Star Health Advantage,Medicare Advantage,Level 2,610,2025-01-01,2026-12-31,Y,90,2025-01-01
+Lone Star Health Advantage,Medicare Advantage,Level 3,700,2025-01-01,2026-12-31,Y,90,2025-01-01
+Gulf Coast HMO,Medicare Advantage,Level 1,455,2023-07-01,2026-06-30,Y,60,2023-07-01
+Gulf Coast HMO,Medicare Advantage,Level 2,540,2023-07-01,2026-06-30,Y,60,2023-07-01
+Prairie Star Plus,Medicaid managed care,Custodial,238,2024-09-01,2026-02-28,N,,2024-09-01
+Bluebonnet Care Plan,Medicaid managed care,,232,2025-03-01,,,,2025-03-01

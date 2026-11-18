@@ -1,0 +1,23 @@
+{
+  "name": "mulberry-of-mco-contracts",
+  "version": "0.1.0",
+  "description": "Managed care contract review: per-diem rates below your market benchmark, paid below contract, contracts ending or in their notice window, rates unchanged for years, and a payer matrix for the admissions team.",
+  "author": {
+    "name": "Kurt Francisco"
+  },
+  "license": "MIT",
+  "homepage": "https://github.com/fpavia111-creator/evergreen-agents/tree/main/packages/mulberry-of-mco-contracts#readme",
+  "keywords": [
+    "mcp",
+    "mcp-server",
+    "nursing-home",
+    "skilled-nursing",
+    "snf",
+    "long-term-care",
+    "evergreen",
+    "managed-care",
+    "contracts",
+    "payer-matrix",
+    "rates"
+  ]
+}

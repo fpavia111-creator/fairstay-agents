@@ -1,0 +1,1 @@
+{ "warn_days": 30, "stale_years": 2, "benchmarks": [ { "level": "Level 1", "rate": 500 }, { "level": "Level 2", "rate": 600 }, { "level": "Level 3", "rate": 690 }, { "level": "Custodial", "rate": 240 } ] }
