@@ -1,0 +1,7 @@
+Resident #,Resident Name,Payer,Claim #,Service From,Service To,Denied Amount,Denial Date,Reason,Appeal Level,Appeal Filed,Decision Date,Decision
+R1501,Ivo Brandt,Medicare A,D-3001,2025-10-01,2025-10-31,14200,2025-11-20,CO-50 not medically necessary,,,,
+R1502,Juno Vasquez,Sunrise Advantage HMO (fictional),D-3002,2026-02-01,2026-02-20,8800,2026-02-22,CO-197 no authorization,,,,
+R1503,Kai Lindell,Medicare A,D-3003,2025-11-01,2025-11-30,12600,2025-12-15,CO-50 not medically necessary,1,2026-01-10,,
+R1504,Lena Moroz,Medicare A,D-3004,2025-08-01,2025-08-31,15100,2025-09-15,CO-50 not medically necessary,1,2025-10-01,2025-11-20,Upheld
+R1505,Milo Ferraz,Lone Star Medicaid (fictional),D-3005,2026-03-01,2026-03-31,6100,2026-04-05,N-30 eligibility,,,,
+R1506,Nadia Kerr,Medicare B,D-3006,2026-01-05,2026-01-30,940,2026-02-10,CO-151,1,2026-03-01,2026-04-01,Overturned

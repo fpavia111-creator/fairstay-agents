@@ -1,0 +1,12 @@
+{
+  "mcpServers": {
+    "larch-of-appeals": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "larch-of-appeals@0.1.0",
+        "mcp"
+      ]
+    }
+  }
+}
