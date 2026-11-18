@@ -1,0 +1,22 @@
+{
+  "name": "spruce-of-liability",
+  "version": "0.1.0",
+  "description": "Patient liability (Medicaid share of cost) and private pay: liability not billed, billed short or over, unpaid balances, credit balances to refund and new liability notices not applied.",
+  "author": {
+    "name": "Kurt Francisco"
+  },
+  "license": "MIT",
+  "homepage": "https://github.com/fpavia111-creator/evergreen-agents/tree/main/packages/spruce-of-liability#readme",
+  "keywords": [
+    "mcp",
+    "mcp-server",
+    "nursing-home",
+    "skilled-nursing",
+    "snf",
+    "long-term-care",
+    "evergreen",
+    "patient-liability",
+    "share-of-cost",
+    "private-pay"
+  ]
+}

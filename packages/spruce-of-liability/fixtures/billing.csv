@@ -1,0 +1,12 @@
+Resident #,Resident Name,Month,Amount,Type
+R601,Rosalind Mercer,2026-01,1450.00,Liability
+R601,Rosalind Mercer,2026-02,1450.00,Liability
+R601,Rosalind Mercer,2026-03,1450.00,Liability
+R602,Sebastian Thorne,2026-02,980.00,Liability
+R602,Sebastian Thorne,2026-03,980.00,Liability
+R603,Tabitha Lowell,2026-02,1220.00,Liability
+R604,Ulrich Brandt,2026-03,860.00,Liability
+R605,Vivienne Achebe,2026-03,1310.00,Liability
+R606,Walter Ibsen,2026-01,9300.00,Private
+R606,Walter Ibsen,2026-02,8400.00,Private
+R606,Walter Ibsen,2026-03,9300.00,Private

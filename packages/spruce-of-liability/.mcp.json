@@ -1,0 +1,12 @@
+{
+  "mcpServers": {
+    "spruce-of-liability": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "spruce-of-liability@0.1.0",
+        "mcp"
+      ]
+    }
+  }
+}

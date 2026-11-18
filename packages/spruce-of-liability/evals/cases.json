@@ -1,0 +1,273 @@
+{
+ "suite": "spruce-of-liability",
+ "root": "..",
+ "data_note": "Fictional home and residents in ../fixtures. Deterministic checks; no model is called.",
+ "cases": [
+  {
+   "id": "totals",
+   "tool": "spruce_check",
+   "args": {
+    "schedule": "fixtures/liability-notices.csv",
+    "billing": "fixtures/billing.csv",
+    "payments": "fixtures/payments.csv",
+    "census": "fixtures/census.csv",
+    "rules": "fixtures/rules.json",
+    "month": "2026-03",
+    "as_of": "2026-04-10"
+   },
+   "expect": {
+    "status": "executed",
+    "equals": {
+     "result.residents_with_liability": 5,
+     "result.amount_to_bill": 1345,
+     "result.unpaid_total": 17700,
+     "result.credits_total": 860
+    }
+   }
+  },
+  {
+   "id": "order",
+   "tool": "spruce_check",
+   "args": {
+    "schedule": "fixtures/liability-notices.csv",
+    "billing": "fixtures/billing.csv",
+    "payments": "fixtures/payments.csv",
+    "census": "fixtures/census.csv",
+    "rules": "fixtures/rules.json",
+    "month": "2026-03",
+    "as_of": "2026-04-10"
+   },
+   "expect": {
+    "equals": {
+     "result.items.0.status": "not_billed",
+     "result.items.1.status": "underbilled",
+     "result.items.2.status": "overbilled",
+     "result.items.3.status": "credit_balance",
+     "result.items.4.status": "unpaid"
+    }
+   }
+  },
+  {
+   "id": "new-notice-not-applied",
+   "tool": "spruce_check",
+   "args": {
+    "schedule": "fixtures/liability-notices.csv",
+    "billing": "fixtures/billing.csv",
+    "payments": "fixtures/payments.csv",
+    "census": "fixtures/census.csv",
+    "rules": "fixtures/rules.json",
+    "month": "2026-03",
+    "as_of": "2026-04-10",
+    "status": "underbilled"
+   },
+   "expect": {
+    "equals": {
+     "result.items.0.expected": 1105,
+     "result.items.0.billed": 980,
+     "result.items.0.amount": 125
+    }
+   }
+  },
+  {
+   "id": "prorated-after-discharge",
+   "tool": "spruce_check",
+   "args": {
+    "schedule": "fixtures/liability-notices.csv",
+    "billing": "fixtures/billing.csv",
+    "payments": "fixtures/payments.csv",
+    "census": "fixtures/census.csv",
+    "rules": "fixtures/rules.json",
+    "month": "2026-03",
+    "as_of": "2026-04-10",
+    "status": "overbilled"
+   },
+   "expect": {
+    "equals": {
+     "result.items.0.expected": 633.87,
+     "result.items.0.days_in_house": 15
+    }
+   }
+  },
+  {
+   "id": "no-proration-when-off",
+   "tool": "spruce_check",
+   "args": {
+    "schedule": "fixtures/liability-notices.csv",
+    "billing": "fixtures/billing.csv",
+    "payments": "fixtures/payments.csv",
+    "census": "fixtures/census.csv",
+    "rules": "fixtures/rules-no-prorate.json",
+    "month": "2026-03",
+    "as_of": "2026-04-10"
+   },
+   "expect": {
+    "not_contains": [
+     "overbilled"
+    ]
+   }
+  },
+  {
+   "id": "without-census-full-months",
+   "tool": "spruce_check",
+   "args": {
+    "schedule": "fixtures/liability-notices.csv",
+    "billing": "fixtures/billing.csv",
+    "payments": "fixtures/payments.csv",
+    "rules": "fixtures/rules.json",
+    "month": "2026-03",
+    "as_of": "2026-04-10"
+   },
+   "expect": {
+    "not_contains": [
+     "overbilled"
+    ]
+   }
+  },
+  {
+   "id": "unpaid-oldest-month",
+   "tool": "spruce_check",
+   "args": {
+    "schedule": "fixtures/liability-notices.csv",
+    "billing": "fixtures/billing.csv",
+    "payments": "fixtures/payments.csv",
+    "census": "fixtures/census.csv",
+    "rules": "fixtures/rules.json",
+    "month": "2026-03",
+    "as_of": "2026-04-10",
+    "status": "unpaid"
+   },
+   "expect": {
+    "equals": {
+     "result.items.0.oldest_unpaid_month": "2026-02",
+     "result.items.0.days_unpaid": 68
+    }
+   }
+  },
+  {
+   "id": "earlier-as-of-not-yet-unpaid",
+   "tool": "spruce_check",
+   "args": {
+    "schedule": "fixtures/liability-notices.csv",
+    "billing": "fixtures/billing.csv",
+    "payments": "fixtures/payments.csv",
+    "census": "fixtures/census.csv",
+    "rules": "fixtures/rules.json",
+    "month": "2026-03",
+    "as_of": "2026-03-10"
+   },
+   "expect": {
+    "not_contains": [
+     "\"unpaid\""
+    ]
+   }
+  },
+  {
+   "id": "names-masked",
+   "tool": "spruce_check",
+   "args": {
+    "schedule": "fixtures/liability-notices.csv",
+    "billing": "fixtures/billing.csv",
+    "payments": "fixtures/payments.csv",
+    "census": "fixtures/census.csv",
+    "rules": "fixtures/rules.json",
+    "month": "2026-03",
+    "as_of": "2026-04-10"
+   },
+   "expect": {
+    "matches": [
+     "\"resident_id\":\"MRN-[0-9a-f]{8}\""
+    ],
+    "not_contains": [
+     "Ibsen",
+     "R602"
+    ]
+   }
+  },
+  {
+   "id": "bad-rules-refused",
+   "tool": "spruce_check",
+   "args": {
+    "schedule": "fixtures/liability-notices.csv",
+    "billing": "fixtures/billing.csv",
+    "payments": "fixtures/payments.csv",
+    "census": "fixtures/census.csv",
+    "rules": "fixtures/rules-typo.json",
+    "month": "2026-03",
+    "as_of": "2026-04-10"
+   },
+   "expect": {
+    "status": "error",
+    "contains": [
+     "prorate"
+    ]
+   }
+  },
+  {
+   "id": "bad-month-refused",
+   "tool": "spruce_check",
+   "args": {
+    "schedule": "fixtures/liability-notices.csv",
+    "billing": "fixtures/billing.csv",
+    "payments": "fixtures/payments.csv",
+    "census": "fixtures/census.csv",
+    "rules": "fixtures/rules.json",
+    "month": "March",
+    "as_of": "2026-04-10"
+   },
+   "expect": {
+    "status": "error"
+   }
+  },
+  {
+   "id": "report",
+   "tool": "spruce_write_report",
+   "args": {
+    "schedule": "fixtures/liability-notices.csv",
+    "billing": "fixtures/billing.csv",
+    "payments": "fixtures/payments.csv",
+    "census": "fixtures/census.csv",
+    "rules": "fixtures/rules.json",
+    "month": "2026-03",
+    "as_of": "2026-04-10",
+    "out_dir": "evergreen-out/eval-spruce",
+    "language": "it"
+   },
+   "expect": {
+    "status": "executed",
+    "equals": {
+     "result.lang": "it"
+    }
+   }
+  },
+  {
+   "id": "statement-send-refused",
+   "tool": "statement_send",
+   "args": {},
+   "expect": {
+    "status": "blocked",
+    "decision": "block"
+   }
+  },
+  {
+   "id": "refund-refused",
+   "tool": "refund_issue",
+   "args": {},
+   "expect": {
+    "status": "blocked",
+    "decision": "block"
+   }
+  },
+  {
+   "id": "recall-empty-memory",
+   "tool": "spruce_recall",
+   "args": {},
+   "expect": {
+    "status": "executed",
+    "contains": [
+     "memory is empty",
+     "collection_note"
+    ]
+   }
+  }
+ ]
+}
