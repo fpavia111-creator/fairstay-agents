@@ -1,0 +1,249 @@
+{
+ "suite": "magnolia-of-staffing",
+ "root": "..",
+ "data_note": "Fictional staff and residents in ../fixtures. Deterministic checks; no model is called.",
+ "cases": [
+  {
+   "id": "totals",
+   "tool": "magnolia_check",
+   "args": {
+    "time": "fixtures/nursing-time.csv",
+    "census": "fixtures/census.csv",
+    "invoices": "fixtures/agency-invoices.csv",
+    "rules": "fixtures/rules.json",
+    "start": "2026-03-23",
+    "end": "2026-03-29",
+    "as_of": "2026-04-20"
+   },
+   "expect": {
+    "status": "executed",
+    "equals": {
+     "result.resident_days": 280,
+     "result.avg_total_hprd": 3.59,
+     "result.avg_rn_hprd": 0.56,
+     "result.pbj_due": "2026-05-15"
+    }
+   }
+  },
+  {
+   "id": "rn-gap-first",
+   "tool": "magnolia_check",
+   "args": {
+    "time": "fixtures/nursing-time.csv",
+    "census": "fixtures/census.csv",
+    "invoices": "fixtures/agency-invoices.csv",
+    "rules": "fixtures/rules.json",
+    "start": "2026-03-23",
+    "end": "2026-03-29",
+    "as_of": "2026-04-20"
+   },
+   "expect": {
+    "equals": {
+     "result.items.0.status": "rn_8_hours_missing",
+     "result.items.0.date": "2026-03-28"
+    }
+   }
+  },
+  {
+   "id": "weekday-meets-targets",
+   "tool": "magnolia_check",
+   "args": {
+    "time": "fixtures/nursing-time.csv",
+    "census": "fixtures/census.csv",
+    "invoices": "fixtures/agency-invoices.csv",
+    "rules": "fixtures/rules.json",
+    "start": "2026-03-23",
+    "end": "2026-03-29",
+    "as_of": "2026-04-20",
+    "status": "hprd_below_target"
+   },
+   "expect": {
+    "equals": {
+     "result.items.0.date": "2026-03-28",
+     "result.items.1.date": "2026-03-29"
+    },
+    "min": {
+     "result.items.length": 2
+    }
+   }
+  },
+  {
+   "id": "daily-table",
+   "tool": "magnolia_check",
+   "args": {
+    "time": "fixtures/nursing-time.csv",
+    "census": "fixtures/census.csv",
+    "invoices": "fixtures/agency-invoices.csv",
+    "rules": "fixtures/rules.json",
+    "start": "2026-03-23",
+    "end": "2026-03-29",
+    "as_of": "2026-04-20"
+   },
+   "expect": {
+    "equals": {
+     "result.daily.5.rn_longest_hours": 6,
+     "result.daily.0.total_hprd": 3.8,
+     "result.daily.6.cna_hprd": 2
+    }
+   }
+  },
+  {
+   "id": "agency",
+   "tool": "magnolia_check",
+   "args": {
+    "time": "fixtures/nursing-time.csv",
+    "census": "fixtures/census.csv",
+    "invoices": "fixtures/agency-invoices.csv",
+    "rules": "fixtures/rules.json",
+    "start": "2026-03-23",
+    "end": "2026-03-29",
+    "as_of": "2026-04-20",
+    "status": "agency_hours_differ"
+   },
+   "expect": {
+    "equals": {
+     "result.items.0.billed_hours": 12,
+     "result.items.0.worked_hours": 8
+    }
+   }
+  },
+  {
+   "id": "pbj-due",
+   "tool": "magnolia_check",
+   "args": {
+    "time": "fixtures/nursing-time.csv",
+    "census": "fixtures/census.csv",
+    "invoices": "fixtures/agency-invoices.csv",
+    "rules": "fixtures/rules.json",
+    "start": "2026-03-23",
+    "end": "2026-03-29",
+    "as_of": "2026-04-20",
+    "status": "pbj_due"
+   },
+   "expect": {
+    "contains": [
+     "2026-05-15"
+    ]
+   }
+  },
+  {
+   "id": "pbj-late",
+   "tool": "magnolia_check",
+   "args": {
+    "time": "fixtures/nursing-time.csv",
+    "census": "fixtures/census.csv",
+    "invoices": "fixtures/agency-invoices.csv",
+    "rules": "fixtures/rules.json",
+    "start": "2026-03-23",
+    "end": "2026-03-29",
+    "as_of": "2026-05-20",
+    "status": "pbj_late"
+   },
+   "expect": {
+    "contains": [
+     "drops the staffing star rating"
+    ]
+   }
+  },
+  {
+   "id": "pbj-submitted",
+   "tool": "magnolia_check",
+   "args": {
+    "time": "fixtures/nursing-time.csv",
+    "census": "fixtures/census.csv",
+    "invoices": "fixtures/agency-invoices.csv",
+    "rules": "fixtures/rules-pbj-sent.json",
+    "start": "2026-03-23",
+    "end": "2026-03-29",
+    "as_of": "2026-04-20",
+    "status": "pbj_due"
+   },
+   "expect": {
+    "equals": {
+     "result.items.length": 0
+    },
+    "not_contains": [
+     "pbj_late"
+    ]
+   }
+  },
+  {
+   "id": "typo-rules-refused",
+   "tool": "magnolia_check",
+   "args": {
+    "time": "fixtures/nursing-time.csv",
+    "census": "fixtures/census.csv",
+    "invoices": "fixtures/agency-invoices.csv",
+    "rules": "fixtures/rules-typo.json",
+    "start": "2026-03-23",
+    "end": "2026-03-29",
+    "as_of": "2026-04-20"
+   },
+   "expect": {
+    "status": "error",
+    "contains": [
+     "target"
+    ]
+   }
+  },
+  {
+   "id": "employees-masked",
+   "tool": "magnolia_check",
+   "args": {
+    "time": "fixtures/nursing-time.csv",
+    "census": "fixtures/census.csv",
+    "invoices": "fixtures/agency-invoices.csv",
+    "rules": "fixtures/rules.json",
+    "start": "2026-03-23",
+    "end": "2026-03-29",
+    "as_of": "2026-04-20"
+   },
+   "expect": {
+    "not_contains": [
+     "Jo Pruitt",
+     "A601"
+    ]
+   }
+  },
+  {
+   "id": "report",
+   "tool": "magnolia_write_report",
+   "args": {
+    "time": "fixtures/nursing-time.csv",
+    "census": "fixtures/census.csv",
+    "invoices": "fixtures/agency-invoices.csv",
+    "rules": "fixtures/rules.json",
+    "start": "2026-03-23",
+    "end": "2026-03-29",
+    "as_of": "2026-04-20"
+   },
+   "expect": {
+    "status": "executed",
+    "contains": [
+     "magnolia-staffing.csv"
+    ]
+   }
+  },
+  {
+   "id": "pbj-submit-refused",
+   "tool": "pbj_submit",
+   "args": {},
+   "expect": {
+    "status": "blocked",
+    "decision": "block"
+   }
+  },
+  {
+   "id": "recall-empty",
+   "tool": "magnolia_recall",
+   "args": {},
+   "expect": {
+    "status": "executed",
+    "contains": [
+     "memory is empty",
+     "staffing_note"
+    ]
+   }
+  }
+ ]
+}

@@ -1,0 +1,23 @@
+{
+  "name": "magnolia-of-staffing",
+  "version": "0.1.0",
+  "description": "Staffing and PBJ checks: hours per resident day by role against your targets, days without 8 consecutive RN hours, agency invoices against agency timecards and the PBJ due date.",
+  "author": {
+    "name": "Kurt Francisco"
+  },
+  "license": "MIT",
+  "homepage": "https://github.com/fpavia111-creator/evergreen-agents/tree/main/packages/magnolia-of-staffing#readme",
+  "keywords": [
+    "mcp",
+    "mcp-server",
+    "nursing-home",
+    "skilled-nursing",
+    "snf",
+    "long-term-care",
+    "evergreen",
+    "staffing",
+    "pbj",
+    "hprd",
+    "agency"
+  ]
+}

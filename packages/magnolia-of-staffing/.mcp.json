@@ -1,0 +1,12 @@
+{
+  "mcpServers": {
+    "magnolia-of-staffing": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "magnolia-of-staffing@0.1.0",
+        "mcp"
+      ]
+    }
+  }
+}
