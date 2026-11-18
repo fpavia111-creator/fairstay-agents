@@ -1,0 +1,12 @@
+{
+  "mcpServers": {
+    "maple-of-medicaid-pending": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "maple-of-medicaid-pending@0.1.0",
+        "mcp"
+      ]
+    }
+  }
+}

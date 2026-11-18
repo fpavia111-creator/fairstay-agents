@@ -1,0 +1,12 @@
+{
+  "mcpServers": {
+    "pine-of-part-a": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "pine-of-part-a@0.1.0",
+        "mcp"
+      ]
+    }
+  }
+}

@@ -1,0 +1,8 @@
+Resident #,Resident Name,Applied On,Status,Last Contact,Docs Requested,Docs Received,Docs Due,Decision Date,Effective Date,Billed Through,Patient Liability,Appeal Filed,Pending Balance
+R501,Harriet Quill,2025-12-01,Pending,2026-02-25,,,,,,,,,21450.00
+R502,Ignatius Bell,2026-02-02,Request for information,2026-02-20,Bank statements; Life insurance policy; Deed,Bank statements,2026-03-01,,,,,,9820.00
+R503,Juno Castellano,2026-02-15,Pending,2026-01-30,Pension letter,,2026-03-06,,,,,,4410.00
+R504,Kasimir Lund,2025-11-10,Approved,2026-02-01,,,,2026-02-10,2025-11-01,,,,0
+R505,Lorna Fitzgerald,2025-10-01,Approved,2026-01-15,,,,2026-01-20,2025-10-01,2026-02-28,1180.00,,0
+R506,Matthias Oyelaran,2025-12-10,Denied,2026-02-12,,,,2026-02-12,,,,,6300.00
+R507,Noor Benali,2025-09-15,Denied,2026-01-02,,,,2026-01-02,,,,,11200.00

@@ -1,0 +1,57 @@
+{
+  "name": "maple-of-medicaid-pending",
+  "version": "0.1.0",
+  "description": "Medicaid pending oversight: applications past the decision deadline, document requests due, no follow-up, approvals not yet billed, approvals with no patient liability set, denials with no appeal and pending residents with no application on file.",
+  "type": "module",
+  "license": "MIT",
+  "author": "Kurt Francisco",
+  "engines": {
+    "node": ">=20"
+  },
+  "main": "src/index.js",
+  "exports": {
+    ".": "./src/index.js",
+    "./package.json": "./package.json"
+  },
+  "bin": {
+    "maple-of-medicaid-pending": "bin/maple-of-medicaid-pending.js"
+  },
+  "files": [
+    "src",
+    "bin",
+    "fixtures",
+    "evals",
+    "README.md",
+    "CHANGELOG.md",
+    "LICENSE"
+  ],
+  "scripts": {
+    "test": "node scripts/run-tests.cjs",
+    "demo": "node bin/maple-of-medicaid-pending.js demo",
+    "eval": "node bin/maple-of-medicaid-pending.js eval"
+  },
+  "dependencies": {
+    "evergreen-core": "^0.1.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/fpavia111-creator/evergreen-agents.git",
+    "directory": "packages/maple-of-medicaid-pending"
+  },
+  "homepage": "https://github.com/fpavia111-creator/evergreen-agents/tree/main/packages/maple-of-medicaid-pending#readme",
+  "bugs": {
+    "url": "https://github.com/fpavia111-creator/evergreen-agents/issues"
+  },
+  "keywords": [
+    "mcp",
+    "mcp-server",
+    "nursing-home",
+    "skilled-nursing",
+    "snf",
+    "long-term-care",
+    "evergreen",
+    "medicaid-pending",
+    "long-term-care",
+    "applications"
+  ]
+}
