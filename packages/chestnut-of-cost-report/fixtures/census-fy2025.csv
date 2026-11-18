@@ -1,0 +1,10 @@
+Resident #,Resident Name,Payer,Effective Date,End Date,Bed Status
+R1801,Delia Frost,Lone Star Medicaid (fictional),2024-06-01,,
+R1802,Ezra Quell,Medicare A,2025-02-01,2025-04-01,
+R1802,Ezra Quell,Lone Star Medicaid (fictional),2025-04-01,,
+R1803,Fern Oduya,Private Pay,2025-01-01,2025-07-01,
+R1804,Gideon Park,Medicare A,2025-09-01,2025-10-11,
+R1805,Hollis Grey,Sunrise Advantage HMO (fictional),2025-03-01,2025-03-21,
+R1806,Isla Moreno,Lone Star Medicaid (fictional),2025-01-01,2025-05-10,
+R1806,Isla Moreno,Lone Star Medicaid (fictional),2025-05-10,2025-05-13,Hospital leave
+R1806,Isla Moreno,Lone Star Medicaid (fictional),2025-05-13,2025-12-01,
