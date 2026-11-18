@@ -1,0 +1,12 @@
+{
+  "mcpServers": {
+    "beech-of-propco": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "beech-of-propco@0.1.0",
+        "mcp"
+      ]
+    }
+  }
+}
