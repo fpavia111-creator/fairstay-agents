@@ -1,0 +1,7 @@
+Resident,Resident ID,Payer,Payer Type,Age Days,Balance
+Augustina Pell,B4401,Medicare A,medicare_a,22,41200
+Cornelius Haverford,B4402,Medicare A,medicare_a,140,18600
+Delphine Marchetti,B4403,Texas Medicaid,medicaid,45,52300
+Ignatius Bloomfield,B4404,Texas Medicaid Pending,medicaid_pending,210,24800
+Rosalind Featherstone,B4405,Private Pay,private,95,15400
+Bartholomew Quist,B4406,Lone Star Health Advantage,managed_care,30,29700

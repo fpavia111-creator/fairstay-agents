@@ -1,0 +1,265 @@
+{
+ "suite": "baobab-of-underwriting",
+ "root": "..",
+ "no_names_in_report": true,
+ "data_note": "A fictional 120-bed facility in ../fixtures. Deterministic arithmetic; no model is called.",
+ "cases": [
+  {
+   "id": "t12-annualized",
+   "tool": "baobab_check",
+   "args": {
+    "t12": "fixtures/t12.csv",
+    "census": "fixtures/census-months.csv",
+    "ar": "fixtures/ar-aging.csv",
+    "assumptions": "fixtures/assumptions.json"
+   },
+   "expect": {
+    "status": "executed",
+    "equals": {
+     "result.period.months_with_lines": 11,
+     "result.period.annualized": true,
+     "result.t12.rent": 1560000
+    }
+   }
+  },
+  {
+   "id": "missing-month-first",
+   "tool": "baobab_check",
+   "args": {
+    "t12": "fixtures/t12.csv",
+    "census": "fixtures/census-months.csv",
+    "ar": "fixtures/ar-aging.csv",
+    "assumptions": "fixtures/assumptions.json"
+   },
+   "expect": {
+    "equals": {
+     "result.items.0.status": "missing_month",
+     "result.items.0.month": "2025-09"
+    }
+   }
+  },
+  {
+   "id": "normalized",
+   "tool": "baobab_check",
+   "args": {
+    "t12": "fixtures/t12.csv",
+    "census": "fixtures/census-months.csv",
+    "ar": "fixtures/ar-aging.csv",
+    "assumptions": "fixtures/assumptions.json"
+   },
+   "expect": {
+    "equals": {
+     "result.t12.adjustments": -610590.97,
+     "result.t12.normalized_ebitdar": 1952473.39
+    }
+   }
+  },
+  {
+   "id": "one-time-items",
+   "tool": "baobab_check",
+   "args": {
+    "t12": "fixtures/t12.csv",
+    "census": "fixtures/census-months.csv",
+    "ar": "fixtures/ar-aging.csv",
+    "assumptions": "fixtures/assumptions.json",
+    "status": "one_time_item"
+   },
+   "expect": {
+    "equals": {
+     "result.items.length": 2,
+     "result.items.0.account": "Provider relief fund income",
+     "result.items.1.amount": 65000
+    }
+   }
+  },
+  {
+   "id": "rent-coverage",
+   "tool": "baobab_check",
+   "args": {
+    "t12": "fixtures/t12.csv",
+    "census": "fixtures/census-months.csv",
+    "ar": "fixtures/ar-aging.csv",
+    "assumptions": "fixtures/assumptions.json"
+   },
+   "expect": {
+    "equals": {
+     "result.t12.rent_coverage": 1.25,
+     "result.by_status.rent_coverage_low": 1
+    }
+   }
+  },
+  {
+   "id": "occupancy-mix",
+   "tool": "baobab_check",
+   "args": {
+    "t12": "fixtures/t12.csv",
+    "census": "fixtures/census-months.csv",
+    "ar": "fixtures/ar-aging.csv",
+    "assumptions": "fixtures/assumptions.json"
+   },
+   "expect": {
+    "equals": {
+     "result.census.occupancy": 0.77,
+     "result.census.adc": 92,
+     "result.payer_mix.0.payer_type": "medicaid",
+     "result.payer_mix.0.share": 0.63
+    }
+   }
+  },
+  {
+   "id": "staffing",
+   "tool": "baobab_check",
+   "args": {
+    "t12": "fixtures/t12.csv",
+    "census": "fixtures/census-months.csv",
+    "ar": "fixtures/ar-aging.csv",
+    "assumptions": "fixtures/assumptions.json"
+   },
+   "expect": {
+    "equals": {
+     "result.staffing.hours_per_day": 349.6,
+     "result.staffing.ftes": 61.35,
+     "result.staffing.gap": 249484
+    }
+   }
+  },
+  {
+   "id": "year-one-value",
+   "tool": "baobab_check",
+   "args": {
+    "t12": "fixtures/t12.csv",
+    "census": "fixtures/census-months.csv",
+    "ar": "fixtures/ar-aging.csv",
+    "assumptions": "fixtures/assumptions.json"
+   },
+   "expect": {
+    "equals": {
+     "result.year_one.ebitdar": 1914232.1,
+     "result.valuation.value": 15313856.8,
+     "result.valuation.value_per_bed": 127615.47
+    }
+   }
+  },
+  {
+   "id": "receivables",
+   "tool": "baobab_check",
+   "args": {
+    "t12": "fixtures/t12.csv",
+    "census": "fixtures/census-months.csv",
+    "ar": "fixtures/ar-aging.csv",
+    "assumptions": "fixtures/assumptions.json"
+   },
+   "expect": {
+    "equals": {
+     "result.valuation.ar_gross": 182000,
+     "result.valuation.ar_value": 137941
+    }
+   }
+  },
+  {
+   "id": "pending-haircut-largest",
+   "tool": "baobab_check",
+   "args": {
+    "t12": "fixtures/t12.csv",
+    "census": "fixtures/census-months.csv",
+    "ar": "fixtures/ar-aging.csv",
+    "assumptions": "fixtures/assumptions.json",
+    "status": "ar_haircut"
+   },
+   "expect": {
+    "equals": {
+     "result.items.0.payer_type": "medicaid_pending",
+     "result.items.0.amount": 19840
+    }
+   }
+  },
+  {
+   "id": "no-ar-file",
+   "tool": "baobab_check",
+   "args": {
+    "t12": "fixtures/t12.csv",
+    "census": "fixtures/census-months.csv",
+    "assumptions": "fixtures/assumptions.json"
+   },
+   "expect": {
+    "equals": {
+     "result.valuation.ar_gross": 0
+    },
+    "not_contains": [
+     "receivables of"
+    ]
+   }
+  },
+  {
+   "id": "typo-assumptions-refused",
+   "tool": "baobab_check",
+   "args": {
+    "t12": "fixtures/t12.csv",
+    "census": "fixtures/census-months.csv",
+    "ar": "fixtures/ar-aging.csv",
+    "assumptions": "fixtures/rules-typo.json"
+   },
+   "expect": {
+    "status": "error",
+    "contains": [
+     "cap"
+    ]
+   }
+  },
+  {
+   "id": "residents-masked",
+   "tool": "baobab_check",
+   "args": {
+    "t12": "fixtures/t12.csv",
+    "census": "fixtures/census-months.csv",
+    "ar": "fixtures/ar-aging.csv",
+    "assumptions": "fixtures/assumptions.json"
+   },
+   "expect": {
+    "not_contains": [
+     "Pell",
+     "Haverford",
+     "Bloomfield",
+     "B4404"
+    ]
+   }
+  },
+  {
+   "id": "report",
+   "tool": "baobab_write_report",
+   "args": {
+    "t12": "fixtures/t12.csv",
+    "census": "fixtures/census-months.csv",
+    "ar": "fixtures/ar-aging.csv",
+    "assumptions": "fixtures/assumptions.json"
+   },
+   "expect": {
+    "status": "executed",
+    "contains": [
+     "baobab-underwriting.csv"
+    ]
+   }
+  },
+  {
+   "id": "loi-refused",
+   "tool": "loi_send",
+   "args": {},
+   "expect": {
+    "status": "blocked",
+    "decision": "block"
+   }
+  },
+  {
+   "id": "recall-empty",
+   "tool": "baobab_recall",
+   "args": {},
+   "expect": {
+    "status": "executed",
+    "contains": [
+     "memory is empty",
+     "deal_note"
+    ]
+   }
+  }
+ ]
+}

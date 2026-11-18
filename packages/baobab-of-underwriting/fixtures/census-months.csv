@@ -1,0 +1,49 @@
+Month,Payer,Payer Type,Days
+2025-04,Medicare A,medicare_a,420
+2025-04,Lone Star Health Advantage,managed_care,300
+2025-04,Texas Medicaid,medicaid,1740
+2025-04,Private Pay,private,300
+2025-05,Medicare A,medicare_a,434
+2025-05,Lone Star Health Advantage,managed_care,310
+2025-05,Texas Medicaid,medicaid,1798
+2025-05,Private Pay,private,310
+2025-06,Medicare A,medicare_a,420
+2025-06,Lone Star Health Advantage,managed_care,300
+2025-06,Texas Medicaid,medicaid,1740
+2025-06,Private Pay,private,300
+2025-07,Medicare A,medicare_a,434
+2025-07,Lone Star Health Advantage,managed_care,310
+2025-07,Texas Medicaid,medicaid,1798
+2025-07,Private Pay,private,310
+2025-08,Medicare A,medicare_a,434
+2025-08,Lone Star Health Advantage,managed_care,310
+2025-08,Texas Medicaid,medicaid,1798
+2025-08,Private Pay,private,310
+2025-09,Medicare A,medicare_a,420
+2025-09,Lone Star Health Advantage,managed_care,300
+2025-09,Texas Medicaid,medicaid,1740
+2025-09,Private Pay,private,300
+2025-10,Medicare A,medicare_a,434
+2025-10,Lone Star Health Advantage,managed_care,310
+2025-10,Texas Medicaid,medicaid,1798
+2025-10,Private Pay,private,310
+2025-11,Medicare A,medicare_a,420
+2025-11,Lone Star Health Advantage,managed_care,300
+2025-11,Texas Medicaid,medicaid,1740
+2025-11,Private Pay,private,300
+2025-12,Medicare A,medicare_a,434
+2025-12,Lone Star Health Advantage,managed_care,310
+2025-12,Texas Medicaid,medicaid,1798
+2025-12,Private Pay,private,310
+2026-01,Medicare A,medicare_a,434
+2026-01,Lone Star Health Advantage,managed_care,310
+2026-01,Texas Medicaid,medicaid,1798
+2026-01,Private Pay,private,310
+2026-02,Medicare A,medicare_a,392
+2026-02,Lone Star Health Advantage,managed_care,280
+2026-02,Texas Medicaid,medicaid,1624
+2026-02,Private Pay,private,280
+2026-03,Medicare A,medicare_a,434
+2026-03,Lone Star Health Advantage,managed_care,310
+2026-03,Texas Medicaid,medicaid,1798
+2026-03,Private Pay,private,310

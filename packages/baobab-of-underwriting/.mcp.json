@@ -1,0 +1,12 @@
+{
+  "mcpServers": {
+    "baobab-of-underwriting": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "baobab-of-underwriting@0.1.0",
+        "mcp"
+      ]
+    }
+  }
+}

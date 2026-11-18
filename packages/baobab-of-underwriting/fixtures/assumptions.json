@@ -1,0 +1,1 @@
+{ "beds": 120, "cap_rate": 0.125, "mgmt_fee_pct": 5, "revenue_growth_pct": 3, "expense_growth_pct": 4, "occupancy_target": 0.85, "min_rent_coverage": 1.3, "staffing": { "hprd": 3.8, "hourly_cost": 38 } }

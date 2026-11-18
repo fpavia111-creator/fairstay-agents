@@ -1,0 +1,80 @@
+Month,Account,Group,Amount,One Time
+2025-04,Resident revenue,revenue,918300
+2025-04,Ancillary revenue,revenue,36732
+2025-04,Nursing wages and benefits,nursing_labor,377568
+2025-04,Other wages and benefits,other_labor,156111
+2025-04,Supplies food and services,non_labor,192843
+2025-04,Management fee,management_fee,27549
+2025-04,Rent,rent,130000
+2025-05,Resident revenue,revenue,948910
+2025-05,Ancillary revenue,revenue,37956
+2025-05,Nursing wages and benefits,nursing_labor,390154
+2025-05,Other wages and benefits,other_labor,161315
+2025-05,Supplies food and services,non_labor,199271
+2025-05,Management fee,management_fee,28467
+2025-05,Rent,rent,130000
+2025-06,Resident revenue,revenue,918300
+2025-06,Ancillary revenue,revenue,36732
+2025-06,Nursing wages and benefits,nursing_labor,377568
+2025-06,Other wages and benefits,other_labor,156111
+2025-06,Supplies food and services,non_labor,192843
+2025-06,Management fee,management_fee,27549
+2025-06,Rent,rent,130000
+2025-07,Resident revenue,revenue,948910
+2025-07,Ancillary revenue,revenue,37956
+2025-07,Nursing wages and benefits,nursing_labor,390154
+2025-07,Other wages and benefits,other_labor,161315
+2025-07,Supplies food and services,non_labor,199271
+2025-07,Management fee,management_fee,28467
+2025-07,Rent,rent,130000
+2025-08,Resident revenue,revenue,948910
+2025-08,Ancillary revenue,revenue,37956
+2025-08,Nursing wages and benefits,nursing_labor,390154
+2025-08,Other wages and benefits,other_labor,161315
+2025-08,Supplies food and services,non_labor,199271
+2025-08,Management fee,management_fee,28467
+2025-08,Rent,rent,130000
+2025-10,Resident revenue,revenue,948910
+2025-10,Ancillary revenue,revenue,37956
+2025-10,Nursing wages and benefits,nursing_labor,390154
+2025-10,Other wages and benefits,other_labor,161315
+2025-10,Supplies food and services,non_labor,199271
+2025-10,Management fee,management_fee,28467
+2025-10,Rent,rent,130000
+2025-11,Resident revenue,revenue,918300
+2025-11,Ancillary revenue,revenue,36732
+2025-11,Nursing wages and benefits,nursing_labor,377568
+2025-11,Other wages and benefits,other_labor,156111
+2025-11,Supplies food and services,non_labor,192843
+2025-11,Management fee,management_fee,27549
+2025-11,Rent,rent,130000
+2025-12,Resident revenue,revenue,948910
+2025-12,Ancillary revenue,revenue,37956
+2025-12,Nursing wages and benefits,nursing_labor,390154
+2025-12,Other wages and benefits,other_labor,161315
+2025-12,Supplies food and services,non_labor,199271
+2025-12,Management fee,management_fee,28467
+2025-12,Rent,rent,130000
+2026-01,Resident revenue,revenue,948910
+2026-01,Ancillary revenue,revenue,37956
+2026-01,Nursing wages and benefits,nursing_labor,390154
+2026-01,Other wages and benefits,other_labor,161315
+2026-01,Supplies food and services,non_labor,199271
+2026-01,Management fee,management_fee,28467
+2026-01,Rent,rent,130000
+2026-02,Resident revenue,revenue,857080
+2026-02,Ancillary revenue,revenue,34283
+2026-02,Nursing wages and benefits,nursing_labor,352397
+2026-02,Other wages and benefits,other_labor,145704
+2026-02,Supplies food and services,non_labor,179987
+2026-02,Management fee,management_fee,25712
+2026-02,Rent,rent,130000
+2026-03,Resident revenue,revenue,948910
+2026-03,Ancillary revenue,revenue,37956
+2026-03,Nursing wages and benefits,nursing_labor,390154
+2026-03,Other wages and benefits,other_labor,161315
+2026-03,Supplies food and services,non_labor,199271
+2026-03,Management fee,management_fee,28467
+2026-03,Rent,rent,130000
+2025-06,Provider relief fund income,revenue,180000,
+2025-11,Legal settlement,non_labor,65000,Y
