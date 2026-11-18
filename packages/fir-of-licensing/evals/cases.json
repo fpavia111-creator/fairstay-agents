@@ -1,0 +1,220 @@
+{
+ "suite": "fir-of-licensing",
+ "root": "..",
+ "data_note": "Fictional licenses and staff in ../fixtures. Deterministic checks; no model is called.",
+ "cases": [
+  {
+   "id": "totals",
+   "tool": "fir_check",
+   "args": {
+    "items": "fixtures/licenses.csv",
+    "staff": "fixtures/staff.csv",
+    "rules": "fixtures/rules.json",
+    "as_of": "2026-04-01"
+   },
+   "expect": {
+    "status": "executed",
+    "equals": {
+     "result.items_on_list": 16,
+     "result.facilities": 2,
+     "result.staff_checked": 5
+    }
+   }
+  },
+  {
+   "id": "rn-expired-first",
+   "tool": "fir_check",
+   "args": {
+    "items": "fixtures/licenses.csv",
+    "staff": "fixtures/staff.csv",
+    "rules": "fixtures/rules.json",
+    "as_of": "2026-04-01"
+   },
+   "expect": {
+    "equals": {
+     "result.items.0.status": "expired",
+     "result.items.0.item": "RN license",
+     "result.items.0.days_left": -17
+    }
+   }
+  },
+  {
+   "id": "cna-not-on-list",
+   "tool": "fir_check",
+   "args": {
+    "items": "fixtures/licenses.csv",
+    "staff": "fixtures/staff.csv",
+    "rules": "fixtures/rules.json",
+    "as_of": "2026-04-01",
+    "status": "staff_license_missing"
+   },
+   "expect": {
+    "equals": {
+     "result.items.length": 1,
+     "result.items.0.role": "C.N.A."
+    }
+   }
+  },
+  {
+   "id": "clia-renewal-pending",
+   "tool": "fir_check",
+   "args": {
+    "items": "fixtures/licenses.csv",
+    "staff": "fixtures/staff.csv",
+    "rules": "fixtures/rules.json",
+    "as_of": "2026-04-01",
+    "status": "renewal_pending_past_expiry"
+   },
+   "expect": {
+    "equals": {
+     "result.items.0.renewal_filed": "2026-02-25",
+     "result.items.0.days_left": -12
+    }
+   }
+  },
+  {
+   "id": "bluebonnet-missing-clia",
+   "tool": "fir_check",
+   "args": {
+    "items": "fixtures/licenses.csv",
+    "staff": "fixtures/staff.csv",
+    "rules": "fixtures/rules.json",
+    "as_of": "2026-04-01",
+    "status": "missing_standard_item"
+   },
+   "expect": {
+    "equals": {
+     "result.items.length": 1,
+     "result.items.0.facility": "Bluebonnet Manor",
+     "result.items.0.standard": "clia"
+    }
+   }
+  },
+  {
+   "id": "expiring-in-60",
+   "tool": "fir_check",
+   "args": {
+    "items": "fixtures/licenses.csv",
+    "staff": "fixtures/staff.csv",
+    "rules": "fixtures/rules.json",
+    "as_of": "2026-04-01",
+    "status": "expiring"
+   },
+   "expect": {
+    "equals": {
+     "result.items.length": 2,
+     "result.items.0.days_left": 29,
+     "result.items.1.item": "Medicare enrollment revalidation"
+    }
+   }
+  },
+  {
+   "id": "fire-no-date",
+   "tool": "fir_check",
+   "args": {
+    "items": "fixtures/licenses.csv",
+    "staff": "fixtures/staff.csv",
+    "rules": "fixtures/rules.json",
+    "as_of": "2026-04-01",
+    "status": "no_expiration_date"
+   },
+   "expect": {
+    "equals": {
+     "result.items.0.item": "Fire marshal inspection"
+    }
+   }
+  },
+  {
+   "id": "no-staff-file",
+   "tool": "fir_check",
+   "args": {
+    "items": "fixtures/licenses.csv",
+    "rules": "fixtures/rules.json",
+    "as_of": "2026-04-01"
+   },
+   "expect": {
+    "equals": {
+     "result.staff_checked": 0
+    },
+    "not_contains": [
+     "staff_license_missing"
+    ]
+   }
+  },
+  {
+   "id": "typo-rules-refused",
+   "tool": "fir_check",
+   "args": {
+    "items": "fixtures/licenses.csv",
+    "staff": "fixtures/staff.csv",
+    "rules": "fixtures/rules-typo.json",
+    "as_of": "2026-04-01"
+   },
+   "expect": {
+    "status": "error",
+    "contains": [
+     "warn"
+    ]
+   }
+  },
+  {
+   "id": "names-numbers-masked",
+   "tool": "fir_check",
+   "args": {
+    "items": "fixtures/licenses.csv",
+    "staff": "fixtures/staff.csv",
+    "rules": "fixtures/rules.json",
+    "as_of": "2026-04-01"
+   },
+   "expect": {
+    "not_contains": [
+     "Oyelaran",
+     "Fairbrook",
+     "RN-771204",
+     "NHA-30917"
+    ],
+    "contains": [
+     "PT-",
+     "ACCT-"
+    ]
+   }
+  },
+  {
+   "id": "report",
+   "tool": "fir_write_report",
+   "args": {
+    "items": "fixtures/licenses.csv",
+    "staff": "fixtures/staff.csv",
+    "rules": "fixtures/rules.json",
+    "as_of": "2026-04-01"
+   },
+   "expect": {
+    "status": "executed",
+    "contains": [
+     "fir-licensing.csv"
+    ]
+   }
+  },
+  {
+   "id": "renewal-refused",
+   "tool": "license_renewal_submit",
+   "args": {},
+   "expect": {
+    "status": "blocked",
+    "decision": "block"
+   }
+  },
+  {
+   "id": "recall-empty",
+   "tool": "fir_recall",
+   "args": {},
+   "expect": {
+    "status": "executed",
+    "contains": [
+     "memory is empty",
+     "licensing_note"
+    ]
+   }
+  }
+ ]
+}
