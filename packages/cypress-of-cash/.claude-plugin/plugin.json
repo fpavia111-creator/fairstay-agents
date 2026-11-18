@@ -1,0 +1,21 @@
+{
+  "name": "cypress-of-cash",
+  "version": "0.1.0",
+  "description": "Daily bank reconciliation: bank lines with no book entry, book entries not on the bank, stale outstanding checks, deposits in transit too long and the unexplained difference.",
+  "author": {
+    "name": "Kurt Francisco"
+  },
+  "license": "MIT",
+  "homepage": "https://github.com/fpavia111-creator/evergreen-agents/tree/main/packages/cypress-of-cash#readme",
+  "keywords": [
+    "mcp",
+    "mcp-server",
+    "nursing-home",
+    "skilled-nursing",
+    "snf",
+    "long-term-care",
+    "evergreen",
+    "bank-reconciliation",
+    "cash"
+  ]
+}
