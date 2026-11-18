@@ -5,11 +5,35 @@
   "type": "module",
   "license": "MIT",
   "author": "Kurt Francisco",
-  "engines": { "node": ">=20" },
+  "engines": {
+    "node": ">=20"
+  },
   "main": "src/index.js",
-  "exports": { ".": "./src/index.js", "./testkit": "./src/testkit.js", "./package.json": "./package.json" },
-  "files": ["src", "README.md", "LICENSE"],
-  "scripts": { "test": "node scripts/run-tests.cjs" },
-  "dependencies": { "remedy-core": "^0.2.0" },
-  "keywords": ["mcp", "mcp-server", "skilled-nursing", "snf", "long-term-care", "nursing-home", "revenue-cycle", "evergreen"]
+  "exports": {
+    ".": "./src/index.js",
+    "./testkit": "./src/testkit.js",
+    "./package.json": "./package.json"
+  },
+  "files": [
+    "src",
+    "README.md",
+    "LICENSE",
+    "CHANGELOG.md"
+  ],
+  "scripts": {
+    "test": "node scripts/run-tests.cjs"
+  },
+  "dependencies": {
+    "remedy-core": "^0.2.0"
+  },
+  "keywords": [
+    "mcp",
+    "mcp-server",
+    "skilled-nursing",
+    "snf",
+    "long-term-care",
+    "nursing-home",
+    "revenue-cycle",
+    "evergreen"
+  ]
 }

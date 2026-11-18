@@ -16,7 +16,10 @@
     "check": "node scripts/family-check.mjs",
     "readme": "node scripts/readme.mjs",
     "readme:check": "node scripts/readme.mjs --check",
-    "hostile:args": "node scripts/hostile.mjs --args"
+    "hostile:args": "node scripts/hostile.mjs --args",
+    "release:check": "node scripts/release-check.mjs",
+    "release:check:offline": "node scripts/release-check.mjs --offline",
+    "bench": "node scripts/bench.mjs"
   },
   "engines": {
     "node": ">=20"

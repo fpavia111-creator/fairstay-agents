@@ -1,5 +1,7 @@
 # Evergreen: nursing-home back-office agents (ver 1)
 
+English · [Deutsch](README.de.md) · [Français](README.fr.md) · [Español](README.es.md) · [Português](README.pt-BR.md) · [Italiano](README.it.md) · [日本語](README.ja.md) · [简体中文](README.zh-Hans.md) · [한국어](README.ko.md)
+
 32 MCP agents for skilled nursing facilities (SNFs), one for every service on the back-office brochure from ECAP West 26: revenue cycle, collections, case management, managed care, financial services, payroll, change of ownership and licensing, and acquisitions. Each one reads the files a nursing home already exports (census, claims, aging, bank, payroll, contracts), flags what a biller, AP clerk or controller would catch by hand, and writes a CSV worklist and an HTML report for staff.
 
 Built on `remedy-core` (masking, policy, approvals, audit log, MCP server, memory, nine-language reports) plus `evergreen-core` (census-day expansion, payer types, per-diem rates, aging buckets, nursing-home column names).
