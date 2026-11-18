@@ -1,0 +1,1 @@
+{ "follow_up_days": 30, "warn_days": 30, "bill_lag_days": 10, "filing_days": { "managed_care": 90, "medicaid": 365 } }

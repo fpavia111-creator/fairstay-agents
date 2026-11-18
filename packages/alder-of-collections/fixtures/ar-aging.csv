@@ -1,0 +1,10 @@
+Resident #,Resident Name,Payer,Claim #,Service From,Service To,Billed,Balance,Last Follow Up,Status
+R1001,Ada Pemberton,Medicare A,C-5001,2026-01-01,2026-01-31,2026-02-04,18400,,
+R1002,Basil Ortega,Gulf Coast Advantage HMO (fictional),C-5002,2025-12-01,2025-12-31,,9600,,
+R1003,Cora Lindqvist,Lone Star Medicaid (fictional),C-5003,2025-11-01,2025-11-30,2025-12-04,6200,2026-01-10,
+R1004,Dmitri Hale,Private Pay,I-7004,2026-01-01,2026-01-31,2026-02-01,-850,,
+R1005,Edith Moreau,Sunrise Health Plan HMO (fictional),C-5005,2025-10-01,2025-10-31,2025-11-05,7200,2026-03-20,Denied CO-197 no authorization
+R1006,Felix Arkwright,Medicaid Pending,P-1006,2025-12-01,2026-02-28,,15900,,
+R1007,Greta Solberg,Medicare A,C-5007,2025-02-01,2025-02-28,,4100,,
+R1008,Hugo Tanaka,Lone Star Medicaid (fictional),C-5008,2026-03-01,2026-03-15,,3300,,
+R1009,Ines Calder,Private Pay,I-7009,2026-03-01,2026-03-31,2026-03-31,9100,,

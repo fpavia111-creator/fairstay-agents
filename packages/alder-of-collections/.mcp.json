@@ -1,0 +1,12 @@
+{
+  "mcpServers": {
+    "alder-of-collections": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "alder-of-collections@0.1.0",
+        "mcp"
+      ]
+    }
+  }
+}

@@ -1,0 +1,218 @@
+{
+ "suite": "alder-of-collections",
+ "root": "..",
+ "data_note": "Fictional residents and example settings in ../fixtures. Deterministic checks; no model is called.",
+ "cases": [
+  {
+   "id": "totals",
+   "tool": "alder_check",
+   "args": {
+    "ar": "fixtures/ar-aging.csv",
+    "rules": "fixtures/rules.json",
+    "as_of": "2026-03-31"
+   },
+   "expect": {
+    "status": "executed",
+    "equals": {
+     "result.open_accounts": 9,
+     "result.total_ar": 72950,
+     "result.over_90": 17500,
+     "result.at_risk": 20900
+    }
+   }
+  },
+  {
+   "id": "filing-missed-first",
+   "tool": "alder_check",
+   "args": {
+    "ar": "fixtures/ar-aging.csv",
+    "rules": "fixtures/rules.json",
+    "as_of": "2026-03-31"
+   },
+   "expect": {
+    "equals": {
+     "result.items.0.status": "timely_filing_missed",
+     "result.items.0.filing_deadline": "2026-02-28",
+     "result.items.0.balance": 4100
+    }
+   }
+  },
+  {
+   "id": "filing-at-risk-today",
+   "tool": "alder_check",
+   "args": {
+    "ar": "fixtures/ar-aging.csv",
+    "rules": "fixtures/rules.json",
+    "as_of": "2026-03-31",
+    "status": "timely_filing_at_risk"
+   },
+   "expect": {
+    "equals": {
+     "result.items.0.payer_type": "managed_care",
+     "result.items.0.filing_deadline": "2026-03-31"
+    },
+    "contains": [
+     "(today)"
+    ]
+   }
+  },
+  {
+   "id": "credit-balance",
+   "tool": "alder_check",
+   "args": {
+    "ar": "fixtures/ar-aging.csv",
+    "rules": "fixtures/rules.json",
+    "as_of": "2026-03-31",
+    "status": "credit_balance"
+   },
+   "expect": {
+    "equals": {
+     "result.items.0.balance": -850,
+     "result.items.0.amount": 850
+    }
+   }
+  },
+  {
+   "id": "denial-code-not-note",
+   "tool": "alder_check",
+   "args": {
+    "ar": "fixtures/ar-aging.csv",
+    "rules": "fixtures/rules.json",
+    "as_of": "2026-03-31",
+    "status": "denied"
+   },
+   "expect": {
+    "equals": {
+     "result.items.0.reason_code": "CO-197"
+    },
+    "not_contains": [
+     "no authorization"
+    ]
+   }
+  },
+  {
+   "id": "follow-up-from-billing",
+   "tool": "alder_check",
+   "args": {
+    "ar": "fixtures/ar-aging.csv",
+    "rules": "fixtures/rules.json",
+    "as_of": "2026-03-31",
+    "status": "no_followup"
+   },
+   "expect": {
+    "equals": {
+     "result.items.0.days_since_follow_up": 55,
+     "result.items.1.days_since_follow_up": 80
+    }
+   }
+  },
+  {
+   "id": "aging-table",
+   "tool": "alder_check",
+   "args": {
+    "ar": "fixtures/ar-aging.csv",
+    "rules": "fixtures/rules.json",
+    "as_of": "2026-03-31"
+   },
+   "expect": {
+    "equals": {
+     "result.aging.0.payer_type": "medicare_a",
+     "result.aging.0.365+": 4100,
+     "result.aging.0.total": 22500
+    }
+   }
+  },
+  {
+   "id": "longer-managed-care-limit",
+   "tool": "alder_check",
+   "args": {
+    "ar": "fixtures/ar-aging.csv",
+    "rules": "fixtures/rules-150.json",
+    "as_of": "2026-03-31"
+   },
+   "expect": {
+    "not_contains": [
+     "timely_filing_at_risk"
+    ]
+   }
+  },
+  {
+   "id": "typo-rules-refused",
+   "tool": "alder_check",
+   "args": {
+    "ar": "fixtures/ar-aging.csv",
+    "rules": "fixtures/rules-typo.json",
+    "as_of": "2026-03-31"
+   },
+   "expect": {
+    "status": "error",
+    "contains": [
+     "follow_up"
+    ]
+   }
+  },
+  {
+   "id": "masked",
+   "tool": "alder_check",
+   "args": {
+    "ar": "fixtures/ar-aging.csv",
+    "rules": "fixtures/rules.json",
+    "as_of": "2026-03-31"
+   },
+   "expect": {
+    "not_contains": [
+     "Ada Pemberton",
+     "R1001"
+    ],
+    "matches": [
+     "MRN-[0-9a-f]{8}"
+    ]
+   }
+  },
+  {
+   "id": "report",
+   "tool": "alder_write_report",
+   "args": {
+    "ar": "fixtures/ar-aging.csv",
+    "rules": "fixtures/rules.json",
+    "as_of": "2026-03-31"
+   },
+   "expect": {
+    "status": "executed",
+    "contains": [
+     "alder-collections.csv"
+    ]
+   }
+  },
+  {
+   "id": "write-off-refused",
+   "tool": "claim_write_off",
+   "args": {},
+   "expect": {
+    "status": "blocked",
+    "decision": "block"
+   }
+  },
+  {
+   "id": "portal-refused",
+   "tool": "payer_portal_login",
+   "args": {},
+   "expect": {
+    "status": "blocked",
+    "decision": "block"
+   }
+  },
+  {
+   "id": "recall-empty",
+   "tool": "alder_recall",
+   "args": {},
+   "expect": {
+    "status": "executed",
+    "contains": [
+     "memory is empty",
+     "filing_limit"
+    ]
+   }
+  }
+ ]
+}
