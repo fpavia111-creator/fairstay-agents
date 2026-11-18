@@ -13,7 +13,10 @@
     "evals": "node scripts/run-all-evals.mjs",
     "hostile": "node scripts/hostile.mjs",
     "samples": "node scripts/sample-reports.mjs",
-    "check": "node scripts/family-check.mjs"
+    "check": "node scripts/family-check.mjs",
+    "readme": "node scripts/readme.mjs",
+    "readme:check": "node scripts/readme.mjs --check",
+    "hostile:args": "node scripts/hostile.mjs --args"
   },
   "engines": {
     "node": ">=20"

@@ -132,7 +132,9 @@ export class PhiMasker {
     if (kind === 'claim' && this.mode !== 'strict') return;
     const vals = kind === 'name' ? nameVariants(raw) : [String(raw).trim()];
     const rep = FIXED[kind] || (kind === 'dob' ? '[DOB]' : this.token(kind, raw));
-    for (const v of vals) if (v.length >= (MIN_TEXT[kind] || 4) && !this.seen.has(v.toLowerCase())) { this.seen.set(v.toLowerCase(), { value: v, rep }); this.index = null; }
+    // Leading and trailing punctuation is dropped for matching, so a value with junk in front of it
+    // (a spreadsheet formula, a quote, a bullet) is still found where it appears in text.
+    for (const v0 of vals) { const v = v0.replace(/^[^a-z0-9\u00C0-\uFFFF]+|[^a-z0-9\u00C0-\uFFFF]+$/gi, ''); if (v.length >= (MIN_TEXT[kind] || 4) && !this.seen.has(v.toLowerCase())) { this.seen.set(v.toLowerCase(), { value: v, rep }); this.index = null; } }
   }
 
   /** Register every PHI-named field of plain records (used when a tool reads a source file). */
