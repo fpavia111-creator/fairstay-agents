@@ -1,0 +1,6 @@
+Resident #,Resident Name,Payer,Hospice,Effective Date,End Date,Bed Status
+R1101,Iris Fairbanks,Lone Star Medicaid (fictional),Bluebonnet Hospice (fictional),2026-02-01,,
+R1102,Jonah Whitlock,Lone Star Medicaid (fictional),Bluebonnet Hospice (fictional),2026-03-01,,
+R1103,Kara Nyström,Private Pay,Prairie Light Hospice (fictional),2026-03-10,,
+R1104,Leon Abara,Lone Star Medicaid (fictional),,2026-01-01,,
+R1105,Mina Okafor,Lone Star Medicaid (fictional),Bluebonnet Hospice (fictional),2026-03-01,2026-03-21,

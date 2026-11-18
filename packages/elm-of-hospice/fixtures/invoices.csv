@@ -1,0 +1,5 @@
+Resident #,Resident Name,Hospice,Invoice #,Service From,Service To,Days,Amount,Invoice Date,Paid
+R1101,Iris Fairbanks,Bluebonnet Hospice (fictional),BB-0301,2026-03-01,2026-03-31,31,6045,2026-04-02,6045
+R1102,Jonah Whitlock,Bluebonnet Hospice (fictional),BB-0302,2026-03-01,2026-03-20,20,3600,2026-04-02,
+R1104,Leon Abara,Bluebonnet Hospice (fictional),BB-0303,2026-03-01,2026-03-05,5,975,2026-04-02,975
+R1105,Mina Okafor,Bluebonnet Hospice (fictional),BB-0222,2026-02-15,2026-02-28,14,2730,2026-03-01,

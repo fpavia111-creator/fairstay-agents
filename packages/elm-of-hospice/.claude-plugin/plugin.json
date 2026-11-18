@@ -1,0 +1,22 @@
+{
+  "name": "elm-of-hospice",
+  "version": "0.1.0",
+  "description": "Hospice room and board for nursing-home residents: days not invoiced to the hospice, invoiced days that differ from the census, rates below the hospice contract, unpaid invoices, hospices with no contract and Medicaid billed directly for hospice days.",
+  "author": {
+    "name": "Kurt Francisco"
+  },
+  "license": "MIT",
+  "homepage": "https://github.com/fpavia111-creator/evergreen-agents/tree/main/packages/elm-of-hospice#readme",
+  "keywords": [
+    "mcp",
+    "mcp-server",
+    "nursing-home",
+    "skilled-nursing",
+    "snf",
+    "long-term-care",
+    "evergreen",
+    "hospice",
+    "room-and-board",
+    "pass-through"
+  ]
+}
