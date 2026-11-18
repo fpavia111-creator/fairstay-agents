@@ -1,0 +1,240 @@
+{
+ "suite": "hemlock-of-next-payer",
+ "root": "..",
+ "data_note": "Fictional residents and example settings in ../fixtures. Deterministic checks; no model is called.",
+ "cases": [
+  {
+   "id": "totals",
+   "tool": "hemlock_check",
+   "args": {
+    "census": "fixtures/census.csv",
+    "plans": "fixtures/plans.csv",
+    "rules": "fixtures/rules.json",
+    "as_of": "2026-03-10"
+   },
+   "expect": {
+    "status": "executed",
+    "equals": {
+     "result.residents": 7,
+     "result.by_status.plan_needed": 2,
+     "result.by_status.apply_medicaid": 1,
+     "result.by_status.funds_low": 1,
+     "result.by_status.plan_in_place": 1
+    }
+   }
+  },
+  {
+   "id": "soonest-first",
+   "tool": "hemlock_check",
+   "args": {
+    "census": "fixtures/census.csv",
+    "plans": "fixtures/plans.csv",
+    "rules": "fixtures/rules.json",
+    "as_of": "2026-03-10"
+   },
+   "expect": {
+    "equals": {
+     "result.items.0.status": "plan_needed",
+     "result.items.0.runs_out_on": "2026-03-20",
+     "result.items.0.days_left": 10,
+     "result.items.0.payer_type": "managed_care"
+    }
+   }
+  },
+  {
+   "id": "part-a-day-100",
+   "tool": "hemlock_check",
+   "args": {
+    "census": "fixtures/census.csv",
+    "plans": "fixtures/plans.csv",
+    "rules": "fixtures/rules.json",
+    "as_of": "2026-03-10",
+    "status": "plan_needed"
+   },
+   "expect": {
+    "equals": {
+     "result.items.1.payer_type": "medicare_a",
+     "result.items.1.runs_out_on": "2026-04-05",
+     "result.items.1.days_left": 26
+    },
+    "contains": [
+     "74 used"
+    ]
+   }
+  },
+  {
+   "id": "planned-medicaid",
+   "tool": "hemlock_check",
+   "args": {
+    "census": "fixtures/census.csv",
+    "plans": "fixtures/plans.csv",
+    "rules": "fixtures/rules.json",
+    "as_of": "2026-03-10",
+    "status": "plan_in_place"
+   },
+   "expect": {
+    "equals": {
+     "result.items.0.next_payer": "Lone Star Medicaid (fictional)",
+     "result.items.0.runs_out_on": "2026-04-04"
+    }
+   }
+  },
+  {
+   "id": "apply-medicaid-early",
+   "tool": "hemlock_check",
+   "args": {
+    "census": "fixtures/census.csv",
+    "plans": "fixtures/plans.csv",
+    "rules": "fixtures/rules.json",
+    "as_of": "2026-03-10",
+    "status": "apply_medicaid"
+   },
+   "expect": {
+    "equals": {
+     "result.items.0.days_left": 64,
+     "result.items.0.runs_out_on": "2026-05-13"
+    },
+    "contains": [
+     "no Medicaid application"
+    ]
+   }
+  },
+  {
+   "id": "funds-low-applied",
+   "tool": "hemlock_check",
+   "args": {
+    "census": "fixtures/census.csv",
+    "plans": "fixtures/plans.csv",
+    "rules": "fixtures/rules.json",
+    "as_of": "2026-03-10",
+    "status": "funds_low"
+   },
+   "expect": {
+    "equals": {
+     "result.items.0.days_left": 19
+    },
+    "contains": [
+     "Medicaid applied 2026-02-15"
+    ]
+   }
+  },
+  {
+   "id": "shorter-horizon",
+   "tool": "hemlock_check",
+   "args": {
+    "census": "fixtures/census.csv",
+    "plans": "fixtures/plans.csv",
+    "as_of": "2026-03-10",
+    "rules": "fixtures/rules-short.json"
+   },
+   "expect": {
+    "equals": {
+     "result.horizon_days": 14,
+     "result.by_status.plan_needed": 1
+    },
+    "not_contains": [
+     "plan_in_place"
+    ]
+   }
+  },
+  {
+   "id": "medicaid-resident-quiet",
+   "tool": "hemlock_check",
+   "args": {
+    "census": "fixtures/census.csv",
+    "plans": "fixtures/plans.csv",
+    "rules": "fixtures/rules.json",
+    "as_of": "2026-03-10"
+   },
+   "expect": {
+    "equals": {
+     "result.items.4.status": "plan_in_place"
+    },
+    "not_contains": [
+     "\"payer_type\":\"medicaid\""
+    ]
+   }
+  },
+  {
+   "id": "typo-rules-refused",
+   "tool": "hemlock_check",
+   "args": {
+    "census": "fixtures/census.csv",
+    "plans": "fixtures/plans.csv",
+    "rules": "fixtures/rules-typo.json",
+    "as_of": "2026-03-10"
+   },
+   "expect": {
+    "status": "error",
+    "contains": [
+     "horizon"
+    ]
+   }
+  },
+  {
+   "id": "masked",
+   "tool": "hemlock_check",
+   "args": {
+    "census": "fixtures/census.csv",
+    "plans": "fixtures/plans.csv",
+    "rules": "fixtures/rules.json",
+    "as_of": "2026-03-10"
+   },
+   "expect": {
+    "not_contains": [
+     "Kenji Marlowe",
+     "R901"
+    ],
+    "matches": [
+     "MRN-[0-9a-f]{8}"
+    ]
+   }
+  },
+  {
+   "id": "report",
+   "tool": "hemlock_write_report",
+   "args": {
+    "census": "fixtures/census.csv",
+    "plans": "fixtures/plans.csv",
+    "rules": "fixtures/rules.json",
+    "as_of": "2026-03-10"
+   },
+   "expect": {
+    "status": "executed",
+    "contains": [
+     "hemlock-next-payer.csv"
+    ]
+   }
+  },
+  {
+   "id": "family-letter-refused",
+   "tool": "family_letter_send",
+   "args": {},
+   "expect": {
+    "status": "blocked",
+    "decision": "block"
+   }
+  },
+  {
+   "id": "unknown-tool-blocked",
+   "tool": "shell_exec",
+   "args": {},
+   "expect": {
+    "status": "blocked",
+    "decision": "block"
+   }
+  },
+  {
+   "id": "recall-empty",
+   "tool": "hemlock_recall",
+   "args": {},
+   "expect": {
+    "status": "executed",
+    "contains": [
+     "memory is empty",
+     "planning_note"
+    ]
+   }
+  }
+ ]
+}
