@@ -1,0 +1,12 @@
+{
+  "mcpServers": {
+    "linden-of-covenants": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "linden-of-covenants@0.1.0",
+        "mcp"
+      ]
+    }
+  }
+}

@@ -1,0 +1,6 @@
+Covenant,Loan #,Measure,Minimum,Test Period,Reporting Days,Delivered
+Lease rent coverage,LEASE-77041,rent_coverage,1.15,ttm,45,
+Lease occupancy,LEASE-77041,occupancy,80,quarter,45,
+HUD debt service coverage,HUD-1144092,dscr,1.45,ttm,30,
+Bank fixed charge coverage,LOC-5530187,fccr,1.10,ttm,30,2026-04-10
+Bank days cash,LOC-5530187,days_cash,30,month,30,2026-04-10
