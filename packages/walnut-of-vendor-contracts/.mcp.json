@@ -1,0 +1,12 @@
+{
+  "mcpServers": {
+    "walnut-of-vendor-contracts": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "walnut-of-vendor-contracts@0.1.0",
+        "mcp"
+      ]
+    }
+  }
+}

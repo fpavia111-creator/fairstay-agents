@@ -1,0 +1,5 @@
+Vendor,Contract #,Start Date,End Date,Auto Renew,Notice Days,Escalator %,Contact Email,Contact Phone
+Lone Star Linen (fictional),LSL-2023-01,2023-07-01,2026-06-30,Y,60,3,ops@lonestarlinen.example,512-555-0141
+Bluebonnet Food Service (fictional),BFS-22,2024-06-01,2026-05-31,Y,90,4,accounts@bluebonnetfood.example,512-555-0177
+Prairie Medical Supply (fictional),PMS-881,2023-01-01,2025-12-31,N,30,3,billing@prairiemed.example,512-555-0102
+Gulf Coast Pharmacy (fictional),GCP-MSA-7,2025-01-01,2027-12-31,N,90,2,contracts@gulfcoastrx.example,512-555-0199
