@@ -1,0 +1,11 @@
+Resident #,Resident Name,Date of Service,CPT,Modifiers,Timed Minutes,Units,Charge,Allowed
+R801,Edmund Carraway,2026-03-03,97110,GP,38,3,135,96
+R801,Edmund Carraway,2026-03-03,97140,GP,8,1,45,30
+R802,Florence Adeyemi,2026-03-04,97530,GO,22,2,90,64
+R803,Gustav Lindahl,2026-03-05,92526,GN,,1,110,82
+R803,Gustav Lindahl,2026-03-06,97112,,30,2,90,64
+R804,Hazel Montgomery,2026-03-10,97110,GP,30,2,90,1200
+R804,Hazel Montgomery,2026-03-12,97110,GP,30,2,90,1300
+R805,Ingrid Solberg,2026-03-11,97110,GP,45,3,135,96
+R805,Ingrid Solberg,2026-03-11,97110,GP,45,3,135,96
+R806,Jasper Oduya,2026-03-15,97530,GP,30,2,90,64

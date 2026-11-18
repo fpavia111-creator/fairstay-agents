@@ -1,0 +1,12 @@
+{
+  "mcpServers": {
+    "aspen-of-part-b": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "aspen-of-part-b@0.1.0",
+        "mcp"
+      ]
+    }
+  }
+}
