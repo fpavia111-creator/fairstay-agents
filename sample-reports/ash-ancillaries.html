@@ -1,0 +1,34 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'unsafe-inline'">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Ancillary invoice review</title>
+<style>
+:root{--bg:#fbfaf7;--fg:#1d1c1a;--mut:#6b6760;--line:#e4e0d8;--ok:#1f7a4d;--bad:#b42318;--warn:#a15c07;--card:#fff}
+@media (prefers-color-scheme:dark){:root{--bg:#161514;--fg:#ecebe8;--mut:#a29d94;--line:#34312d;--ok:#4ade80;--bad:#f87171;--warn:#fbbf24;--card:#1f1e1c}}
+body{margin:0;background:var(--bg);color:var(--fg);font:15px/1.5 system-ui,-apple-system,Segoe UI,"Hiragino Sans","Yu Gothic UI","Microsoft YaHei","PingFang SC","Malgun Gothic","Apple SD Gothic Neo","Noto Sans CJK",sans-serif}
+main{max-width:1040px;margin:0 auto;padding:24px 16px}
+h1{font-size:22px;margin:0 0 4px}h2{font-size:17px;margin:28px 0 8px}
+.mut{color:var(--mut)}.ok{color:var(--ok)}.bad{color:var(--bad)}.warn{color:var(--warn)}
+table{border-collapse:collapse;width:100%;background:var(--card);font-size:14px}
+th,td{border-bottom:1px solid var(--line);padding:6px 8px;text-align:left;vertical-align:top}
+th{font-weight:600}td.num,th.num{text-align:right;font-variant-numeric:tabular-nums}
+.tiles{display:flex;gap:12px;flex-wrap:wrap}.tile{background:var(--card);border:1px solid var(--line);border-radius:8px;padding:10px 14px;min-width:120px}
+.tile b{display:block;font-size:22px}code{font-size:13px;overflow-wrap:anywhere}pre{overflow-x:auto}
+.wrap{overflow-x:auto;max-width:100%}svg,img{max-width:100%;height:auto}figure{margin:16px 0}p,li,h1,h2,h3{overflow-wrap:break-word}
+</style></head><body><main>
+<h1>Ancillary invoice review</h1>
+<p class="mut">9 ancillary line(s) from 2 vendor(s), billed 2513.9; credits to request 1717.5. not_in_building 2, duplicate_line 1, bill_payer_instead 1, outside_consolidated_billing 1, above_contract 1.</p>
+
+<h2>All rows (6)</h2>
+<div class="wrap"><table><thead><tr><th scope="col">Status</th><th scope="col">vendor</th><th scope="col">invoice no</th><th scope="col">resident name</th><th scope="col">Date</th><th scope="col">description</th><th scope="col">Amount</th><th scope="col">Finding</th></tr></thead><tbody>
+<tr><td>not_in_building</td><td>Gulf Coast Pharmacy (fictional)</td><td>GCP-0326</td><td>Maeve Collins</td><td>2026-03-16</td><td>Insulin glargine pen</td><td>148</td><td>Billed for 2026-03-16, while the resident was in the hospital.</td></tr>
+<tr><td>not_in_building</td><td>Gulf Coast Pharmacy (fictional)</td><td>GCP-0326</td><td>Leif Moreau</td><td>2026-03-14</td><td>Amoxicillin 500 mg x21</td><td>24.9</td><td>Billed for 2026-03-14, when the resident was not on the census.</td></tr>
+<tr><td>duplicate_line</td><td>Gulf Coast Pharmacy (fictional)</td><td>GCP-0326</td><td>Jasper Holt</td><td>2026-03-04</td><td>Apixaban 5 mg x30</td><td>612.4</td><td>Same resident, date and item as line 1.</td></tr>
+<tr><td>bill_payer_instead</td><td>Gulf Coast Pharmacy (fictional)</td><td>GCP-0326</td><td>Kiri Anand</td><td>2026-03-06</td><td>Metformin 500 mg x60</td><td>18.2</td><td>The resident was on Lone Star Medicaid (fictional) (medicaid) on 2026-03-06; the pharmacy provider should bill that payer, not the facility.</td></tr>
+<tr><td>outside_consolidated_billing</td><td>Prairie Lab Services (fictional)</td><td>PLS-3301</td><td>Jasper Holt</td><td>2026-03-09</td><td>Chemotherapy drug (fictional exclusion)</td><td>890</td><td>J9035 is on your list of items outside Part A consolidated billing; the provider bills Medicare directly.</td></tr>
+<tr><td>above_contract</td><td>Prairie Lab Services (fictional)</td><td>PLS-3301</td><td>Jasper Holt</td><td>2026-03-08</td><td>Comprehensive metabolic panel</td><td>24</td><td>Billed 38 for 1 unit(s); the contract rate is 14 each.</td></tr>
+</tbody></table></div>
+<h2>Limits</h2><ul><li>Reads only the files you give it. It does not log in to PointClickCare, MatrixCare, a payer portal, a bank, a state Medicaid portal or a payroll system.</li><li>Consolidated billing exclusions change every year; list the codes from the current CMS files. Managed care contracts differ on which ancillaries the facility pays.</li><li>Not legal, tax, accounting, clinical, reimbursement or HIPAA advice. A person decides what to bill, pay, appeal, file or send.</li></ul>
+<p class="mut" style="margin-top:32px">Written by a Remedy agent from your files on this computer. Nothing was sent, submitted or paid. This page contains patient information: keep it in your secure folder and do not e-mail it.</p>
+</main></body></html>

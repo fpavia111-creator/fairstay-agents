@@ -1,0 +1,88 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'unsafe-inline'">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Underwriting packet</title>
+<style>
+:root{--bg:#fbfaf7;--fg:#1d1c1a;--mut:#6b6760;--line:#e4e0d8;--ok:#1f7a4d;--bad:#b42318;--warn:#a15c07;--card:#fff}
+@media (prefers-color-scheme:dark){:root{--bg:#161514;--fg:#ecebe8;--mut:#a29d94;--line:#34312d;--ok:#4ade80;--bad:#f87171;--warn:#fbbf24;--card:#1f1e1c}}
+body{margin:0;background:var(--bg);color:var(--fg);font:15px/1.5 system-ui,-apple-system,Segoe UI,"Hiragino Sans","Yu Gothic UI","Microsoft YaHei","PingFang SC","Malgun Gothic","Apple SD Gothic Neo","Noto Sans CJK",sans-serif}
+main{max-width:1040px;margin:0 auto;padding:24px 16px}
+h1{font-size:22px;margin:0 0 4px}h2{font-size:17px;margin:28px 0 8px}
+.mut{color:var(--mut)}.ok{color:var(--ok)}.bad{color:var(--bad)}.warn{color:var(--warn)}
+table{border-collapse:collapse;width:100%;background:var(--card);font-size:14px}
+th,td{border-bottom:1px solid var(--line);padding:6px 8px;text-align:left;vertical-align:top}
+th{font-weight:600}td.num,th.num{text-align:right;font-variant-numeric:tabular-nums}
+.tiles{display:flex;gap:12px;flex-wrap:wrap}.tile{background:var(--card);border:1px solid var(--line);border-radius:8px;padding:10px 14px;min-width:120px}
+.tile b{display:block;font-size:22px}code{font-size:13px;overflow-wrap:anywhere}pre{overflow-x:auto}
+.wrap{overflow-x:auto;max-width:100%}svg,img{max-width:100%;height:auto}figure{margin:16px 0}p,li,h1,h2,h3{overflow-wrap:break-word}
+</style></head><body><main>
+<h1>Underwriting packet</h1>
+<p class="mut">T12 2025-04 to 2026-03: revenue 11814022.91, EBITDAR 2563064.36, normalized 1952473.39; occupancy 0.77; year-one EBITDAR 1914232.1; value 15313856.8 (127615.47 a bed); receivables 182000 worth 137941. missing_month 1, rent_coverage_low 1, staffing_cost_gap 1, one_time_item 2, management_fee_normalized 1, occupancy_below_target 1, ar_haircut 5.</p>
+
+<h2>T12 summary</h2><div class="wrap"><table><thead><tr><th scope="col">Line</th><th scope="col">Value</th></tr></thead><tbody>
+<tr><td>revenue</td><td>11814022.91</td></tr>
+<tr><td>expenses</td><td>9250958.55</td></tr>
+<tr><td>ebitdar</td><td>2563064.36</td></tr>
+<tr><td>rent</td><td>1560000</td></tr>
+<tr><td>ebitda</td><td>1003064.36</td></tr>
+<tr><td>adjustments</td><td>-610590.97</td></tr>
+<tr><td>normalized_ebitdar</td><td>1952473.39</td></tr>
+<tr><td>margin</td><td>0.17</td></tr>
+<tr><td>rent_coverage</td><td>1.25</td></tr>
+</tbody></table></div>
+<h2>Census and payer mix</h2><div class="wrap"><table><thead><tr><th scope="col">payer type</th><th scope="col">Days</th><th scope="col">Share</th></tr></thead><tbody>
+<tr><td>all</td><td>33580</td><td>1</td></tr>
+<tr><td>medicaid</td><td>21170</td><td>0.63</td></tr>
+<tr><td>medicare_a</td><td>5110</td><td>0.15</td></tr>
+<tr><td>managed_care</td><td>3650</td><td>0.11</td></tr>
+<tr><td>private</td><td>3650</td><td>0.11</td></tr>
+</tbody></table></div>
+<h2>Staffing model</h2><div class="wrap"><table><thead><tr><th scope="col">Line</th><th scope="col">Value</th></tr></thead><tbody>
+<tr><td>hprd</td><td>3.8</td></tr>
+<tr><td>adc</td><td>92</td></tr>
+<tr><td>hours_per_day</td><td>349.6</td></tr>
+<tr><td>ftes</td><td>61.35</td></tr>
+<tr><td>hourly_cost</td><td>38</td></tr>
+<tr><td>annual_cost</td><td>4848952</td></tr>
+<tr><td>t12_nursing_labor</td><td>4599468</td></tr>
+<tr><td>gap</td><td>249484</td></tr>
+</tbody></table></div>
+<h2>Year one and value</h2><div class="wrap"><table><thead><tr><th scope="col">Line</th><th scope="col">Value</th></tr></thead><tbody>
+<tr><td>revenue</td><td>11983043.6</td></tr>
+<tr><td>expenses</td><td>10068811.5</td></tr>
+<tr><td>ebitdar</td><td>1914232.1</td></tr>
+<tr><td>revenue_growth_pct</td><td>3</td></tr>
+<tr><td>expense_growth_pct</td><td>4</td></tr>
+<tr><td>cap_rate</td><td>0.125</td></tr>
+<tr><td>value</td><td>15313856.8</td></tr>
+<tr><td>value_per_bed</td><td>127615.47</td></tr>
+<tr><td>ar_gross</td><td>182000</td></tr>
+<tr><td>ar_value</td><td>137941</td></tr>
+</tbody></table></div>
+<h2>Receivables</h2><div class="wrap"><table><thead><tr><th scope="col">payer type</th><th scope="col">Aging bucket</th><th scope="col">Balance</th><th scope="col">Rate</th><th scope="col">Value</th></tr></thead><tbody>
+<tr><td>managed_care</td><td>0-30</td><td>29700</td><td>0.95</td><td>28215</td></tr>
+<tr><td>medicaid</td><td>31-90</td><td>52300</td><td>0.9</td><td>47070</td></tr>
+<tr><td>medicaid_pending</td><td>180+</td><td>24800</td><td>0.2</td><td>4960</td></tr>
+<tr><td>medicare_a</td><td>0-30</td><td>41200</td><td>0.98</td><td>40376</td></tr>
+<tr><td>medicare_a</td><td>91-180</td><td>18600</td><td>0.6</td><td>11160</td></tr>
+<tr><td>private</td><td>91-180</td><td>15400</td><td>0.4</td><td>6160</td></tr>
+</tbody></table></div>
+<h2>All rows (12)</h2>
+<div class="wrap"><table><thead><tr><th scope="col">Status</th><th scope="col">Account</th><th scope="col">Amount</th><th scope="col">Finding</th></tr></thead><tbody>
+<tr><td>missing_month</td><td>2025-09</td><td>0</td><td>The T12 has no lines for 2025-09; recurring lines are annualized from the months given.</td></tr>
+<tr><td>rent_coverage_low</td><td></td><td>0</td><td>Normalized EBITDAR covers rent 1.25 times; your floor is 1.3.</td></tr>
+<tr><td>staffing_cost_gap</td><td></td><td>249484</td><td>Staffing 3.8 hours per resident day at 38 an hour costs 4848952 a year; the T12 shows 4599468 for nursing labor (249484 more).</td></tr>
+<tr><td>one_time_item</td><td>Provider relief fund income</td><td>180000</td><td>Provider relief fund income (revenue, 180000) looks one-time and is taken out of normalized EBITDAR.</td></tr>
+<tr><td>one_time_item</td><td>Legal settlement</td><td>65000</td><td>Legal settlement (expense, 65000) looks one-time and is added back to normalized EBITDAR.</td></tr>
+<tr><td>management_fee_normalized</td><td>Management fee</td><td>246106.97</td><td>Management fee in the T12 is 335594.18; at 5% of revenue it would be 581701.15.</td></tr>
+<tr><td>occupancy_below_target</td><td></td><td>0</td><td>Occupancy is 77% (92 average daily census on 120 beds), under the 85% target.</td></tr>
+<tr><td>ar_haircut</td><td>medicaid_pending</td><td>19840</td><td>medicaid_pending receivables of 24800 are worth about 4960 at your collection rates (19840 less).</td></tr>
+<tr><td>ar_haircut</td><td>private</td><td>9240</td><td>private receivables of 15400 are worth about 6160 at your collection rates (9240 less).</td></tr>
+<tr><td>ar_haircut</td><td>medicare_a</td><td>8264</td><td>medicare_a receivables of 59800 are worth about 51536 at your collection rates (8264 less).</td></tr>
+<tr><td>ar_haircut</td><td>medicaid</td><td>5230</td><td>medicaid receivables of 52300 are worth about 47070 at your collection rates (5230 less).</td></tr>
+<tr><td>ar_haircut</td><td>managed_care</td><td>1485</td><td>managed_care receivables of 29700 are worth about 28215 at your collection rates (1485 less).</td></tr>
+</tbody></table></div>
+<h2>Limits</h2><ul><li>Reads only the files you give it. It does not log in to PointClickCare, MatrixCare, a payer portal, a bank, a state Medicaid portal or a payroll system.</li><li>Projections and valuations are arithmetic on the numbers you give it, not forecasts or appraisals.</li><li>One-time items are found by flag and by words like settlement or provider relief; a deal team confirms each one against the ledger.</li><li>Not legal, tax, accounting, clinical, reimbursement or HIPAA advice. A person decides what to bill, pay, appeal, file or send.</li></ul>
+<p class="mut" style="margin-top:32px">Written by a Remedy agent from your files on this computer. Nothing was sent, submitted or paid. This page contains patient information: keep it in your secure folder and do not e-mail it.</p>
+</main></body></html>

@@ -1,0 +1,9 @@
+status,resident_id,resident_name,payer,days_left,message,fix,owner,decision
+nomnc_late,R1401,Bea Lindholm,Medicare A,-1,The last covered day is 2026-03-18 and no NOMNC is on file; it was due by 2026-03-16.,Give the notice now and move the last covered day so the resident has the full 2 days; days without valid notice are the facility's liability.,,
+custodial_on_skilled,R1405,Faye Romero,Gulf Coast Advantage HMO (fictional),,"The team says skilled care has ended, but the resident is still on Gulf Coast Advantage HMO (fictional).","Set the last covered day, give the notices, and move the census to the next payer.",,
+discharge_past_due,R1404,Emil Strand,Sunrise Advantage HMO (fictional),,Planned discharge was 2026-03-12 (5 days ago) and the resident is still on Sunrise Advantage HMO (fictional).,Update the discharge plan and tell the payer.,,
+review_overdue,R1404,Emil Strand,Sunrise Advantage HMO (fictional),,Last clinical review was 2026-03-03 (14 days ago).,"Review at this week's meeting: goals, therapy minutes, expected discharge.",,
+auth_ending_no_plan,R1404,Emil Strand,Sunrise Advantage HMO (fictional),2,The authorization ends 2026-03-19 (2 days) and no plan is recorded.,"Decide this week: extension request, discharge or payer change.",,
+nomnc_due,R1402,Cyrus Vane,Medicare A,2,The last covered day is 2026-03-21; the NOMNC is due by 2026-03-19.,"Deliver the NOMNC (CMS-10123) and get it signed, or note who was reached by phone.",,
+day_100_coming,R1403,Dora Achebe,Medicare A,12,Medicare day 100 is 2026-03-29.,Plan the next payer (hemlock-of-next-payer) and the notices.,,
+day_20_coming,R1402,Cyrus Vane,Medicare A,3,Medicare day 20 is 2026-03-20; coinsurance starts on day 21.,"Tell the resident or family about the daily coinsurance and who will pay it (secondary insurance, Medicaid or private).",,

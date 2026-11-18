@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="de"><head><meta charset="utf-8">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'unsafe-inline'">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Übersicht ausstehende Medicaid-Anträge</title>
+<style>
+:root{--bg:#fbfaf7;--fg:#1d1c1a;--mut:#6b6760;--line:#e4e0d8;--ok:#1f7a4d;--bad:#b42318;--warn:#a15c07;--card:#fff}
+@media (prefers-color-scheme:dark){:root{--bg:#161514;--fg:#ecebe8;--mut:#a29d94;--line:#34312d;--ok:#4ade80;--bad:#f87171;--warn:#fbbf24;--card:#1f1e1c}}
+body{margin:0;background:var(--bg);color:var(--fg);font:15px/1.5 system-ui,-apple-system,Segoe UI,"Hiragino Sans","Yu Gothic UI","Microsoft YaHei","PingFang SC","Malgun Gothic","Apple SD Gothic Neo","Noto Sans CJK",sans-serif}
+main{max-width:1040px;margin:0 auto;padding:24px 16px}
+h1{font-size:22px;margin:0 0 4px}h2{font-size:17px;margin:28px 0 8px}
+.mut{color:var(--mut)}.ok{color:var(--ok)}.bad{color:var(--bad)}.warn{color:var(--warn)}
+table{border-collapse:collapse;width:100%;background:var(--card);font-size:14px}
+th,td{border-bottom:1px solid var(--line);padding:6px 8px;text-align:left;vertical-align:top}
+th{font-weight:600}td.num,th.num{text-align:right;font-variant-numeric:tabular-nums}
+.tiles{display:flex;gap:12px;flex-wrap:wrap}.tile{background:var(--card);border:1px solid var(--line);border-radius:8px;padding:10px 14px;min-width:120px}
+.tile b{display:block;font-size:22px}code{font-size:13px;overflow-wrap:anywhere}pre{overflow-x:auto}
+.wrap{overflow-x:auto;max-width:100%}svg,img{max-width:100%;height:auto}figure{margin:16px 0}p,li,h1,h2,h3{overflow-wrap:break-word}
+</style></head><body><main>
+<h1>Übersicht ausstehende Medicaid-Anträge</h1>
+<p class="mut">3 open application(s) of 7, oldest 92 days, 35680 pending. not_applied 1, appeal_window_closing 1, appeal_window_closed 1, docs_overdue 1, decision_overdue 1, approved_not_billed 1, liability_missing 1, no_followup 1, docs_due_soon 1.</p>
+<p class="mut">Übersetzt von Claude; die Prüfung durch Muttersprachler steht noch aus. Die Begründungen in den Zeilen stehen auf Englisch, damit Codes und Beträge überall gleich lauten.</p>
+<h2>Pending balance by age (days since applied)</h2><div class="wrap"><table><thead><tr><th scope="col">age</th><th scope="col">Betrag</th></tr></thead><tbody>
+<tr><td>91-120</td><td>21450</td></tr>
+<tr><td>0-30</td><td>14230</td></tr>
+</tbody></table></div>
+<h2>Alle Zeilen (9)</h2>
+<div class="wrap"><table><thead><tr><th scope="col">Status</th><th scope="col">resident name</th><th scope="col">applied on</th><th scope="col">days pending</th><th scope="col">Betrag</th><th scope="col">Befund</th><th scope="col">Behebung</th></tr></thead><tbody>
+<tr><td>not_applied</td><td>Octavia Reyes</td><td></td><td></td><td>0</td><td>The census has this resident as Medicaid pending, but there is no application on file.</td><td>Find out whether an application was filed; if not, file it now (coverage can reach back only a limited time).</td></tr>
+<tr><td>appeal_window_closing</td><td>Matthias Oyelaran</td><td>2025-12-10</td><td>83</td><td>6300</td><td>Denied 2026-02-12; request a fair hearing by 2026-03-14 (11 days).</td><td>Decide today whether to appeal or reapply, and file before the deadline.</td></tr>
+<tr><td>appeal_window_closed</td><td>Noor Benali</td><td>2025-09-15</td><td>169</td><td>11200</td><td>Denied 2026-01-02; the 30-day window for a fair hearing request passed on 2026-02-01.</td><td>Check whether a new application (with a new start date) or a late-filing exception is possible.</td></tr>
+<tr><td>docs_overdue</td><td>Ignatius Bell</td><td>2026-02-02</td><td>29</td><td>9820</td><td>2 requested document(s) were due 2026-03-01: Life insurance policy, Deed.</td><td>Send what you have today and ask for an extension in writing; a missed request can close the application.</td></tr>
+<tr><td>decision_overdue</td><td>Harriet Quill</td><td>2025-12-01</td><td>92</td><td>21450</td><td>Applied 2025-12-01, 92 days ago; the state decision time is 45 days.</td><td>Call the caseworker, ask for the decision date in writing, and escalate to the supervisor if needed.</td></tr>
+<tr><td>approved_not_billed</td><td>Kasimir Lund</td><td>2025-11-10</td><td>113</td><td>0</td><td>Approved from 2025-11-01, not billed yet.</td><td>Bill Medicaid for the approved days now, from the effective date; timely filing runs from the service dates.</td></tr>
+<tr><td>liability_missing</td><td>Kasimir Lund</td><td>2025-11-10</td><td>113</td><td>0</td><td>Approved, but no patient liability (share of cost) amount is recorded.</td><td>Get the liability notice and set it up, so the resident portion is billed and the Medicaid claim is reduced by it.</td></tr>
+<tr><td>no_followup</td><td>Juno Castellano</td><td>2026-02-15</td><td>16</td><td>4410</td><td>No contact with the caseworker for 32 days (last 2026-01-30).</td><td>Call or write to the caseworker and log the contact.</td></tr>
+<tr><td>docs_due_soon</td><td>Juno Castellano</td><td>2026-02-15</td><td>16</td><td>4410</td><td>1 document(s) due 2026-03-06 (3 days): Pension letter.</td><td>Chase the family or bank for these documents now.</td></tr>
+</tbody></table></div>
+<h2>Grenzen</h2><ul><li>Reads only the files you give it. It does not log in to PointClickCare, MatrixCare, a payer portal, a bank, a state Medicaid portal or a payroll system.</li><li>Deadlines are the numbers in your rules file; decision times and appeal windows differ by state.</li><li>Not legal, tax, accounting, clinical, reimbursement or HIPAA advice. A person decides what to bill, pay, appeal, file or send.</li><li>Results returned to the AI model have patient names, birth dates, member ids and other direct identifiers masked. The files written here keep the real values: keep them in a secure folder.</li></ul>
+<p class="mut" style="margin-top:32px">Von einem Remedy-Agenten aus Ihren Dateien auf diesem Rechner erstellt. Nichts wurde gesendet, eingereicht oder bezahlt. Diese Seite enthält Patientendaten: Bewahren Sie sie in Ihrem geschützten Ordner auf und versenden Sie sie nicht per E-Mail.</p>
+</main></body></html>
