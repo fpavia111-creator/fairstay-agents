@@ -1,0 +1,23 @@
+{
+  "name": "holly-of-payroll",
+  "version": "0.1.0",
+  "description": "Payroll audit for nursing homes: missing punches, paid hours that differ from punches, overtime under the 40-hour or 8/80 rule, shift differentials left out of the overtime rate, garnishments over the limit and terminated staff paid.",
+  "author": {
+    "name": "Kurt Francisco"
+  },
+  "license": "MIT",
+  "homepage": "https://github.com/fpavia111-creator/evergreen-agents/tree/main/packages/holly-of-payroll#readme",
+  "keywords": [
+    "mcp",
+    "mcp-server",
+    "nursing-home",
+    "skilled-nursing",
+    "snf",
+    "long-term-care",
+    "evergreen",
+    "payroll",
+    "overtime",
+    "garnishment",
+    "flsa"
+  ]
+}

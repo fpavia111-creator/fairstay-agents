@@ -1,0 +1,230 @@
+{
+ "suite": "holly-of-payroll",
+ "root": "..",
+ "data_note": "Fictional employees and payroll in ../fixtures. Deterministic checks; no model is called.",
+ "cases": [
+  {
+   "id": "totals",
+   "tool": "holly_check",
+   "args": {
+    "punches": "fixtures/punches.csv",
+    "register": "fixtures/register.csv",
+    "employees": "fixtures/employees.csv",
+    "rules": "fixtures/rules.json"
+   },
+   "expect": {
+    "status": "executed",
+    "equals": {
+     "result.employees_paid": 6,
+     "result.gross": 11430.5,
+     "result.at_risk": 1947
+    }
+   }
+  },
+  {
+   "id": "terminated-first",
+   "tool": "holly_check",
+   "args": {
+    "punches": "fixtures/punches.csv",
+    "register": "fixtures/register.csv",
+    "employees": "fixtures/employees.csv",
+    "rules": "fixtures/rules.json"
+   },
+   "expect": {
+    "equals": {
+     "result.items.0.status": "terminated_paid",
+     "result.items.0.amount": 1512
+    }
+   }
+  },
+  {
+   "id": "forty-hour-rule",
+   "tool": "holly_check",
+   "args": {
+    "punches": "fixtures/punches.csv",
+    "register": "fixtures/register.csv",
+    "employees": "fixtures/employees.csv",
+    "rules": "fixtures/rules.json",
+    "status": "ot_underpaid"
+   },
+   "expect": {
+    "equals": {
+     "result.items.0.ot_owed": 8,
+     "result.items.0.ot_paid": 0,
+     "result.items.0.amount": 96
+    }
+   }
+  },
+  {
+   "id": "eight-eighty-paid-right",
+   "tool": "holly_check",
+   "args": {
+    "punches": "fixtures/punches.csv",
+    "register": "fixtures/register.csv",
+    "employees": "fixtures/employees.csv",
+    "rules": "fixtures/rules.json",
+    "status": "ot_underpaid"
+   },
+   "expect": {
+    "equals": {
+     "result.items.length": 1
+    }
+   }
+  },
+  {
+   "id": "regular-rate-with-differential",
+   "tool": "holly_check",
+   "args": {
+    "punches": "fixtures/punches.csv",
+    "register": "fixtures/register.csv",
+    "employees": "fixtures/employees.csv",
+    "rules": "fixtures/rules.json",
+    "status": "ot_rate_missing_diff"
+   },
+   "expect": {
+    "equals": {
+     "result.items.0.regular_rate": 46,
+     "result.items.0.amount": 144
+    }
+   }
+  },
+  {
+   "id": "garnishment",
+   "tool": "holly_check",
+   "args": {
+    "punches": "fixtures/punches.csv",
+    "register": "fixtures/register.csv",
+    "employees": "fixtures/employees.csv",
+    "rules": "fixtures/rules.json",
+    "status": "garnishment_over_limit"
+   },
+   "expect": {
+    "equals": {
+     "result.items.0.limit_pct": 25,
+     "result.items.0.amount": 75
+    }
+   }
+  },
+  {
+   "id": "hours-differ",
+   "tool": "holly_check",
+   "args": {
+    "punches": "fixtures/punches.csv",
+    "register": "fixtures/register.csv",
+    "employees": "fixtures/employees.csv",
+    "rules": "fixtures/rules.json",
+    "status": "hours_differ"
+   },
+   "expect": {
+    "equals": {
+     "result.items.0.paid_hours": 76,
+     "result.items.0.punched_hours": 72
+    }
+   }
+  },
+  {
+   "id": "missing-punch",
+   "tool": "holly_check",
+   "args": {
+    "punches": "fixtures/punches.csv",
+    "register": "fixtures/register.csv",
+    "employees": "fixtures/employees.csv",
+    "rules": "fixtures/rules.json",
+    "status": "missing_punch"
+   },
+   "expect": {
+    "equals": {
+     "result.items.0.date": "2026-03-09"
+    },
+    "contains": [
+     "clock-out"
+    ]
+   }
+  },
+  {
+   "id": "no-employee-file",
+   "tool": "holly_check",
+   "args": {
+    "punches": "fixtures/punches.csv",
+    "register": "fixtures/register.csv"
+   },
+   "expect": {
+    "not_contains": [
+     "terminated_paid"
+    ]
+   }
+  },
+  {
+   "id": "typo-rules-refused",
+   "tool": "holly_check",
+   "args": {
+    "punches": "fixtures/punches.csv",
+    "register": "fixtures/register.csv",
+    "employees": "fixtures/employees.csv",
+    "rules": "fixtures/rules-typo.json"
+   },
+   "expect": {
+    "status": "error",
+    "contains": [
+     "workweek_start"
+    ]
+   }
+  },
+  {
+   "id": "employees-masked",
+   "tool": "holly_check",
+   "args": {
+    "punches": "fixtures/punches.csv",
+    "register": "fixtures/register.csv",
+    "employees": "fixtures/employees.csv",
+    "rules": "fixtures/rules.json"
+   },
+   "expect": {
+    "not_contains": [
+     "Rosa Kimball",
+     "E105"
+    ],
+    "matches": [
+     "MRN-[0-9a-f]{8}"
+    ]
+   }
+  },
+  {
+   "id": "report",
+   "tool": "holly_write_report",
+   "args": {
+    "punches": "fixtures/punches.csv",
+    "register": "fixtures/register.csv",
+    "employees": "fixtures/employees.csv",
+    "rules": "fixtures/rules.json"
+   },
+   "expect": {
+    "status": "executed",
+    "contains": [
+     "holly-payroll-audit.csv"
+    ]
+   }
+  },
+  {
+   "id": "release-refused",
+   "tool": "payroll_release",
+   "args": {},
+   "expect": {
+    "status": "blocked",
+    "decision": "block"
+   }
+  },
+  {
+   "id": "recall-empty",
+   "tool": "holly_recall",
+   "args": {},
+   "expect": {
+    "status": "executed",
+    "contains": [
+     "memory is empty",
+     "payroll_note"
+    ]
+   }
+  }
+ ]
+}

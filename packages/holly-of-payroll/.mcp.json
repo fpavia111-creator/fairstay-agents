@@ -1,0 +1,12 @@
+{
+  "mcpServers": {
+    "holly-of-payroll": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "holly-of-payroll@0.1.0",
+        "mcp"
+      ]
+    }
+  }
+}

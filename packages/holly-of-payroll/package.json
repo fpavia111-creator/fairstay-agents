@@ -1,0 +1,58 @@
+{
+  "name": "holly-of-payroll",
+  "version": "0.1.0",
+  "description": "Payroll audit for nursing homes: missing punches, paid hours that differ from punches, overtime under the 40-hour or 8/80 rule, shift differentials left out of the overtime rate, garnishments over the limit and terminated staff paid.",
+  "type": "module",
+  "license": "MIT",
+  "author": "Kurt Francisco",
+  "engines": {
+    "node": ">=20"
+  },
+  "main": "src/index.js",
+  "exports": {
+    ".": "./src/index.js",
+    "./package.json": "./package.json"
+  },
+  "bin": {
+    "holly-of-payroll": "bin/holly-of-payroll.js"
+  },
+  "files": [
+    "src",
+    "bin",
+    "fixtures",
+    "evals",
+    "README.md",
+    "CHANGELOG.md",
+    "LICENSE"
+  ],
+  "scripts": {
+    "test": "node scripts/run-tests.cjs",
+    "demo": "node bin/holly-of-payroll.js demo",
+    "eval": "node bin/holly-of-payroll.js eval"
+  },
+  "dependencies": {
+    "evergreen-core": "^0.1.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/fpavia111-creator/evergreen-agents.git",
+    "directory": "packages/holly-of-payroll"
+  },
+  "homepage": "https://github.com/fpavia111-creator/evergreen-agents/tree/main/packages/holly-of-payroll#readme",
+  "bugs": {
+    "url": "https://github.com/fpavia111-creator/evergreen-agents/issues"
+  },
+  "keywords": [
+    "mcp",
+    "mcp-server",
+    "nursing-home",
+    "skilled-nursing",
+    "snf",
+    "long-term-care",
+    "evergreen",
+    "payroll",
+    "overtime",
+    "garnishment",
+    "flsa"
+  ]
+}

@@ -1,0 +1,7 @@
+Employee ID,Employee Name,Pay Date,Period Start,Period End,Regular Hours,OT Hours,Rate,Shift Differential,OT Pay,Gross,Garnishment,Garnishment Type,Disposable
+E101,Rosa Kimball,2026-03-20,2026-03-01,2026-03-14,80,5,19.00,0,142.50,1662.50,420,Creditor,1380
+E102,Tomas Varga,2026-03-20,2026-03-01,2026-03-14,48,24,42.00,288,1512.00,3816.00,,,
+E103,Ines Duarte,2026-03-20,2026-03-01,2026-03-14,76,0,30.00,0,0,2280.00,600,Child support,1900
+E104,Owen Pratt,2026-03-20,2026-03-01,2026-03-14,8,0,18.00,0,0,144.00,,,
+E105,Lena Fiske,2026-03-20,2026-03-01,2026-03-14,72,0,21.00,0,0,1512.00,,,
+E106,Marta Quinn,2026-03-20,2026-03-01,2026-03-14,84,0,24.00,0,0,2016.00,,,
