@@ -1,0 +1,12 @@
+{
+  "mcpServers": {
+    "poplar-of-authorizations": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "poplar-of-authorizations@0.1.0",
+        "mcp"
+      ]
+    }
+  }
+}

@@ -1,0 +1,7 @@
+Resident #,Payer,Auth #,Auth From,Auth To,Level,Days Authorized,Next Review
+R1301,Sunrise Advantage HMO (fictional),SA-1001,2026-03-01,2026-03-31,SKILLED,31,2026-03-20
+R1302,Sunrise Advantage HMO (fictional),SA-1002,2026-03-01,2026-03-17,SKILLED,10,2026-03-12
+R1303,Gulf Coast Advantage HMO (fictional),GC-2003,2026-03-03,2026-03-31,REHAB MED,,2026-03-17
+R1304,Gulf Coast Advantage HMO (fictional),GC-2004,2026-03-09,2026-03-31,SKILLED,,
+R1305,Sunrise Advantage HMO (fictional),SA-1005,2026-03-02,2026-03-16,SKILLED,,
+R1305,Sunrise Advantage HMO (fictional),SA-1006,2026-03-17,2026-03-30,SKILLED,,
