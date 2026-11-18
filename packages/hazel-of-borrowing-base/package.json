@@ -1,0 +1,57 @@
+{
+  "name": "hazel-of-borrowing-base",
+  "version": "0.1.0",
+  "description": "Borrowing base certificate preparation: eligible receivables by payer type, ineligibles by reason (age, Medicaid pending, credits, cross-aging, concentration), availability at your advance rates and the room left on the line.",
+  "type": "module",
+  "license": "MIT",
+  "author": "Kurt Francisco",
+  "engines": {
+    "node": ">=20"
+  },
+  "main": "src/index.js",
+  "exports": {
+    ".": "./src/index.js",
+    "./package.json": "./package.json"
+  },
+  "bin": {
+    "hazel-of-borrowing-base": "bin/hazel-of-borrowing-base.js"
+  },
+  "files": [
+    "src",
+    "bin",
+    "fixtures",
+    "evals",
+    "README.md",
+    "CHANGELOG.md",
+    "LICENSE"
+  ],
+  "scripts": {
+    "test": "node scripts/run-tests.cjs",
+    "demo": "node bin/hazel-of-borrowing-base.js demo",
+    "eval": "node bin/hazel-of-borrowing-base.js eval"
+  },
+  "dependencies": {
+    "evergreen-core": "^0.1.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/fpavia111-creator/evergreen-agents.git",
+    "directory": "packages/hazel-of-borrowing-base"
+  },
+  "homepage": "https://github.com/fpavia111-creator/evergreen-agents/tree/main/packages/hazel-of-borrowing-base#readme",
+  "bugs": {
+    "url": "https://github.com/fpavia111-creator/evergreen-agents/issues"
+  },
+  "keywords": [
+    "mcp",
+    "mcp-server",
+    "nursing-home",
+    "skilled-nursing",
+    "snf",
+    "long-term-care",
+    "evergreen",
+    "borrowing-base",
+    "abl",
+    "receivables"
+  ]
+}

@@ -1,0 +1,13 @@
+Resident #,Resident Name,Payer,Service To,Balance
+R1601,Opal Whitaker,Medicare A,2026-03-31,62000
+R1602,Piers Langley,Medicare A,2026-02-28,48000
+R1603,Quinn Adair,Medicare A,2025-10-31,9000
+R1604,Rhea Solano,Lone Star Medicaid (fictional),2026-03-31,71000
+R1605,Sven Okoro,Lone Star Medicaid (fictional),2026-02-28,54000
+R1606,Tess Marlow,Medicaid Pending,2026-03-31,33000
+R1607,Umar Fitch,Sunrise Advantage HMO (fictional),2026-03-31,58000
+R1608,Vida Rasmussen,Sunrise Advantage HMO (fictional),2026-02-28,41000
+R1609,Wade Corliss,Private Pay,2026-03-31,6200
+R1609,Wade Corliss,Private Pay,2025-11-30,8400
+R1610,Xia Montague,Private Pay,2026-03-31,7100
+R1611,Yara Beck,Private Pay,2026-02-28,-1300

@@ -1,0 +1,16 @@
+{
+  "advance_rates": {
+    "medicare_a": 0.85,
+    "medicaid": 0.85,
+    "managed_care": 0.8,
+    "private": 0.5
+  },
+  "max_age_days": {
+    "default": 120,
+    "private": 90
+  },
+  "cross_age_pct": 50,
+  "concentration_pct": 25,
+  "line_limit": 300000,
+  "outstanding": 290000
+}

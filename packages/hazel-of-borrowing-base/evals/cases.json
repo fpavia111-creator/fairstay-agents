@@ -1,0 +1,199 @@
+{
+ "suite": "hazel-of-borrowing-base",
+ "root": "..",
+ "data_note": "Fictional residents and example loan terms in ../fixtures. Deterministic arithmetic; no model is called.",
+ "cases": [
+  {
+   "id": "certificate",
+   "tool": "hazel_check",
+   "args": {
+    "ar": "fixtures/ar-aging.csv",
+    "terms": "fixtures/terms.json",
+    "as_of": "2026-03-31"
+   },
+   "expect": {
+    "status": "executed",
+    "equals": {
+     "result.gross_ar": 397700,
+     "result.ineligible": 71625,
+     "result.eligible": 326075,
+     "result.borrowing_base": 270870,
+     "result.available": 30870
+    }
+   }
+  },
+  {
+   "id": "ineligibles-by-reason",
+   "tool": "hazel_check",
+   "args": {
+    "ar": "fixtures/ar-aging.csv",
+    "terms": "fixtures/terms.json",
+    "as_of": "2026-03-31"
+   },
+   "expect": {
+    "equals": {
+     "result.ineligibles.over_age": 17400,
+     "result.ineligibles.medicaid_pending": 33000,
+     "result.ineligibles.cross_aged": 6200,
+     "result.ineligibles.credit_balance": 1300,
+     "result.ineligibles.concentration_excess": 13725
+    }
+   }
+  },
+  {
+   "id": "concentration-first",
+   "tool": "hazel_check",
+   "args": {
+    "ar": "fixtures/ar-aging.csv",
+    "terms": "fixtures/terms.json",
+    "as_of": "2026-03-31"
+   },
+   "expect": {
+    "equals": {
+     "result.items.0.status": "concentration_excess",
+     "result.items.0.amount": 13725
+    }
+   }
+  },
+  {
+   "id": "cross-aged-private",
+   "tool": "hazel_check",
+   "args": {
+    "ar": "fixtures/ar-aging.csv",
+    "terms": "fixtures/terms.json",
+    "as_of": "2026-03-31",
+    "status": "cross_aged"
+   },
+   "expect": {
+    "equals": {
+     "result.items.0.payer_type": "private",
+     "result.items.0.amount": 6200
+    }
+   }
+  },
+  {
+   "id": "private-advance-rate",
+   "tool": "hazel_check",
+   "args": {
+    "ar": "fixtures/ar-aging.csv",
+    "terms": "fixtures/terms.json",
+    "as_of": "2026-03-31"
+   },
+   "expect": {
+    "equals": {
+     "result.by_payer_type.4.payer_type": "private",
+     "result.by_payer_type.4.eligible": 5800,
+     "result.by_payer_type.4.availability": 2900
+    }
+   }
+  },
+  {
+   "id": "default-terms",
+   "tool": "hazel_check",
+   "args": {
+    "ar": "fixtures/ar-aging.csv",
+    "as_of": "2026-03-31"
+   },
+   "expect": {
+    "equals": {
+     "result.borrowing_base": 270870,
+     "result.line_limit": null,
+     "result.available": 270870
+    }
+   }
+  },
+  {
+   "id": "over-line",
+   "tool": "hazel_check",
+   "args": {
+    "ar": "fixtures/ar-aging.csv",
+    "terms": "fixtures/terms-overdrawn.json",
+    "as_of": "2026-03-31"
+   },
+   "expect": {
+    "equals": {
+     "result.items.0.status": "over_line",
+     "result.items.0.amount": 19130
+    }
+   }
+  },
+  {
+   "id": "typo-terms-refused",
+   "tool": "hazel_check",
+   "args": {
+    "ar": "fixtures/ar-aging.csv",
+    "terms": "fixtures/rules-typo.json",
+    "as_of": "2026-03-31"
+   },
+   "expect": {
+    "status": "error",
+    "contains": [
+     "advance_rate"
+    ]
+   }
+  },
+  {
+   "id": "masked",
+   "tool": "hazel_check",
+   "args": {
+    "ar": "fixtures/ar-aging.csv",
+    "terms": "fixtures/terms.json",
+    "as_of": "2026-03-31"
+   },
+   "expect": {
+    "not_contains": [
+     "Wade Corliss",
+     "R1609"
+    ],
+    "matches": [
+     "MRN-[0-9a-f]{8}"
+    ]
+   }
+  },
+  {
+   "id": "report",
+   "tool": "hazel_write_report",
+   "args": {
+    "ar": "fixtures/ar-aging.csv",
+    "terms": "fixtures/terms.json",
+    "as_of": "2026-03-31"
+   },
+   "expect": {
+    "status": "executed",
+    "contains": [
+     "hazel-borrowing-base.csv"
+    ]
+   }
+  },
+  {
+   "id": "submit-refused",
+   "tool": "certificate_submit",
+   "args": {},
+   "expect": {
+    "status": "blocked",
+    "decision": "block"
+   }
+  },
+  {
+   "id": "draw-refused",
+   "tool": "line_draw",
+   "args": {},
+   "expect": {
+    "status": "blocked",
+    "decision": "block"
+   }
+  },
+  {
+   "id": "recall-empty",
+   "tool": "hazel_recall",
+   "args": {},
+   "expect": {
+    "status": "executed",
+    "contains": [
+     "memory is empty",
+     "lender_note"
+    ]
+   }
+  }
+ ]
+}

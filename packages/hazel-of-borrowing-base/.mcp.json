@@ -1,0 +1,12 @@
+{
+  "mcpServers": {
+    "hazel-of-borrowing-base": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "hazel-of-borrowing-base@0.1.0",
+        "mcp"
+      ]
+    }
+  }
+}
