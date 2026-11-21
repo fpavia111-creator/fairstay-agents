@@ -4,6 +4,7 @@
   "description": "Fairstay: nursing-home (skilled nursing) back-office agents monorepo, built on fairclaim-core.",
   "license": "MIT",
   "workspaces": [
+    "vendor/fair-agent-core",
     "packages/fairclaim-core",
     "packages/fairstay-core",
     "packages/*"
