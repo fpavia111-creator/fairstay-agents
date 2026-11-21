@@ -38,3 +38,5 @@ export { CLAIM_FIELDS, REMIT_FIELDS, DEPOSIT_FIELDS, APPOINTMENT_FIELDS, parseAd
 export { PhiMasker, PHI_MODES, PHI_KEY_FILE, phiKindOf, loadPhiKey } from './phi.js';
 export { REPORT_TEXT, COLUMN_LABELS, CATEGORY_LABELS, SECTION_TITLES, sectionTitle, reportText } from './report-text.js';
 export { categorise, denialLines } from './denials.js';
+export { stateSeal, envSeal, generateStateKey, parseStateKey, convertStateFile, StateKeyError, STATE_KINDS } from './state.js';
+export { FAMILY_PROFILE } from './engine.js';
