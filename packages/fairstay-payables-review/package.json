@@ -40,7 +40,7 @@
     "url": "git+https://github.com/fpavia111-creator/fairstay-agents.git",
     "directory": "packages/fairstay-payables-review"
   },
-  "homepage": "https://github.com/fpavia111-creator/fairstay-agents/tree/main/packages/fairstay-payables-review#readme",
+  "homepage": "https://github.com/fpavia111-creator/fairstay-agents/tree/master/packages/fairstay-payables-review#readme",
   "bugs": {
     "url": "https://github.com/fpavia111-creator/fairstay-agents/issues"
   },

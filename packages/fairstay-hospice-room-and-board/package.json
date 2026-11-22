@@ -40,7 +40,7 @@
     "url": "git+https://github.com/fpavia111-creator/fairstay-agents.git",
     "directory": "packages/fairstay-hospice-room-and-board"
   },
-  "homepage": "https://github.com/fpavia111-creator/fairstay-agents/tree/main/packages/fairstay-hospice-room-and-board#readme",
+  "homepage": "https://github.com/fpavia111-creator/fairstay-agents/tree/master/packages/fairstay-hospice-room-and-board#readme",
   "bugs": {
     "url": "https://github.com/fpavia111-creator/fairstay-agents/issues"
   },

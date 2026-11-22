@@ -40,7 +40,7 @@
     "url": "git+https://github.com/fpavia111-creator/fairstay-agents.git",
     "directory": "packages/fairstay-payroll-audit"
   },
-  "homepage": "https://github.com/fpavia111-creator/fairstay-agents/tree/main/packages/fairstay-payroll-audit#readme",
+  "homepage": "https://github.com/fpavia111-creator/fairstay-agents/tree/master/packages/fairstay-payroll-audit#readme",
   "bugs": {
     "url": "https://github.com/fpavia111-creator/fairstay-agents/issues"
   },

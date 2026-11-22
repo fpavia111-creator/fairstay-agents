@@ -1,6 +1,6 @@
 {
   "name": "fairclaim-core",
-  "version": "0.2.1",
+  "version": "0.3.0",
   "description": "Family kit (names, reading rules, data and domain helpers) on fair-agent-core for Fairclaim domain agents: pinned-model pack manifests, allow/ask/block policy, Review/Assist/Auto modes with caps and a kill switch, hash-chained JSONL audit logs, a zero-dependency stdio MCP server and fixture-based evals.",
   "type": "module",
   "license": "MIT",
@@ -24,19 +24,20 @@
     "src",
     "bin",
     "README.md",
-    "LICENSE"
+    "LICENSE",
+    "CHANGELOG.md"
   ],
   "scripts": {
     "test": "node scripts/run-tests.cjs"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/fpavia111-creator/remedy-agents.git",
+    "url": "git+https://github.com/fpavia111-creator/fairclaim-agents.git",
     "directory": "packages/fairclaim-core"
   },
-  "homepage": "https://github.com/fpavia111-creator/remedy-agents/tree/main/packages/fairclaim-core#readme",
+  "homepage": "https://github.com/fpavia111-creator/fairclaim-agents/tree/main/packages/fairclaim-core#readme",
   "bugs": {
-    "url": "https://github.com/fpavia111-creator/remedy-agents/issues"
+    "url": "https://github.com/fpavia111-creator/fairclaim-agents/issues"
   },
   "keywords": [
     "mcp",

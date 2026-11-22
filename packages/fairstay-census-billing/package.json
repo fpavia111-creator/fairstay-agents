@@ -40,7 +40,7 @@
     "url": "git+https://github.com/fpavia111-creator/fairstay-agents.git",
     "directory": "packages/fairstay-census-billing"
   },
-  "homepage": "https://github.com/fpavia111-creator/fairstay-agents/tree/main/packages/fairstay-census-billing#readme",
+  "homepage": "https://github.com/fpavia111-creator/fairstay-agents/tree/master/packages/fairstay-census-billing#readme",
   "bugs": {
     "url": "https://github.com/fpavia111-creator/fairstay-agents/issues"
   },

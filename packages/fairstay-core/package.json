@@ -23,8 +23,17 @@
   "scripts": {
     "test": "node scripts/run-tests.cjs"
   },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/fpavia111-creator/fairstay-agents.git",
+    "directory": "packages/fairstay-core"
+  },
+  "homepage": "https://github.com/fpavia111-creator/fairstay-agents/tree/master/packages/fairstay-core#readme",
+  "bugs": {
+    "url": "https://github.com/fpavia111-creator/fairstay-agents/issues"
+  },
   "dependencies": {
-    "fairclaim-core": "^0.2.0"
+    "fairclaim-core": "^0.3.0"
   },
   "keywords": [
     "mcp",
