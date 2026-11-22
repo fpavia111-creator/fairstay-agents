@@ -11,6 +11,7 @@ export const FAMILY_PROFILE = core.defineFamily({
   // How this family reads files where the families differ (see fair-agent-core/src/family.js).
   dialect: { units: false, ownName: 'count', decimals: 'file', groupedEvidence: true, monthHeaders: false, legalTails: 'basic', localValues: false, aliasSkipsTaken: false, emptyMarks: false, percentWord: false },
   previewHidden: /secret|token|password|key|tin|ssn|card|iban|account|email|phone|dob|birth|patient|member|subscriber|insured|guarantor|mrn/i,
+  limits: {"pathChars":1024,"nameChars":255},
   exports: exportsData, exportsNote, columnWords, fieldConcepts,
   memoryExample: "Visits for Dr. Example bill under the group NPI", prefixHint: ", e.g. \"ladon\"",
   masking: {

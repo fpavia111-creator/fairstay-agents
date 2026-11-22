@@ -1,5 +1,5 @@
 #!/usr/bin/env node
-// Scaffold a new Fairclaim domain agent: remedy-new-agent <figure>-of-<process> [--dir packages]
+// Scaffold a new Fair agent: remedy-new-agent <product>-<what-it-does> [--dir packages], for example fairclaim-denial-trends
 // The output passes `npm test`, `eval` and `npm pack --dry-run` untouched.
 import { mkdirSync, writeFileSync, existsSync } from 'node:fs';
 import { join, resolve } from 'node:path';
@@ -7,11 +7,11 @@ import { join, resolve } from 'node:path';
 const name = process.argv[2];
 const dirFlag = process.argv.indexOf('--dir');
 const base = resolve(dirFlag > 0 ? process.argv[dirFlag + 1] : '.');
-if (!name || !/^[a-z]+-of-[a-z]+$/.test(name)) { process.stdout.write('Usage: remedy-new-agent <figure>-of-<process> [--dir packages]\n'); process.exit(2); }
+if (!name || !/^fair[a-z]+(-[a-z0-9]+){1,4}$/.test(name)) { process.stdout.write('Usage: remedy-new-agent <product>-<what-it-does> [--dir packages], for example fairclaim-denial-trends\n'); process.exit(2); }
 const root = join(base, name);
 if (existsSync(root)) { process.stderr.write(`${root} already exists\n`); process.exit(1); }
-const pre = name.split('-')[0];
-const Title = name.split('-').map((w) => (w === 'of' ? w : w[0].toUpperCase() + w.slice(1))).join(' ');
+const pre = name.split('-').slice(1).join('_'); // tool prefix: the words after the product
+const Title = name.split('-').map((w) => w[0].toUpperCase() + w.slice(1)).join(' ');
 const files = {
   'package.json': JSON.stringify({ name, version: '0.1.0', description: `${Title}: describe the one process this agent owns.`, type: 'module', license: 'MIT', engines: { node: '>=20' }, main: 'src/index.js', exports: { '.': './src/index.js', './package.json': './package.json' }, bin: { [name]: `bin/${name}.js` }, files: ['src', 'bin', 'fixtures', 'evals', 'README.md', 'LICENSE'], scripts: { test: 'node scripts/run-tests.cjs', demo: `node bin/${name}.js demo`, eval: `node bin/${name}.js eval` }, dependencies: { 'fairclaim-core': '^0.2.0' }, keywords: ['mcp', 'mcp-server', 'ai-agents', 'remedy'] }, null, 2) + '\n',
   [`bin/${name}.js`]: `#!/usr/bin/env node\nimport { fileURLToPath } from 'node:url';\nimport { main } from 'fairclaim-core';\nimport { manifest } from '../src/manifest.js';\nimport { demo } from '../src/demo.js';\n\nmain(manifest, { bin: '${name}', demo, evalFile: fileURLToPath(new URL('../evals/cases.json', import.meta.url)) });\n`,

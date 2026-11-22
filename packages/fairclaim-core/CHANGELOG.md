@@ -1,8 +1,23 @@
 # Changelog
 
+## 0.3.0 (2026-11-22, first npm release)
+
+One fairclaim-core for all four products that use it. Before this, Fairclaim, Fairstay, Fairpractice and Fairpractice wave 2 each carried their own copy under the same name and version (0.2.1), with different files, so whichever copy reached npm first would have been wrong for the other three. This version is the union of the four copies.
+
+Changed:
+
+- Report footers name the product that wrote them, from the agent's package name (`fairstay-…` writes "Written by a Fairstay agent", `fairpractice-…` "Fairpractice", `fairclaim-…` "Fairclaim"), in all nine report languages. The four copies had the product name typed into the core. New export `brandOf(name)`.
+- Everything in the 0.2.0 notes below that came from the Fairpractice final passes (repeated column names, the new `remedy-new-agent` names, over-long paths) is now in every product, not only Fairpractice. Fairclaim and Fairstay already had the CSV and path fixes in the shared engine; they now have the tests for them too.
+- Package metadata points at the fairclaim-agents repository, the canonical home of this package.
+
+
 ## 0.2.0 (unreleased, Fairclaim ver 2)
 
 Fixed:
+
+- A repeated column name no longer loses data: the first column keeps the name and later ones become "Name (2)", "Name (3)". Before, the last column replaced the first, so the CMS physician fee schedule RVU file (a work "RVU" and a malpractice "RVU") was read with malpractice RVUs as work RVUs (Fairpractice wave 1 final pass, real-data run).
+- `remedy-new-agent` takes `<product>-<what-it-does>` names (for example `fairclaim-denial-trends`; the tool prefix is the words after the product) and refuses the old `<figure>-of-<process>` names (Fairpractice wave 1 final pass, after the Fairclinic note).
+- Over-long paths (more than 1,024 characters, or a folder or file name over 255) are refused by `safePath` with a plain message. A report `out_dir` of 200,000 characters made the recursive `mkdir` never return on Windows with Node 24 (found by the Fairpractice wave 2 hostile argument pass, 18 Nov 2026).
 
 - Modifier conflicts: the list missed AA with QY, QK with QY, AA with QZ, 25 with 57, and NU, RR and UE together; all are now conflicts (Dill and Sage).
 - Reason code overrides: a config override given as just a category ("197": "documentation") was ignored and left the category blank; both the short and the object form now work.

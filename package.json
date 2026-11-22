@@ -21,7 +21,8 @@
     "release:check": "node scripts/release-check.mjs",
     "release:check:offline": "node scripts/release-check.mjs --offline",
     "bench": "node scripts/bench.mjs",
-    "intl": "node scripts/intl-check.mjs"
+    "intl": "node scripts/intl-check.mjs",
+    "core:check": "node scripts/core-check.mjs"
   },
   "engines": {
     "node": ">=20"

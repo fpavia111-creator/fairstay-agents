@@ -58,7 +58,7 @@ main(manifest); // gives you: mcp | tools | call | demo | eval | approve | rejec
 ## Scaffold a new agent
 
 ```bash
-npx -y -p fairclaim-core remedy-new-agent iris-of-tests --dir packages
+npx -y -p fairclaim-core remedy-new-agent fairclaim-denial-trends --dir packages
 ```
 
 The generated package passes `npm test`, `eval` and `npm pack --dry-run` as is. See `docs/build-an-agent.md` in the monorepo.
@@ -101,7 +101,7 @@ const KINDS = {
 const mem = memoryTools('acme', KINDS);   // acme_recall, acme_learn, acme_accept_learning, acme_retire_memory
 
 export const manifest = defineManifest({
-  name: 'acme-of-access', /* … */
+  name: 'fairclaim-access-requests', /* … */
   memory: { prefix: 'acme', kinds: KINDS },
   tools: [
     { name: 'acme_review', kind: 'read', description: '…', handler: async (a, ctx) => {
@@ -271,7 +271,7 @@ The manifest declares which host model a pack's prompts and evals target. An MCP
 
 ## Packs built on this core
 
-All 30 Fairclaim domain agents in the monorepo, from `olympus-of-migration` to `solon-of-clauses`. Source: <https://github.com/fpavia111-creator/remedy-agents>.
+The 30 Fairclaim agents (`fairclaim-<what it does>`, source: <https://github.com/fpavia111-creator/fairclaim-agents>), the Fairstay nursing-home agents (<https://github.com/fpavia111-creator/fairstay-agents>) and the 60 Fairpractice agents (<https://github.com/fpavia111-creator/fairpractice-agents>, <https://github.com/fpavia111-creator/fairpractice2-agents>). All four repositories carry the same copy of this package; the copy in fairclaim-agents is the source, and `npm run core:check` in each of the others fails if its copy drifts.
 
 ## License
 

@@ -21,7 +21,7 @@ for (const [name, description, kw] of list) {
   const root = join(repo, 'packages', name);
   const write = (f, text, { keep = false } = {}) => { const p = join(root, f); if (keep && existsSync(p)) return; mkdirSync(dirname(p), { recursive: true }); writeFileSync(p, text); };
   const keywords = ['mcp', 'mcp-server', 'nursing-home', 'skilled-nursing', 'snf', 'long-term-care', 'evergreen', ...kw.split(',').filter(Boolean)];
-  const home = `https://github.com/fpavia111-creator/fairstay-agents/tree/main/packages/${name}#readme`;
+  const home = `https://github.com/fpavia111-creator/fairstay-agents/tree/master/packages/${name}#readme`;
   write('package.json', JSON.stringify({
     name, version: VERSION, description, type: 'module', license: 'MIT', author: 'Kurt Francisco', engines: { node: '>=20' },
     main: 'src/index.js', exports: { '.': './src/index.js', './package.json': './package.json' }, bin: { [name]: `bin/${name}.js` },

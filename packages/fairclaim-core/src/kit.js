@@ -6,7 +6,7 @@ import { join, relative } from 'node:path';
 import { toCsv } from './csv.js';
 import { sha256, safePath } from './util.js';
 import { escapeHtml, htmlPage, safeMarkdown, safeFileName } from './formats.js';
-import { reportText } from './report-text.js';
+import { reportText, brandOf } from './report-text.js';
 
 export const MODEL_PIN = Object.freeze({ provider: 'anthropic', id: 'claude-sonnet-5-5', note: 'Declared host-model pin. The tools are deterministic and call no model.' });
 export const OPEN_MARKER = /\[(TO CONFIRM|MISSING|CHECK|ATTACH)[^\]]*\]/g;
@@ -60,7 +60,7 @@ export function writeWorklist(ctx, dir, base, { title, intro = '', rows, columns
     htmlTable(rows, htmlColumns || columns, lab, rt.t('none')),
     limits.length ? `<h2>${escapeHtml(rt.t('limits'))}</h2><ul>${limits.map((l) => `<li>${escapeHtml(l)}</li>`).join('')}</ul>` : '',
   ].join('\n');
-  const html = ctx.writeFile(out, `${base}.html`, htmlPage({ title: ttl, bodyHtml: body, footer: rt.t('footer'), lang: rt.lang }));
+  const html = ctx.writeFile(out, `${base}.html`, htmlPage({ title: ttl, bodyHtml: body, footer: rt.t('footer', { brand: brandOf(ctx.manifest && ctx.manifest.name) }), lang: rt.lang }));
   const files = [csv, html];
   return { files: files.map((f) => rel(ctx, f)), output_sha256: filesHash(files), lang: rt.lang };
 }

@@ -143,6 +143,13 @@ test('caps persist across restarts per session and per day; per-tool caps block 
   assert.equal(capHit({ maxSpendUsd: 0 }, { session: { steps: 0, spend_usd: 0, tools: {} }, today: { steps: 0, spend_usd: 0, tools: {} } }, 'x', 0), null);
 });
 
+test('safePath refuses over-long paths before touching the disk (a recursive mkdir of one hangs on Windows)', () => {
+  const root = tmp();
+  assert.throws(() => safePath(root, 'A'.repeat(200000)), /too long/);
+  assert.throws(() => safePath(root, 'x/' + 'B'.repeat(256)), /too long/);
+  assert.ok(safePath(root, 'out/' + 'C'.repeat(200)).endsWith('C'.repeat(200)));
+});
+
 test('safePath refuses symlink escapes and NUL bytes', () => {
   const root = tmp(); const outside = tmp();
   writeFileSync(join(outside, 'secret.txt'), 'x');
@@ -204,9 +211,11 @@ test('eval report: offline HTML with regression highlighted', async () => {
 test('scaffolder writes a complete agent package', async () => {
   const { spawnSync } = await import('node:child_process');
   const dir = tmp();
-  const r = spawnSync(process.execPath, [fileURLToPath(new URL('../bin/remedy-new-agent.js', import.meta.url)), 'iris-of-tests', '--dir', dir], { encoding: 'utf8' });
+  const r = spawnSync(process.execPath, [fileURLToPath(new URL('../bin/remedy-new-agent.js', import.meta.url)), 'fairclaim-test-runs', '--dir', dir], { encoding: 'utf8' });
   assert.equal(r.status, 0, r.stderr);
-  for (const f of ['package.json', 'bin/iris-of-tests.js', 'src/manifest.js', 'evals/cases.json', 'test/logic.test.js', 'LICENSE']) assert.ok(existsSync(join(dir, 'iris-of-tests', f)), f);
+  for (const f of ['package.json', 'bin/fairclaim-test-runs.js', 'src/manifest.js', 'evals/cases.json', 'test/logic.test.js', 'LICENSE']) assert.ok(existsSync(join(dir, 'fairclaim-test-runs', f)), f);
+  assert.ok(readFileSync(join(dir, 'fairclaim-test-runs', 'evals/cases.json'), 'utf8').includes('test_runs_check'), 'tool prefix from the words after the product');
+  assert.equal(spawnSync(process.execPath, [fileURLToPath(new URL('../bin/remedy-new-agent.js', import.meta.url)), 'iris-of-tests', '--dir', tmp()], { encoding: 'utf8' }).status, 2, 'themed names are refused');
   assert.equal(spawnSync(process.execPath, [fileURLToPath(new URL('../bin/remedy-new-agent.js', import.meta.url)), 'Bad Name'], { encoding: 'utf8' }).status, 2);
 });
 
@@ -217,4 +226,23 @@ test('MCP openWorldHint follows the tool openWorld flag', async () => {
   const tools = (await createMcpHandler(new AgentRuntime(m, { audit: false }))({ jsonrpc: '2.0', id: 1, method: 'tools/list' })).result.tools;
   assert.equal(tools.find((t) => t.name === 'net_read').annotations.openWorldHint, true);
   assert.equal(tools.find((t) => t.name === 'local_read').annotations.openWorldHint, false);
+});
+
+test('a repeated column name keeps the first column and numbers the later ones', async () => {
+  const { parseCsv } = await import('../src/csv.js');
+  const r = parseCsv('HCPCS,RVU,PE RVU,RVU\n99213,1.30,1.46,0.09\n');
+  assert.deepEqual(r, [{ HCPCS: '99213', RVU: '1.30', 'PE RVU': '1.46', 'RVU (2)': '0.09' }]);
+});
+
+test('report footers name the product from the agent name, in every language', async () => {
+  const { brandOf, reportText, REPORT_TEXT } = await import('../src/report-text.js');
+  assert.equal(brandOf('fairstay-payroll-check'), 'Fairstay');
+  assert.equal(brandOf('fairpractice-aba-therapy'), 'Fairpractice');
+  assert.equal(brandOf('fairclaim-ar-aging'), 'Fairclaim');
+  assert.equal(brandOf('my-pack'), 'Fair');
+  assert.equal(brandOf(undefined), 'Fair');
+  for (const lang of Object.keys(REPORT_TEXT.footer)) {
+    const f = reportText(lang).t('footer', { brand: 'Fairstay' });
+    assert.ok(f.includes('Fairstay') && !f.includes('{brand}') && !/Fairclaim|Fairpractice/.test(f), lang);
+  }
 });

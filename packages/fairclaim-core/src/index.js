@@ -36,7 +36,7 @@ export { CODE_TABLES_NOTE, GROUP_CODES, DENIAL_CATEGORIES, CARC, RARC, CLAIM_STA
 export { str, num, sum, pct, groupBy, isoDate, daysBetween, addDays, addMonths, today, ageOn, bucketOf, npiValid, npiProblem, icd10Valid, icd10Norm, codeFamily, modifierValid, modifierList, isEm, isAnesthesia, toothValid, QUADRANTS, SURFACES, payerKey } from './billing.js';
 export { CLAIM_FIELDS, REMIT_FIELDS, DEPOSIT_FIELDS, APPOINTMENT_FIELDS, parseAdjustments, groupClaims, groupRemits, readClaims, readRemits, readX12File, allAdjustments, allRemarks } from './billing-sources.js';
 export { PhiMasker, PHI_MODES, PHI_KEY_FILE, phiKindOf, loadPhiKey } from './phi.js';
-export { REPORT_TEXT, COLUMN_LABELS, CATEGORY_LABELS, SECTION_TITLES, sectionTitle, reportText } from './report-text.js';
+export { REPORT_TEXT, COLUMN_LABELS, CATEGORY_LABELS, SECTION_TITLES, sectionTitle, reportText, brandOf } from './report-text.js';
 export { categorise, denialLines } from './denials.js';
 export { stateSeal, envSeal, generateStateKey, parseStateKey, convertStateFile, StateKeyError, STATE_KINDS } from './state.js';
 export { FAMILY_PROFILE } from './engine.js';
