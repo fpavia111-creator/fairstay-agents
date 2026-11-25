@@ -33,7 +33,7 @@ Fairstay Ancillary Invoices demo (fictional home, residents, staff and vendors)
 
 ▶ Review March ancillary invoices
   status: executed  decision: allow
-  9 ancillary line(s) from 2 vendor(s), billed 2513.9; credits to request 1717.5. not_in_building 2, duplicate_line 1, bill_payer_instead 1, outside_consolidated_billing 1, above_contract 1.
+  Credits to request: 1717.5. 9 ancillary line(s) from 2 vendor(s), billed 2513.9. not_in_building 2, duplicate_line 1, bill_payer_instead 1, outside_consolidated_billing 1, above_contract 1.
     not_in_building                   148  Gulf Coast Pharmacy (fictional): Billed for 2026-03-16, while the resident was in the hospital.
     not_in_building                  24.9  Gulf Coast Pharmacy (fictional): Billed for 2026-03-14, when the resident was not on the census.
     duplicate_line                  612.4  Gulf Coast Pharmacy (fictional): Same resident, date and item as line 1.
@@ -47,7 +47,7 @@ Fairstay Ancillary Invoices demo (fictional home, residents, staff and vendors)
 
 ▶ Write the review
   status: executed  decision: allow
-  Ancillary invoice review written: 9 ancillary line(s) from 2 vendor(s), billed 2513.9; credits to request 1717.5. not_in_building 2, duplicate_line 1, bill_payer_instead 1, outside_consolidated_billing 1, above_contract 1. Files: evergreen-out/ancillaries/ancillaries.csv, evergreen-out/ancillaries/ancillaries.html.
+  Ancillary invoice review written: Credits to request: 1717.5. 9 ancillary line(s) from 2 vendor(s), billed 2513.9. not_in_building 2, duplicate_line 1, bill_payer_instead 1, outside_consolidated_billing 1, above_contract 1. Files: evergreen-out/ancillaries/ancillaries.csv, evergreen-out/ancillaries/ancillaries.html.
 
 ▶ Agent tries to hold a vendor payment itself
   status: blocked  decision: block

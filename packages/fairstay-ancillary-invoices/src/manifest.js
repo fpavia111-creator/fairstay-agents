@@ -20,7 +20,7 @@ const args = {
 };
 const rules = (a, ctx) => (a.rules ? ctx.readJson(a.rules, 'ancillaries_rules') : {});
 const run = (a, ctx) => { const r = rules(a, ctx); return reviewAncillaries(ctx.records(a.invoices, 'invoices'), ctx.records(a.census, 'census'), a.rates ? ctx.records(a.rates, 'rates') : [], { snfPays: r.snf_pays_for, cbExcluded: r.cb_excluded_codes || [] }); };
-const summary = (o) => `${o.lines} ancillary line(s) from ${o.vendors} vendor(s), billed ${o.billed}; credits to request ${o.credits_due}. ${Object.entries(o.by_status).map(([k, v]) => `${k} ${v}`).join(', ') || 'Nothing to dispute'}.`;
+const summary = (o) => `Credits to request: ${o.credits_due}. ${o.lines} ancillary line(s) from ${o.vendors} vendor(s), billed ${o.billed}. ${Object.entries(o.by_status).map(([k, v]) => `${k} ${v}`).join(', ') || 'Nothing to dispute'}.`;
 
 export const manifest = snfAgent({
   pkg, prefix: 'ancillaries', title: 'Fairstay Ancillary Invoices',
